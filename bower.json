@@ -1,0 +1,25 @@
+{
+  "name": "fluid",
+  "version": "0.0.1",
+  "homepage": "https://github.com/h2oai/fluid",
+  "authors": [
+    "Prithvi Prabhu <prithvi@h2o.ai> (http://h2o.ai/)"
+  ],
+  "description": "Rapid Application Development for a more... civilized age.",
+  "keywords": [
+    "material-design",
+    "knockout",
+    "FRP",
+    "reactive",
+    "dataflow",
+    "rapid-application-development"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
