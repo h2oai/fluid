@@ -16,36 +16,42 @@ clamp = (value, min, max) ->
     value
 
 add = (container, elements...) ->
-  if (isList container) or (_.isArray container)
-    container.push elements...
+  if container
+    if (isList container) or (_.isArray container)
+      container.push elements...
+    else if container.__fluid_list__
+      add container.__fluid_list__, elements...
   return
 
 _remove = (array, element) ->
   if -1 < index = array.indexOf element
     (array.splice index, 1)[0]
-  else
-    undefined
+  return
 
 remove = (container, elements...) ->
-  if isList container
-    container.removeAll elements
-  else if _.isArray container
-    for element in elements
-      _remove container, element
-  else
-    undefined
+  if container
+    if isList container
+      container.removeAll elements
+    else if _.isArray container
+      for element in elements
+        _remove container, element
+    else if container.__fluid_list__
+      remove container.__fluid_list__, elements...
+  return
 
 clear = (container) ->
-  if isList container
-    container.removeAll()
-  else if isAtom container
-    container undefined
-  else if _.isArray container
-    result = container[0...]
-    container.length = 0
-    result
-  else
-    undefined
+  if container
+    if isList container
+      container.removeAll()
+    else if isAtom container
+      container undefined
+    else if _.isArray container
+      result = container[0...]
+      container.length = 0
+      result
+    else if container.__fluid_list__
+      clear container.__fluid_list__
+  return
 
 event = ->
   _bindings = []
@@ -174,8 +180,8 @@ from = (sources..., f) ->
 #       Pages (Nav + Content)
 #         Layout
 #           Panel
-#         
-#       
+#
+#
 
 extend = (f, opts) ->
   if _.isFunction f
@@ -190,6 +196,7 @@ Layout = (_contents, opts={}) ->
 
   {
     contents, templateOf
+    __fluid_list__: contents
     template: 'layout'
   }
 
@@ -199,6 +206,7 @@ Panel = (_contents, opts={}) ->
 
   {
     contents, templateOf
+    __fluid_list__: contents
     template: "panel-#{span}"
   }
 
@@ -214,6 +222,7 @@ Card = (_contents, opts={}) ->
 
   {
     _hasTitle, title, contents, _hasButtons, buttons, menu, templateOf
+    __fluid_list__: contents
     template: 'card'
   }
 
@@ -245,6 +254,7 @@ Menu = (_commands, opts={}) ->
   #TODO support opt.icon
   {
     id, commands
+    __fluid_list__: commands
     template: 'none'
   }
 
@@ -282,7 +292,7 @@ Button = (_label, opts={}) ->
     #TODO id
     label, clicked, disabled, dispose
     _primary, _accent
-    template: 'button' 
+    template: 'button'
   }
 
 Link = (_label, opts={}) ->
@@ -339,7 +349,10 @@ Application = (version) ->
     ]
   bind title, (title) -> document.title = title
 
-  { title, header, pages, page, footer, templateOf }
+  {
+    title, header, pages, page, footer, templateOf
+    __fluid_list__: pages
+  }
 
 Fluid = ->
   app = Application 'Fluid 0.0.1'
