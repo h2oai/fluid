@@ -185,17 +185,17 @@ extend = (f, opts) ->
     console.warn 'extend: argument 1 is not a function'
     noop
 
-Layout = (_panels, opts={}) ->
-  contents = toList _panels
+Layout = (_contents, opts={}) ->
+  contents = toList _contents
 
   {
     contents, templateOf
     template: 'layout'
   }
 
-Panel = (_controls, opts={}) ->
+Panel = (_contents, opts={}) ->
   span = clamp opts.span ? 12, 1, 12
-  contents = toList _controls
+  contents = toList _contents
 
   {
     contents, templateOf
@@ -217,7 +217,7 @@ Card = (_html, opts={}) ->
     template: 'card'
   }
 
-Html = (_html, opts={}) ->
+Markup = (_html, opts={}) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
   html = toAtom _html
@@ -239,6 +239,7 @@ Markdown = (_value, opts={}) ->
 Menu = (_commands, opts={}) ->
   id = opts.id ? guid()
   commands = toList _commands
+  #TODO support opt.icon
   {
     id, commands
     template: 'none'
@@ -362,7 +363,7 @@ Fluid = ->
     panel12: Panel
     panel: Panel
     card: Card
-    html: Html
+    markup: Markup
     markdown: Markdown
     menu: Menu
     command: Command
