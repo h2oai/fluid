@@ -57,9 +57,11 @@ html(lang='en')
           // /ko
 
         .mdl-layout__tab-bar.mdl-js-ripple-effect
+          // ko with:section
           // ko foreach:pages
           a.mdl-layout__tab(data-bind="attr:{ href:_address }, css:{ 'is-active':_isActive }, text:label")
           // /ko 
+          // /ko
 
       .mdl-layout__drawer
         span.mdl-layout-title Title

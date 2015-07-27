@@ -412,8 +412,6 @@ Application = (version) ->
   section0 = Section()
   sections = list [ section0 ]
   section = atom section0
-  pages = from section, (section) -> section.pages()
-  page = from section, (section) -> section.page()
 
   header = Header version,
     links: [
@@ -428,7 +426,7 @@ Application = (version) ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, section, sections, pages, page, footer, templateOf
+    title, header, section, sections, footer, templateOf
     __fluid_list__: sections
   }
 
