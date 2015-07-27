@@ -271,11 +271,15 @@ Button = (_label, opts={}) ->
   else
     clicked = do event
     bind clicked, opts.clicked if _.isFunction opts.clicked
+
+  _primary = opts.color is 'primary'
+  _accent = opts.color is 'accent'
+
   dispose = -> free clicked
 
   {
     #TODO id
-    label, clicked, dispose
+    label, clicked, _primary, _accent, dispose
     template: 'button' 
   }
 
