@@ -210,10 +210,10 @@ Card = (_html, opts={}) ->
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
   _hasButtons = from buttons, length
-  _hasMenu = no #TODO
+  menu = toAtom opts.menu
 
   {
-    _hasTitle, title, html, _hasButtons, buttons, _hasMenu
+    _hasTitle, title, html, _hasButtons, buttons, menu
     template: 'card'
   }
 
