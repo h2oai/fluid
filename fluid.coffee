@@ -21,6 +21,8 @@ add = (container, elements...) ->
       container.push elements...
     else if container.__fluid_list__
       add container.__fluid_list__, elements...
+    else if isAtom container
+      add container(), elements...
     else
       console.warn 'add: source is not a container'
   else
@@ -41,6 +43,8 @@ remove = (container, elements...) ->
         _remove container, element
     else if container.__fluid_list__
       remove container.__fluid_list__, elements...
+    else if isAtom container
+      remove container(), elements...
     else
       console.warn 'remove: source is not a container'
   else
@@ -59,6 +63,8 @@ clear = (container) ->
       result
     else if container.__fluid_list__
       clear container.__fluid_list__
+    else if isAtom container
+      clear container()
     else
       console.warn 'clear: source is not a container'
   else
