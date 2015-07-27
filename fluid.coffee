@@ -21,6 +21,10 @@ add = (container, elements...) ->
       container.push elements...
     else if container.__fluid_list__
       add container.__fluid_list__, elements...
+    else
+      console.warn 'add: source is not a container'
+  else
+    console.warn 'add: source is not a container'
   return
 
 _remove = (array, element) ->
@@ -37,6 +41,10 @@ remove = (container, elements...) ->
         _remove container, element
     else if container.__fluid_list__
       remove container.__fluid_list__, elements...
+    else
+      console.warn 'remove: source is not a container'
+  else
+    console.warn 'remove: source is not a container'
   return
 
 clear = (container) ->
@@ -51,6 +59,11 @@ clear = (container) ->
       result
     else if container.__fluid_list__
       clear container.__fluid_list__
+    else
+      console.warn 'clear: source is not a container'
+  else
+    console.warn 'clear: source is not a container'
+
   return
 
 event = ->
