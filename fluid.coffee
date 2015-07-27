@@ -204,8 +204,11 @@ Panel = (_contents, opts={}) ->
 
 Panel_ = (span) -> extend Panel, span: span
 
-Card = (_html, opts={}) ->
-  html = toAtom _html
+Card = (_contents, opts={}) ->
+  if _.isString _contents
+    contents = [ Markup _.escape _contents ]
+  else
+    contents = toList _contents
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
@@ -213,7 +216,7 @@ Card = (_html, opts={}) ->
   menu = toAtom opts.menu
 
   {
-    _hasTitle, title, html, _hasButtons, buttons, menu
+    _hasTitle, title, contents, _hasButtons, buttons, menu, templateOf
     template: 'card'
   }
 
