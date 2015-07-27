@@ -1,0 +1,133 @@
+doctype
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title Fluid
+    meta(name='description' content='Fluid Application')
+
+    //- Add to homescreen for Chrome on Android
+    meta(name='mobile-web-app-capable' content='yes')
+    link(rel='icon' sizes='192x192' href='images/touch/chrome-touch-icon-192x192.png')
+
+    //- Add to homescreen for Safari on iOS
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style' content='black')
+    meta(name='apple-mobile-web-app-title' content='Fluid Application')
+    link(rel='apple-touch-icon-precomposed' href='apple-touch-icon-precomposed.png')
+
+    //- Tile icon for Win8 (144x144 + tile color)
+    meta(name='msapplication-TileImage' content='images/touch/ms-touch-icon-144x144-precomposed.png')
+    meta(name='msapplication-TileColor' content='#3372DF')
+
+    //-
+    //- Stylesheets
+    //-
+
+    link(href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' type='text/css')
+    link(href='lib/material-design-lite/material.min.css' rel='stylesheet' type='text/css')
+
+    style.
+      html, body {
+        font-family: 'Roboto', 'Helvetica', sans-serif;
+      }
+
+  body
+    .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+      header.mdl-layout__header
+        .mdl-layout__header-row
+          span.mdl-layout-title(data-bind='text:title')
+          // Align navigation to the right
+          .mdl-layout-spacer
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right
+            label.mdl-button.mdl-js-button.mdl-button--icon(for='fixed-header-drawer-exp')
+              i.material-icons search
+            .mdl-textfield__expandable-holder
+              input#fixed-header-drawer-exp.mdl-textfield__input(type='text', name='sample')
+
+          // ko with:header
+          // ko if:_hasLinks
+          nav.mdl-navigation.mdl-layout--large-screen-only
+            // ko foreach:links
+            a.mdl-navigation__link(data-bind="attr:{ 'href':address }, text:label" target='_blank')
+            // /ko
+          // /ko
+          // /ko
+
+        .mdl-layout__tab-bar.mdl-js-ripple-effect
+          a.mdl-layout__tab.is-active(href='#scroll-tab-1') Tab 1
+          a.mdl-layout__tab(href='#scroll-tab-2') Tab 2
+          a.mdl-layout__tab(href='#scroll-tab-3') Tab 3
+          a.mdl-layout__tab(href='#scroll-tab-4') Tab 4
+          a.mdl-layout__tab(href='#scroll-tab-5') Tab 5
+          a.mdl-layout__tab(href='#scroll-tab-6') Tab 6
+
+      .mdl-layout__drawer
+        span.mdl-layout-title Title
+        nav.mdl-navigation
+          a.mdl-navigation__link(href='') Link
+          a.mdl-navigation__link(href='') Link
+          a.mdl-navigation__link(href='') Link
+          a.mdl-navigation__link(href='') Link
+
+      main.mdl-layout__content.mdl-color--grey-100
+        section#scroll-tab-1.mdl-layout__tab-panel.is-active
+          .page-content(data-bind="template:{ name:templateOf, foreach:page }")
+        section#scroll-tab-2.mdl-layout__tab-panel
+          .page-content
+            // Your content goes here
+        section#scroll-tab-3.mdl-layout__tab-panel
+          .page-content
+            // Your content goes here
+        section#scroll-tab-4.mdl-layout__tab-panel
+          .page-content
+            // Your content goes here
+        section#scroll-tab-5.mdl-layout__tab-panel
+          .page-content
+            // Your content goes here
+        section#scroll-tab-6.mdl-layout__tab-panel
+          .page-content
+            // Your content goes here
+
+      // ko with:footer
+      footer.mdl-mini-footer(data-bind='visible:visible')
+        .mdl-mini-footer--left-section
+          .mdl-logo(data-bind='text:text, visible:_hasText')
+          // ko if:_hasLinks
+          ul.mdl-mini-footer--link-list
+            // ko foreach:links
+            li
+              a(data-bind="attr:{ 'href':address }, text:label", target='_blank')
+            // /ko
+          // /ko
+      // /ko
+
+    //-
+    //- Templates
+    //-
+
+    script(type="text/html" id="layout-template")
+      include themes/mdl/layout.jade
+    include themes/mdl/panel.jade
+    script(type="text/html" id="button-template")
+      include themes/mdl/button.jade
+    script(type="text/html" id="textfield-template")
+      include themes/mdl/textfield.jade
+    script(type="text/html" id="link-template")
+      include themes/mdl/link.jade
+    script(type="text/html" id="html-template")
+      include themes/mdl/html.jade
+
+    //-
+    //- Scripts
+    //-
+
+    script(src='lib/material-design-lite/material.min.js')
+    script(src='lib/lodash/lodash.min.js')
+    script(src='lib/knockout/dist/knockout.js')
+    script(src='lib/marked/marked.min.js')
+    script(src='lib/diecut/diecut.js')
+    script(src='fluid.js')
+    script(src='app.js')
