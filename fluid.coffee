@@ -262,8 +262,11 @@ Command = (_label, opts={}) ->
 
 Button = (_label, opts={}) ->
   label = toAtom _label
-  clicked = do event
-  bind clicked, opts.clicked if _.isFunction opts.clicked
+  if isEvent opts.clicked
+    clicked = opts.clicked
+  else
+    clicked = do event
+    bind clicked, opts.clicked if _.isFunction opts.clicked
   dispose = -> free clicked
 
   {
