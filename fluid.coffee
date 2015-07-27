@@ -236,6 +236,30 @@ Markdown = (_value, opts={}) ->
     template: 'html'
   }
 
+Menu = (_commands, opts={}) ->
+  id = opts.id ? guid()
+  commands = toList _commands
+  {
+    id, commands
+    template: 'none'
+  }
+
+Command = (_label, opts={}) ->
+  label = toAtom _label
+  disabled = toAtom opts.disabled ? no
+  if isEvent opts.clicked
+    clicked = opts.clicked
+  else
+    clicked = do event
+    bind clicked, opts.clicked if _.isFunction opts.clicked
+
+  dispose = -> free clicked
+
+  {
+    label, clicked, disabled
+    template: 'command'
+  }
+
 Button = (_label, opts={}) ->
   label = toAtom _label
   clicked = do event
@@ -337,6 +361,8 @@ Fluid = ->
     card: Card
     html: Html
     markdown: Markdown
+    menu: Menu
+    command: Command
     button: Button
     link: Link
     textfield: Textfield
