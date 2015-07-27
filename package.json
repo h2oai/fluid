@@ -4,6 +4,7 @@
   "description": "Rapid Application Development for a more... civilized age.",
   "main": "index.js",
   "scripts": {
+    "start": "coffee --watch --compile *.coffee & \njade --pretty --watch index.jade & \nbrowser-sync start --server --files \"*.js,*.css,*.html\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,7 +13,6 @@
   },
   "keywords": [
     "material-design",
-    "knockout",
     "FRP",
     "reactive",
     "dataflow",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/h2oai/fluid",
   "devDependencies": {
+    "browser-sync": "^2.8.0",
     "bower": "^1.4.1"
   },
   "dependencies": {

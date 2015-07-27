@@ -25,6 +25,17 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+lib
 
-# Vim swap files
+# OSX temps
+.DS_Store
+
+# Vim temps
 *.swp
+
+# Built files
+index.html
+fluid.js
+app.js
+tests.js
+
