@@ -367,6 +367,20 @@ Header = (_text, opts={}) ->
     links, _hasLinks
   }
 
+Page = (_label, opts={}) ->
+  id = guid()
+  label = toAtom _label
+  contents = toList opts.contents
+
+  _address = "##{id}"
+  _isActive = no
+
+  {
+    id, _address, label, contents, _isActive, templateOf
+    __fluid_list__: contents
+    template: 'layout'
+  }
+
 Footer = (_text, opts={}) ->
   text = toAtom _text
   links = toList opts.links
@@ -380,8 +394,10 @@ Footer = (_text, opts={}) ->
 
 Application = (version) ->
   title = atom ''
-  page = list []
+  page = Page 'Untitled'
+  page._isActive = yes
   pages = list [ page ]
+
   header = Header version,
     links: [
       Link 'Help', address: 'http://example.com/help'
@@ -415,6 +431,7 @@ Fluid = ->
     extend
 
     # components
+    page: Page
     layout: Layout
     panel1: Panel_ 1
     panel2: Panel_ 2

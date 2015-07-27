@@ -57,12 +57,9 @@ html(lang='en')
           // /ko
 
         .mdl-layout__tab-bar.mdl-js-ripple-effect
-          a.mdl-layout__tab.is-active(href='#scroll-tab-1') Tab 1
-          a.mdl-layout__tab(href='#scroll-tab-2') Tab 2
-          a.mdl-layout__tab(href='#scroll-tab-3') Tab 3
-          a.mdl-layout__tab(href='#scroll-tab-4') Tab 4
-          a.mdl-layout__tab(href='#scroll-tab-5') Tab 5
-          a.mdl-layout__tab(href='#scroll-tab-6') Tab 6
+          // ko foreach:pages
+          a.mdl-layout__tab(data-bind="attr:{ href:_address }, css:{ 'is-active':_isActive }, text:label")
+          // /ko 
 
       .mdl-layout__drawer
         span.mdl-layout-title Title
@@ -73,23 +70,10 @@ html(lang='en')
           a.mdl-navigation__link(href='') Link
 
       main.mdl-layout__content.mdl-color--grey-100
-        section#scroll-tab-1.mdl-layout__tab-panel.is-active
-          .page-content(data-bind="template:{ name:templateOf, foreach:page }")
-        section#scroll-tab-2.mdl-layout__tab-panel
-          .page-content
-            // Your content goes here
-        section#scroll-tab-3.mdl-layout__tab-panel
-          .page-content
-            // Your content goes here
-        section#scroll-tab-4.mdl-layout__tab-panel
-          .page-content
-            // Your content goes here
-        section#scroll-tab-5.mdl-layout__tab-panel
-          .page-content
-            // Your content goes here
-        section#scroll-tab-6.mdl-layout__tab-panel
-          .page-content
-            // Your content goes here
+        // ko foreach:pages
+        section(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }").mdl-layout__tab-panel
+          .page-content(data-bind="template:{ name:templateOf, foreach:contents }")
+        // /ko
 
       // ko with:footer
       footer.mdl-mini-footer(data-bind='visible:visible')
