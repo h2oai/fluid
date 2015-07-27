@@ -89,11 +89,13 @@ atom = (value, equalityComparer) ->
     observable.equalityComparer = equalityComparer if _.isFunction equalityComparer
     observable
 
-isAtom = (a) -> (ko.isObservable a) and not _.isFunction a.remove
+isObservable = ko.isObservable
+
+isAtom = (a) -> (isObservable a) and not _.isFunction a.remove
 
 list = (array=[]) -> ko.observableArray array
 
-isList = (a) -> (ko.isObservable a) and _.isFunction a.remove
+isList = (a) -> (isObservable a) and _.isFunction a.remove
 
 length = (a) ->
   if _.isArray
@@ -103,7 +105,7 @@ length = (a) ->
   else
     0
 
-isNode = (a) -> (ko.isObservable a) or isEvent a
+isNode = (a) -> (isObservable a) or isEvent a
 
 toAtom = (value) ->
   if isAtom value then value else atom value
@@ -128,6 +130,8 @@ _bind = (source, f) ->
         source.subscribe f
       else
         console.warn 'bind: target cannot be bound.'
+    else if source.__fluid_node__
+      _bind source.__fluid_node__, f
     else
       console.warn 'bind: source cannot be bound.'
   else
@@ -141,17 +145,42 @@ unbind = (bindings) ->
     free bindings
   return
 
+_resolve = (source) ->
+  if source
+    if _.isFunction source
+      source()
+    else if isObservable source.__fluid_node__
+      source.__fluid_node__()
+    else
+      console.warn 'cannot resolve source'
+      undefined
+  else
+    console.warn 'cannot resolve source'
+    undefined
+
 _apply = (sources, f) ->
-  f (sources.map (source) -> source())...
+  f (sources.map _resolve)...
 
 act = (sources..., f) -> #TODO unused
   _apply sources, f
   sources.map (source) ->
     _bind source, -> _apply sources, f
 
+eventAt0 = (sources) ->
+  if sources.length is 1
+    source0 = sources[0]
+    if isEvent source0
+      source0
+    else if isEvent source0.__fluid_node__
+      source0.__fluid_node__
+    else
+      undefined
+  else
+    undefined
+
 bind = (sources..., f) ->
-  if sources.length is 1 and isEvent sources[0]
-    _bind sources[0], f
+  if evt = eventAt0 sources
+    _bind evt, f
   else
     sources.map (source) ->
       _bind source, -> _apply sources, f
@@ -271,6 +300,7 @@ Command = (_label, opts={}) ->
 
   {
     label, clicked, disabled, dispose
+    __fluid_node__: clicked
     template: 'command'
   }
 
@@ -292,6 +322,7 @@ Button = (_label, opts={}) ->
     #TODO id
     label, clicked, disabled, dispose
     _primary, _accent
+    __fluid_node__: clicked
     template: 'button'
   }
 
@@ -311,6 +342,7 @@ Textfield = (_value, opts={}) ->
   label = toAtom opts.label ? ''
   {
     id, label, value
+    __fluid_node__: value
     template: 'textfield'
   }
 
