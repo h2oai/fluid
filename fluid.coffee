@@ -205,10 +205,7 @@ Panel = (_contents, opts={}) ->
 Panel_ = (span) -> extend Panel, span: span
 
 Card = (_contents, opts={}) ->
-  if _.isString _contents
-    contents = [ Markup _.escape _contents ]
-  else
-    contents = toList _contents
+  contents = toList if _.isString _contents then [ Text _contents ] else _contents
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
@@ -228,6 +225,9 @@ Markup = (_html, opts={}) ->
     id, html
     template: 'html'
   }
+
+Text = (_text, opts={}) ->
+  Markup _.escape(_text), opts
 
 Markdown = (_value, opts={}) ->
   #TODO support bare: yes/no (use spans for bare)
@@ -260,12 +260,13 @@ Command = (_label, opts={}) ->
   dispose = -> free clicked
 
   {
-    label, clicked, disabled
+    label, clicked, disabled, dispose
     template: 'command'
   }
 
 Button = (_label, opts={}) ->
   label = toAtom _label
+  disabled = toAtom opts.disabled ? no
   if isEvent opts.clicked
     clicked = opts.clicked
   else
@@ -279,7 +280,8 @@ Button = (_label, opts={}) ->
 
   {
     #TODO id
-    label, clicked, _primary, _accent, dispose
+    label, clicked, disabled, dispose
+    _primary, _accent
     template: 'button' 
   }
 
@@ -370,6 +372,7 @@ Fluid = ->
     panel12: Panel
     panel: Panel
     card: Card
+    text: Text
     markup: Markup
     markdown: Markdown
     menu: Menu
