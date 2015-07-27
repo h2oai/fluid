@@ -373,18 +373,17 @@ Header = (_text, opts={}) ->
     links, _hasLinks
   }
 
-Page = (_label, opts={}) ->
+Page = (_label='Untitled', opts={}) ->
   id = guid()
   label = toAtom _label
   contents = toList opts.contents
 
   _address = "##{id}"
-  _isActive = no
+  _isActive = opts.active ? no
 
   {
     id, _address, label, contents, _isActive, templateOf
     __fluid_list__: contents
-    template: 'layout'
   }
 
 Footer = (_text, opts={}) ->
@@ -398,11 +397,23 @@ Footer = (_text, opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
+Section = (_label='Untitled', opts={}) ->
+  label = toAtom _label
+  pages = toList opts.pages or [ page0 = Page null, active:yes ]
+  page = atom page0
+
+  load = -> console.log 'load ' + label()
+
+  { label, pages, page, load }
+
 Application = (version) ->
   title = atom ''
-  page = Page 'Untitled'
-  page._isActive = yes
-  pages = list [ page ]
+
+  section0 = Section()
+  sections = list [ section0 ]
+  section = atom section0
+  pages = from section, (section) -> section.pages()
+  page = from section, (section) -> section.page()
 
   header = Header version,
     links: [
@@ -417,8 +428,8 @@ Application = (version) ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, pages, page, footer, templateOf
-    __fluid_list__: pages
+    title, header, section, sections, pages, page, footer, templateOf
+    __fluid_list__: sections
   }
 
 Fluid = ->

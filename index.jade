@@ -64,15 +64,16 @@ html(lang='en')
       .mdl-layout__drawer
         span.mdl-layout-title Title
         nav.mdl-navigation
-          a.mdl-navigation__link(href='') Link
-          a.mdl-navigation__link(href='') Link
-          a.mdl-navigation__link(href='') Link
-          a.mdl-navigation__link(href='') Link
+          // ko foreach:sections
+          a.mdl-navigation__link(data-bind='text:label, click:load')
+          // /ko
 
       main.mdl-layout__content.mdl-color--grey-100
+        // ko foreach:sections
         // ko foreach:pages
         section(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }").mdl-layout__tab-panel
           .page-content(data-bind="template:{ name:templateOf, foreach:contents }")
+        // /ko
         // /ko
 
       // ko with:footer
