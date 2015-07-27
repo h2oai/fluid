@@ -1,0 +1,23 @@
+.mdl-card.mdl-shadow--2dp
+  // ko if:_hasTitle
+  .mdl-card__title
+    h2.mdl-card__title-text(data-bind='text:title')
+  // /ko
+  .mdl-card__supporting-text(data-bind='html:html')
+  // ko if:_hasButtons
+  .mdl-card__actions.mdl-card--border
+    // ko foreach:buttons
+    a.mdl-button.mdl-js-button.mdl-js-ripple-effect(data-bind='text:label, click:clicked')
+    // /ko
+  // /ko
+  // ko if:_hasMenu
+  .mdl-card__menu
+    // Right aligned menu below button
+    button(data-bind="attr:{ id:id }").mdl-button.mdl-js-button.mdl-button--icon
+      i.material-icons more_vert
+    ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(data-bind="attr:{ 'for':id }")
+      li.mdl-menu__item Some Action
+      li.mdl-menu__item Another Action
+      li.mdl-menu__item(disabled='') Disabled Action
+      li.mdl-menu__item Yet Another Action
+  // /ko

@@ -194,15 +194,28 @@ Layout = (_panels, opts={}) ->
   }
 
 Panel = (_controls, opts={}) ->
-    span = clamp opts.span ? 12, 1, 12
-    contents = toList _controls
+  span = clamp opts.span ? 12, 1, 12
+  contents = toList _controls
 
-    {
-      contents, templateOf
-      template: "panel-#{span}"
-    }
+  {
+    contents, templateOf
+    template: "panel-#{span}"
+  }
 
 Panel_ = (span) -> extend Panel, span: span
+
+Card = (_html, opts={}) ->
+  html = toAtom _html
+  title = toAtom opts.title ? ''
+  _hasTitle = from title, truthy
+  buttons = toList opts.buttons ? []
+  _hasButtons = from buttons, length
+  _hasMenu = no #TODO
+
+  {
+    _hasTitle, title, html, _hasButtons, buttons, _hasMenu
+    template: 'card'
+  }
 
 Html = (_html, opts={}) ->
   #TODO support bare: yes/no (use spans for bare)
@@ -321,6 +334,7 @@ Fluid = ->
     panel11: Panel_ 11
     panel12: Panel
     panel: Panel
+    card: Card
     html: Html
     markdown: Markdown
     button: Button
