@@ -224,10 +224,9 @@ from = (sources..., f) ->
 #
 # Component hierarchy:
 #   App
-#     Sections (Menu + Pages)
-#       Pages (Nav + Content)
-#         Layout
-#           Panel
+#     Pages (Nav + Content)
+#       Layout
+#         Panel
 #
 #
 
@@ -373,16 +372,17 @@ Header = (_text, opts={}) ->
     links, _hasLinks
   }
 
+local_activatePage = do event
+
 Page = (_label='Untitled', opts={}) ->
   id = guid()
+  active = atom opts.active ? no
   label = toAtom _label
   contents = toList opts.contents
-
-  _address = "##{id}"
-  _isActive = opts.active ? no
+  load = -> local_activatePage id
 
   {
-    id, _address, label, contents, _isActive, _templateOf
+    id, label, contents, load, active, _templateOf
     __fluid_list__: contents
   }
 
@@ -397,21 +397,17 @@ Footer = (_text, opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
-Section = (_label='Untitled', opts={}) ->
-  label = toAtom _label
-  pages = toList opts.pages or [ page0 = Page null, active:yes ]
-  page = atom page0
-
-  load = -> console.log 'load ' + label()
-
-  { label, pages, page, load }
-
 Application = (version) ->
   title = atom ''
 
-  section0 = Section()
-  sections = list [ section0 ]
-  section = atom section0
+  page0 = Page null, active: yes
+  pages = list [ page0 ]
+  page = atom page0
+
+  bind local_activatePage, (id) ->
+    for p in pages()
+      p.active p.id is id
+    return
 
   header = Header version, #FIXME version
     links: [
@@ -426,8 +422,8 @@ Application = (version) ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, section, sections, footer, _templateOf
-    __fluid_list__: sections
+    title, header, page, pages, footer, _templateOf
+    __fluid_list__: pages
   }
 
 Fluid = ->

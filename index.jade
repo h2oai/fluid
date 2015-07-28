@@ -51,31 +51,21 @@ html(lang='en')
           // ko if:_hasLinks
           nav.mdl-navigation.mdl-layout--large-screen-only
             // ko foreach:links
-            a.mdl-navigation__link(data-bind="attr:{ 'href':address }, text:label" target='_blank')
+            a.mdl-navigation__link(data-bind="attr:{ href:address }, text:label" target='_blank')
             // /ko
           // /ko
-          // /ko
-
-        .mdl-layout__tab-bar.mdl-js-ripple-effect
-          // ko with:section
-          // ko foreach:pages
-          a.mdl-layout__tab(data-bind="attr:{ href:_address }, css:{ 'is-active':_isActive }, text:label")
-          // /ko 
           // /ko
 
       .mdl-layout__drawer
         span.mdl-layout-title Title
         nav.mdl-navigation
-          // ko foreach:sections
+          // ko foreach:pages
           a.mdl-navigation__link(data-bind='text:label, click:load')
           // /ko
 
       main.mdl-layout__content.mdl-color--grey-100
-        // ko foreach:sections
         // ko foreach:pages
-        section(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }").mdl-layout__tab-panel
-          .page-content(data-bind="template:{ name:_templateOf, foreach:contents }")
-        // /ko
+        .page-content(data-bind="template:{ name:_templateOf, foreach:contents }, visible:active")
         // /ko
 
       // ko with:footer
@@ -86,7 +76,7 @@ html(lang='en')
           ul.mdl-mini-footer--link-list
             // ko foreach:links
             li
-              a(data-bind="attr:{ 'href':address }, text:label", target='_blank')
+              a(data-bind="attr:{ href:address }, text:label", target='_blank')
             // /ko
           // /ko
       // /ko
