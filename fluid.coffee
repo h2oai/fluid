@@ -372,14 +372,12 @@ Header = (_text, opts={}) ->
     links, _hasLinks
   }
 
-local_activatePage = do event
-
 Page = (_label='Untitled', opts={}) ->
   id = guid()
   active = atom opts.active ? no
   label = toAtom _label
   contents = toList opts.contents
-  load = -> local_activatePage id
+  load = -> fluid.context.activatePage id
 
   {
     id, label, contents, load, active, _templateOf
@@ -397,10 +395,12 @@ Footer = (_text, opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
-local_showDrawer = do event
-local_hideDrawer = do event
+Context = ->
+  activatePage: do event
+  showDrawer: do event
+  hideDrawer: do event
 
-Application = (version) ->
+Application = ->
   title = atom ''
   loaded = do event
 
@@ -408,7 +408,7 @@ Application = (version) ->
   pages = list [ page0 ]
   page = atom page0
 
-  bind local_activatePage, (id) ->
+  bind fluid.context.activatePage, (id) ->
     target = null
     for p in pages()
       if p.id is id
@@ -417,15 +417,15 @@ Application = (version) ->
       else
         p.active no
     page target 
-    local_hideDrawer()
+    fluid.context.hideDrawer()
     return
 
-  header = Header version, #FIXME version
+  header = Header fluid.version, #FIXME version
     links: [
       Link 'Help', address: 'http://example.com/help'
     ]
 
-  footer = Footer version, #FIXME version
+  footer = Footer fluid.version, #FIXME version
     links: [
       Link 'Source', address: 'https://github.com/h2oai/fluid'
       Link 'H2O.ai', address: 'http://h2o.ai/'
@@ -470,18 +470,25 @@ ko.bindingHandlers.mdlu =
 
 preload = ->
   $drawer = $ '#fluid-drawer'
-  bind local_showDrawer, -> $drawer.addClass 'is-visible'
-  bind local_hideDrawer, -> $drawer.removeClass 'is-visible'
+  bind fluid.context.showDrawer, -> $drawer.addClass 'is-visible'
+  bind fluid.context.hideDrawer, -> $drawer.removeClass 'is-visible'
 
 start = (init) ->
-  app = Application 'Fluid 0.0.1'
-  init app
+  fluid.context = context = do Context
+  fluid.app = app = do Application
+  init context, app
   ko.applyBindings app
   preload()
   app.loaded()
 
 window.fluid = fluid = {
-  start 
+  version: 'Fluid 0.0.1'
+
+  # Available after app start (mutable, for testability)
+  app: null
+  context: null
+
+  start
 
   add, remove, clear
   event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from
@@ -512,4 +519,9 @@ window.fluid = fluid = {
   button: Button
   link: Link
   textfield: Textfield
+
+  # Exported for testability
+  createApplication: Application
+  createContext: Context
+
 }
