@@ -19,8 +19,8 @@ add = (container, elements...) ->
   if container
     if (isList container) or (_.isArray container)
       container.push elements...
-    else if container.__fluid_list__
-      add container.__fluid_list__, elements...
+    else if (isComponent container) and container.items
+      add container.items, elements...
     else if isAtom container
       add container(), elements...
     else
@@ -41,8 +41,8 @@ remove = (container, elements...) ->
     else if _.isArray container
       for element in elements
         _remove container, element
-    else if container.__fluid_list__
-      remove container.__fluid_list__, elements...
+    else if (isComponent container) and container.items
+      remove container.items, elements...
     else if isAtom container
       remove container(), elements...
     else
@@ -61,8 +61,8 @@ clear = (container) ->
       result = container[0...]
       container.length = 0
       result
-    else if container.__fluid_list__
-      clear container.__fluid_list__
+    else if (isComponent container) and container.items
+      clear container.items
     else if isAtom container
       clear container()
     else
@@ -313,7 +313,6 @@ Page = Container (opts) ->
 
   {
     id, label, items, load, isActive, _templateOf
-    __fluid_list__: items
   }
 
 Grid = Container (opts) ->
@@ -321,7 +320,6 @@ Grid = Container (opts) ->
 
   {
     items, _templateOf
-    __fluid_list__: items
     _template: 'grid'
   }
 
@@ -331,7 +329,6 @@ Cell = (span) ->
 
     {
       items, _templateOf
-      __fluid_list__: items
       _template: "cell-#{span}"
     }
 
@@ -345,7 +342,6 @@ Card = Container (opts) ->
 
   {
     _hasTitle, title, items, _hasButtons, buttons, menu, _templateOf
-    __fluid_list__: items
     _template: 'card'
   }
 
@@ -407,7 +403,6 @@ Menu = Container (opts) ->
   #TODO support opt.icon
   {
     id, items
-    __fluid_list__: items
     _template: 'none'
   }
 
@@ -480,7 +475,7 @@ Application = ->
   loaded = do event
 
   page0 = Page isActive: yes
-  pages = list [ page0 ]
+  pages = items = list [ page0 ]
   page = atom page0
 
   bind fluid.context.activatePage, (id) ->
@@ -510,9 +505,8 @@ Application = ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, page, pages, footer, _templateOf
+    title, header, items, page, pages, footer, _templateOf
     loaded
-    __fluid_list__: pages
   }
 
 #
