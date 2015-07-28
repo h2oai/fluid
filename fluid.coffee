@@ -405,8 +405,14 @@ Application = (version) ->
   page = atom page0
 
   bind local_activatePage, (id) ->
+    target = null
     for p in pages()
-      p.active p.id is id
+      if p.id is id
+        p.active yes
+        target = p
+      else
+        p.active no
+    page target 
     return
 
   header = Header version, #FIXME version
