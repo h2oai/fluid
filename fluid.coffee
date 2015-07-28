@@ -162,8 +162,8 @@ _bind = (source, f) ->
         _bind source.fire, f
       else if source.value
         _bind source.value, f
-      else if source.values
-        _bind source.values, f
+      else if source.items
+        _bind source.items, f
       else
         console.warn 'bind: source cannot be bound.'
     else
@@ -186,8 +186,8 @@ _resolve = (source) ->
     else if isComponent source
       if source.value
         source.value()
-      else if source.values
-        source.values()
+      else if source.items
+        source.items()
       else
         console.warn 'cannot resolve source'
     else
@@ -237,6 +237,53 @@ from = (sources..., f) ->
     _bind source, -> target evaluate()
   target
 
+_get = (source) ->
+  if source
+    if isComponent source
+      if source.value
+        _get source.value
+      else if source.items
+        _get source.items
+      else
+        undefined
+    else if isObservable source
+      _get source() # recurse to get at nested nodes
+    else
+      source
+  else
+    source
+
+_set = (source, value) ->
+  if source
+    if isComponent source
+      if source.value
+        _set source.value, value
+      else if source.items
+        _set source.items, value
+      else
+        undefined
+    else if isObservable source
+      source value
+    else
+      undefined
+  else
+    undefined
+
+__fire = (source, args) ->
+  if source
+    if isComponent source
+      if source.fire
+        _fire source.fire, args
+      else
+        undefined
+    else if isEvent source
+      source args...
+    else
+      undefined
+  else
+    undefined
+
+_fire = (source, args...) -> __fire source, args
 
 #
 # Controls
@@ -244,12 +291,6 @@ from = (sources..., f) ->
 
 _untitledCounter = 0
 untitled = -> "Untitled#{++_untitledCounter}"
-
-_get = (source) -> #TODO read from default node
-
-_set = (source) -> #TODO write to default node
-
-_fire = (source) -> #TODO fire default action
 
 extend = (f, opts) ->
   if _.isFunction f
@@ -569,7 +610,9 @@ window.fluid = fluid = {
 
   start
 
+  get: _get, set: _set, fire: _fire
   add, remove, clear
+
   event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from
   extend
 
