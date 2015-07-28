@@ -157,8 +157,15 @@ _bind = (source, f) ->
         source.subscribe f
       else
         console.warn 'bind: target cannot be bound.'
-    else if source.__fluid_node__
-      _bind source.__fluid_node__, f
+    else if isComponent source
+      if source.fire
+        _bind source.fire, f
+      else if source.value
+        _bind source.value, f
+      else if source.values
+        _bind source.values, f
+      else
+        console.warn 'bind: source cannot be bound.'
     else
       console.warn 'bind: source cannot be bound.'
   else
@@ -176,8 +183,13 @@ _resolve = (source) ->
   if source
     if _.isFunction source
       source()
-    else if isObservable source.__fluid_node__
-      source.__fluid_node__()
+    else if isComponent source
+      if source.value
+        source.value()
+      else if source.values
+        source.values()
+      else
+        console.warn 'cannot resolve source'
     else
       console.warn 'cannot resolve source'
       undefined
@@ -198,8 +210,8 @@ eventAt0 = (sources) ->
     source0 = sources[0]
     if isEvent source0
       source0
-    else if isEvent source0.__fluid_node__
-      source0.__fluid_node__
+    else if (isComponent source0) and isEvent source0.fire
+      source0.fire
     else
       undefined
   else
@@ -233,11 +245,11 @@ from = (sources..., f) ->
 _untitledCounter = 0
 untitled = -> "Untitled#{++_untitledCounter}"
 
-get = (source) -> #TODO read from default node
+_get = (source) -> #TODO read from default node
 
-set = (source) -> #TODO write to default node
+_set = (source) -> #TODO write to default node
 
-fire = (source) -> #TODO fire default action
+_fire = (source) -> #TODO fire default action
 
 extend = (f, opts) ->
   if _.isFunction f
@@ -417,20 +429,19 @@ Menu = Container (opts) ->
 Command = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  clicked = toEvent opts.clicked
+  clicked = fire = toEvent opts.clicked
 
   dispose = -> free clicked
 
   {
-    label, value, clicked, disabled, dispose
-    __fluid_node__: clicked
+    label, value, fire, clicked, disabled, dispose
     _template: 'command'
   }
 
 Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  clicked = toEvent opts.clicked
+  clicked = fire = toEvent opts.clicked
 
   _primary = opts.color is 'primary'
   _accent = opts.color is 'accent'
@@ -439,9 +450,8 @@ Button = Component (opts) ->
 
   {
     #TODO id
-    label, value, clicked, disabled, dispose
+    label, value, fire, clicked, disabled, dispose
     _primary, _accent
-    __fluid_node__: clicked
     _template: 'button'
   }
 
@@ -461,7 +471,6 @@ Textfield = Component (opts) ->
   label = toAtom opts.label ? ''
   {
     id, label, value
-    __fluid_node__: value
     _template: 'textfield'
   }
 
