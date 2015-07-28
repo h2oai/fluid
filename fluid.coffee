@@ -142,6 +142,14 @@ toList = (a) ->
   else
     list()
 
+toEvent = (f) ->
+  if isEvent f
+    f
+  else
+    e = do event
+    bind e, f if _.isFunction f
+    e
+
 _bind = (source, f) ->
   if source
     if isNode source
@@ -409,11 +417,7 @@ Menu = Container (opts) ->
 Command = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  if isEvent opts.clicked
-    clicked = opts.clicked
-  else
-    clicked = do event
-    bind clicked, opts.clicked if _.isFunction opts.clicked
+  clicked = toEvent opts.clicked
 
   dispose = -> free clicked
 
@@ -426,11 +430,7 @@ Command = Component (opts) ->
 Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  if isEvent opts.clicked
-    clicked = opts.clicked
-  else
-    clicked = do event
-    bind clicked, opts.clicked if _.isFunction opts.clicked
+  clicked = toEvent opts.clicked
 
   _primary = opts.color is 'primary'
   _accent = opts.color is 'accent'
