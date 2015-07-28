@@ -65,7 +65,7 @@ html(lang='en')
 
       main.mdl-layout__content.mdl-color--grey-100
         // ko foreach:pages
-        .page-content(data-bind="template:{ name:_templateOf, foreach:contents }, visible:active")
+        .page-content(data-bind="template:{ name:_templateOf, foreach:contents }, visible:isActive")
         // /ko
 
       // ko with:footer

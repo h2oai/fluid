@@ -221,24 +221,18 @@ from = (sources..., f) ->
 # Controls
 #
 
-#
-# Component hierarchy:
-#   App
-#     Pages (Nav + Content)
-#       Grid
-#         Cell
-#
-#
+_untitledCounter = 0
+untitled = -> "Untitled#{++_untitledCounter}"
 
 extend = (f, opts) ->
   if _.isFunction f
-    (arg, opts2) ->
-      f arg, if opts2 then _.extend {}, opts, opts2 else opts
+    (opts2) ->
+      f if opts2 then _.extend {}, opts, opts2 else opts
   else
     console.warn 'extend: argument 1 is not a function'
     noop
 
-Header = (_text, opts={}) ->
+Header = (opts={}) ->
   links = toList opts.links
   _hasLinks = from links, length
 
@@ -246,8 +240,8 @@ Header = (_text, opts={}) ->
     links, _hasLinks
   }
 
-Footer = (_text, opts={}) ->
-  text = toAtom _text
+Footer = (opts={}) ->
+  text = toAtom opts.text or untitled()
   links = toList opts.links
   visible = toAtom opts.visible ? yes
   _hasText = from text, truthy
@@ -257,20 +251,20 @@ Footer = (_text, opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
-Page = (_label='Untitled', opts={}) ->
+Page = (opts={}) ->
   id = guid()
-  active = atom opts.active ? no
-  label = toAtom _label
+  isActive = atom opts.isActive ? no
+  label = toAtom opts.label or untitled()
   contents = toList opts.contents
   load = -> fluid.context.activatePage id
 
   {
-    id, label, contents, load, active, _templateOf
+    id, label, contents, load, isActive, _templateOf
     __fluid_list__: contents
   }
 
-Grid = (_contents, opts={}) ->
-  contents = toList _contents
+Grid = (opts={}) ->
+  contents = toList opts.contents
 
   {
     contents, _templateOf
@@ -278,9 +272,9 @@ Grid = (_contents, opts={}) ->
     _template: 'grid'
   }
 
-Cell = (_contents, opts={}) ->
+Cell = (opts={}) ->
   span = clamp opts.span ? 12, 1, 12
-  contents = toList _contents
+  contents = toList opts.contents
 
   {
     contents, _templateOf
@@ -290,8 +284,8 @@ Cell = (_contents, opts={}) ->
 
 Cell_ = (span) -> extend Cell, span: span
 
-Card = (_contents, opts={}) ->
-  contents = toList if _.isString _contents then [ Text _contents ] else _contents
+Card = (opts={}) ->
+  contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
@@ -304,18 +298,18 @@ Card = (_contents, opts={}) ->
     _template: 'card'
   }
 
-Tab = (_label, opts={}) ->
+Tab = (opts={}) ->
   id = guid()
   address = "##{id}"
-  label = toAtom _label
+  label = toAtom opts.label or untitled()
   contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
   {
     id, address, label, contents, _templateOf
     _isActive: no
   }
 
-Tabs = (_tabs, opts={}) ->
-  tabs = toList _tabs
+Tabs = (opts={}) ->
+  tabs = toList opts.tabs
 
   # HACK
   for item, i in tabs()
@@ -348,9 +342,9 @@ Markdown = (_value, opts={}) ->
     _template: 'html'
   }
 
-Menu = (_commands, opts={}) ->
+Menu = (opts={}) ->
   id = opts.id ? guid()
-  commands = toList _commands
+  commands = toList opts.commands
   #TODO support opt.icon
   {
     id, commands
@@ -358,8 +352,8 @@ Menu = (_commands, opts={}) ->
     _template: 'none'
   }
 
-Command = (_label, opts={}) ->
-  label = toAtom _label
+Command = (opts={}) ->
+  label = toAtom opts.label or untitled()
   disabled = toAtom opts.disabled ? no
   if isEvent opts.clicked
     clicked = opts.clicked
@@ -375,8 +369,8 @@ Command = (_label, opts={}) ->
     _template: 'command'
   }
 
-Button = (_label, opts={}) ->
-  label = toAtom _label
+Button = (opts={}) ->
+  label = toAtom opts.label or untitled()
   disabled = toAtom opts.disabled ? no
   if isEvent opts.clicked
     clicked = opts.clicked
@@ -397,8 +391,8 @@ Button = (_label, opts={}) ->
     _template: 'button'
   }
 
-Link = (_label, opts={}) ->
-  label = toAtom _label
+Link = (opts={}) ->
+  label = toAtom opts.label or untitled()
   address = toAtom opts.address or '#'
   {
     #TODO id
@@ -407,9 +401,9 @@ Link = (_label, opts={}) ->
     _template: 'link'
   }
 
-Textfield = (_value, opts={}) ->
+Textfield = (opts={}) ->
   id = guid()
-  value = toAtom _value
+  value = toAtom opts.value or ''
   label = toAtom opts.label ? ''
   {
     id, label, value
@@ -426,7 +420,7 @@ Application = ->
   title = atom ''
   loaded = do event
 
-  page0 = Page null, active: yes
+  page0 = Page isActive: yes
   pages = list [ page0 ]
   page = atom page0
 
@@ -434,20 +428,21 @@ Application = ->
     target = null
     for p in pages()
       if p.id is id
-        p.active yes
+        p.isActive yes
         target = p
       else
-        p.active no
+        p.isActive no
     page target 
     fluid.context.hideDrawer()
     return
 
-  header = Header fluid.version, #FIXME version
+  header = Header
     links: [
       Link 'Help', address: 'http://example.com/help'
     ]
 
-  footer = Footer fluid.version, #FIXME version
+  footer = Footer
+    text: fluid.version
     links: [
       Link 'Source', address: 'https://github.com/h2oai/fluid'
       Link 'H2O.ai', address: 'http://h2o.ai/'
