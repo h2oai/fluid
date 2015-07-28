@@ -399,6 +399,7 @@ Footer = (_text, opts={}) ->
 
 Application = (version) ->
   title = atom ''
+  loaded = do event
 
   page0 = Page null, active: yes
   pages = list [ page0 ]
@@ -425,63 +426,13 @@ Application = (version) ->
       Link 'Source', address: 'https://github.com/h2oai/fluid'
       Link 'H2O.ai', address: 'http://h2o.ai/'
     ]
+
   bind title, (title) -> document.title = title
 
   {
     title, header, page, pages, footer, _templateOf
+    loaded
     __fluid_list__: pages
-  }
-
-Fluid = ->
-  app = Application 'Fluid 0.0.1'
-  loaded = do event
-
-  _init = null
-  init = ->
-    if _.isFunction _init
-      _init()
-    else
-      console.warn 'nothing to initialize.'
-    app
-
-  load = (f) -> _init = f
-
-
-  {
-    app, load, loaded, init
-
-    add, remove, clear
-
-    # dataflow primitives
-    event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from
-
-    extend
-
-    # components
-    page: Page
-    layout: Layout
-    panel1: Panel_ 1
-    panel2: Panel_ 2
-    panel3: Panel_ 3
-    panel4: Panel_ 4
-    panel5: Panel_ 5
-    panel6: Panel_ 6
-    panel7: Panel_ 7
-    panel8: Panel_ 8
-    panel9: Panel_ 9
-    panel10: Panel_ 10
-    panel11: Panel_ 11
-    panel12: Panel
-    panel: Panel
-    card: Card
-    text: Text
-    markup: Markup
-    markdown: Markdown
-    menu: Menu
-    command: Command
-    button: Button
-    link: Link
-    textfield: Textfield
   }
 
 #
@@ -513,13 +464,42 @@ ko.bindingHandlers.mdlu =
       componentHandler.downgradeElements element
     return
 
-window.fluid = fluid = Fluid()
+start = (init) ->
+  app = Application 'Fluid 0.0.1'
+  init app
+  ko.applyBindings app
+  app.loaded()
 
-main = ->
-  ko.applyBindings fluid.init()
-  fluid.loaded()
+window.fluid = fluid = {
+  start 
 
-if document.readyState isnt 'loading'
-  main()
-else
-  document.addEventListener 'DOMContentLoaded', main
+  add, remove, clear
+  event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from
+  extend
+
+  # components
+  page: Page
+  layout: Layout
+  panel1: Panel_ 1
+  panel2: Panel_ 2
+  panel3: Panel_ 3
+  panel4: Panel_ 4
+  panel5: Panel_ 5
+  panel6: Panel_ 6
+  panel7: Panel_ 7
+  panel8: Panel_ 8
+  panel9: Panel_ 9
+  panel10: Panel_ 10
+  panel11: Panel_ 11
+  panel12: Panel
+  panel: Panel
+  card: Card
+  text: Text
+  markup: Markup
+  markdown: Markdown
+  menu: Menu
+  command: Command
+  button: Button
+  link: Link
+  textfield: Textfield
+}
