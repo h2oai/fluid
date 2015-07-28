@@ -3,7 +3,7 @@
   .mdl-card__title
     h2.mdl-card__title-text(data-bind='text:title')
   // /ko
-  .mdl-card__supporting-text(data-bind="template:{ name:templateOf, foreach:contents }")
+  .mdl-card__supporting-text(data-bind="template:{ name:_templateOf, foreach:contents }")
   // ko if:_hasButtons
   .mdl-card__actions.mdl-card--border
     // ko foreach:buttons

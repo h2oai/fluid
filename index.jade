@@ -74,7 +74,7 @@ html(lang='en')
         // ko foreach:sections
         // ko foreach:pages
         section(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }").mdl-layout__tab-panel
-          .page-content(data-bind="template:{ name:templateOf, foreach:contents }")
+          .page-content(data-bind="template:{ name:_templateOf, foreach:contents }")
         // /ko
         // /ko
 

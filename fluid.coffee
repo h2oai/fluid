@@ -3,7 +3,7 @@ truthy = (a) -> if a then yes else no
 falsy = (a) -> if a then no else yes
 always = -> yes
 never = -> no
-templateOf = (component) -> "#{component.template}-template"
+_templateOf = (component) -> "#{component._template}-template"
 guid = -> _.uniqueId 'fluid-'
 free = (entity) -> if entity and _.isFunction entity.dispose then entity.dispose()
 
@@ -243,9 +243,9 @@ Layout = (_contents, opts={}) ->
   contents = toList _contents
 
   {
-    contents, templateOf
+    contents, _templateOf
     __fluid_list__: contents
-    template: 'layout'
+    _template: 'layout'
   }
 
 Panel = (_contents, opts={}) ->
@@ -253,9 +253,9 @@ Panel = (_contents, opts={}) ->
   contents = toList _contents
 
   {
-    contents, templateOf
+    contents, _templateOf
     __fluid_list__: contents
-    template: "panel-#{span}"
+    _template: "panel-#{span}"
   }
 
 Panel_ = (span) -> extend Panel, span: span
@@ -269,9 +269,9 @@ Card = (_contents, opts={}) ->
   menu = toAtom opts.menu
 
   {
-    _hasTitle, title, contents, _hasButtons, buttons, menu, templateOf
+    _hasTitle, title, contents, _hasButtons, buttons, menu, _templateOf
     __fluid_list__: contents
-    template: 'card'
+    _template: 'card'
   }
 
 Markup = (_html, opts={}) ->
@@ -280,7 +280,7 @@ Markup = (_html, opts={}) ->
   html = toAtom _html
   {
     id, html
-    template: 'html'
+    _template: 'html'
   }
 
 Text = (_text, opts={}) ->
@@ -293,7 +293,7 @@ Markdown = (_value, opts={}) ->
   html = from value, window.marked
   {
     id, value, html
-    template: 'html'
+    _template: 'html'
   }
 
 Menu = (_commands, opts={}) ->
@@ -303,7 +303,7 @@ Menu = (_commands, opts={}) ->
   {
     id, commands
     __fluid_list__: commands
-    template: 'none'
+    _template: 'none'
   }
 
 Command = (_label, opts={}) ->
@@ -320,7 +320,7 @@ Command = (_label, opts={}) ->
   {
     label, clicked, disabled, dispose
     __fluid_node__: clicked
-    template: 'command'
+    _template: 'command'
   }
 
 Button = (_label, opts={}) ->
@@ -342,7 +342,7 @@ Button = (_label, opts={}) ->
     label, clicked, disabled, dispose
     _primary, _accent
     __fluid_node__: clicked
-    template: 'button'
+    _template: 'button'
   }
 
 Link = (_label, opts={}) ->
@@ -352,7 +352,7 @@ Link = (_label, opts={}) ->
     #TODO id
     label, address
     _class: ''
-    template: 'link'
+    _template: 'link'
   }
 
 Textfield = (_value, opts={}) ->
@@ -362,7 +362,7 @@ Textfield = (_value, opts={}) ->
   {
     id, label, value
     __fluid_node__: value
-    template: 'textfield'
+    _template: 'textfield'
   }
 
 Header = (_text, opts={}) ->
@@ -382,7 +382,7 @@ Page = (_label='Untitled', opts={}) ->
   _isActive = opts.active ? no
 
   {
-    id, _address, label, contents, _isActive, templateOf
+    id, _address, label, contents, _isActive, _templateOf
     __fluid_list__: contents
   }
 
@@ -413,12 +413,12 @@ Application = (version) ->
   sections = list [ section0 ]
   section = atom section0
 
-  header = Header version,
+  header = Header version, #FIXME version
     links: [
       Link 'Help', address: 'http://example.com/help'
     ]
 
-  footer = Footer version,
+  footer = Footer version, #FIXME version
     links: [
       Link 'Source', address: 'https://github.com/h2oai/fluid'
       Link 'H2O.ai', address: 'http://h2o.ai/'
@@ -426,17 +426,27 @@ Application = (version) ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, section, sections, footer, templateOf
+    title, header, section, sections, footer, _templateOf
     __fluid_list__: sections
   }
 
 Fluid = ->
   app = Application 'Fluid 0.0.1'
   loaded = do event
-  create = (f) -> bind loaded, f
+
+  _init = null
+  init = ->
+    if _.isFunction _init
+      _init()
+    else
+      console.warn 'nothing to initialize.'
+    app
+
+  load = (f) -> _init = f
+
 
   {
-    app, loaded, create
+    app, load, loaded, init
 
     add, remove, clear
 
@@ -504,8 +514,8 @@ ko.bindingHandlers.mdlu =
 window.fluid = fluid = Fluid()
 
 main = ->
+  ko.applyBindings fluid.init()
   fluid.loaded()
-  ko.applyBindings fluid.app
 
 if document.readyState isnt 'loading'
   main()
