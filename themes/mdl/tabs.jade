@@ -1,8 +1,8 @@
 .mdl-tabs.mdl-js-tabs.mdl-js-ripple-effect
   .mdl-tabs__tab-bar
-    // ko foreach:tabs
+    // ko foreach:items
     a.mdl-tabs__tab(data-bind="attr:{ href:address }, css:{ 'is-active':_isActive }, text:label")
     // /ko
-  // ko foreach:tabs
-  .mdl-tabs__panel(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }, template:{ name:_templateOf, foreach:contents }")
+  // ko foreach:items
+  .mdl-tabs__panel(data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }, template:{ name:_templateOf, foreach:items }")
   // /ko

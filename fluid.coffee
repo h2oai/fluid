@@ -217,6 +217,7 @@ from = (sources..., f) ->
     _bind source, -> target evaluate()
   target
 
+
 #
 # Controls
 #
@@ -224,15 +225,67 @@ from = (sources..., f) ->
 _untitledCounter = 0
 untitled = -> "Untitled#{++_untitledCounter}"
 
+get = (source) -> #TODO read from default node
+
+set = (source) -> #TODO write to default node
+
+fire = (source) -> #TODO fire default action
+
 extend = (f, opts) ->
   if _.isFunction f
-    (opts2) ->
-      f if opts2 then _.extend {}, opts, opts2 else opts
+    (args...) ->
+      f args.concat(opts)...
   else
     console.warn 'extend: argument 1 is not a function'
     noop
 
-Header = (opts={}) ->
+isComponent = (a) -> if a?.__fluid_component__ then yes else no
+
+Component = (f) ->
+  (args...) ->
+    opts = {}
+    for arg in args
+      if isComponent arg
+        opts.value = arg
+      else if isObservable arg
+        opts.value = arg
+      else if _.isArray arg
+        # noop
+      else if _.isString arg
+        opts.value = arg
+      else if _.isObject arg
+        for key, value of arg
+          opts[key] = value
+      else
+        opts.value = arg
+
+    self = f opts
+    self.__fluid_component__ = yes
+    self
+
+Container = (f) ->
+  (args...) ->
+    items = []
+    opts = { items }
+    for arg in args
+      if isComponent arg
+        items.push arg
+      else if _.isArray arg
+        for value in arg
+          items.push value
+      else if _.isString arg
+        items.push Text arg
+      else if _.isObject arg
+        for key, value of arg when key isnt 'items'
+          opts[key] = value
+      else
+        items.push String arg
+
+    self = f opts
+    self.__fluid_component__ = yes
+    self
+
+Header = Component (opts) ->
   links = toList opts.links
   _hasLinks = from links, length
 
@@ -240,7 +293,7 @@ Header = (opts={}) ->
     links, _hasLinks
   }
 
-Footer = (opts={}) ->
+Footer = Component (opts) ->
   text = toAtom opts.text or untitled()
   links = toList opts.links
   visible = toAtom opts.visible ? yes
@@ -251,39 +304,39 @@ Footer = (opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
-Page = (opts={}) ->
+Page = Container (opts) ->
   id = guid()
   isActive = atom opts.isActive ? no
   label = toAtom opts.label or untitled()
-  contents = toList opts.contents
+  items = toList opts.items
   load = -> fluid.context.activatePage id
 
   {
-    id, label, contents, load, isActive, _templateOf
-    __fluid_list__: contents
+    id, label, items, load, isActive, _templateOf
+    __fluid_list__: items
   }
 
-Grid = (_contents...) ->
-  contents = toList if _.isArray _contents[0] then _contents[0] else _contents
+Grid = Container (opts) ->
+  items = toList opts.items
 
   {
-    contents, _templateOf
-    __fluid_list__: contents
+    items, _templateOf
+    __fluid_list__: items
     _template: 'grid'
   }
 
 Cell = (span) -> 
-  (_contents...) ->
-    contents = toList if _.isArray _contents[0] then _contents[0] else _contents
+  Container (opts) ->
+    items = toList opts.items
 
     {
-      contents, _templateOf
-      __fluid_list__: contents
+      items, _templateOf
+      __fluid_list__: items
       _template: "cell-#{span}"
     }
 
-Card = (opts={}) ->
-  contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
+Card = Container (opts) ->
+  items = toList opts.items
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
@@ -291,67 +344,75 @@ Card = (opts={}) ->
   menu = toAtom opts.menu
 
   {
-    _hasTitle, title, contents, _hasButtons, buttons, menu, _templateOf
-    __fluid_list__: contents
+    _hasTitle, title, items, _hasButtons, buttons, menu, _templateOf
+    __fluid_list__: items
     _template: 'card'
   }
 
-Tab = (opts={}) ->
+Tab = Container (opts) ->
   id = guid()
   address = "##{id}"
   label = toAtom opts.label or untitled()
-  contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
+  items = toList opts.items
   {
-    id, address, label, contents, _templateOf
+    id, address, label, items, _templateOf
     _isActive: no
   }
 
-Tabs = (opts={}) ->
-  tabs = toList opts.tabs
+Tabs = Container (opts) ->
+  items = toList opts.items
 
   # HACK
-  for item, i in tabs()
+  for item, i in items()
     item._isActive = i is 0
 
   {
-    tabs
+    items
     _template: 'tabs'
   }
 
-Markup = (_html, opts={}) ->
+
+Markup = Component (opts) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
-  html = toAtom _html
+  value = html = toAtom opts.value
   {
-    id, html
+    id, value, html
     _template: 'html'
   }
 
-Text = (_text, opts={}) ->
-  Markup _.escape(_text), opts
-
-Markdown = (_value, opts={}) ->
+Text = Component (opts) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
-  value = toAtom _value
+  value = toAtom opts.value
+  html = from value, _.escape
+  {
+    id, value, html
+    _template: 'html'
+  }
+
+Markdown = Component (opts) ->
+  #TODO support bare: yes/no (use spans for bare)
+  id = opts.id ? guid()
+  value = toAtom opts.value
   html = from value, window.marked
   {
     id, value, html
     _template: 'html'
   }
 
-Menu = (opts={}) ->
+Menu = Container (opts) ->
   id = opts.id ? guid()
-  commands = toList opts.commands
+  items = toList opts.items
   #TODO support opt.icon
   {
-    id, commands
-    __fluid_list__: commands
+    id, items
+    __fluid_list__: items
     _template: 'none'
   }
 
-Command = (opts={}) ->
-  label = toAtom opts.label or untitled()
+Command = Component (opts) ->
+  label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
   if isEvent opts.clicked
     clicked = opts.clicked
@@ -362,13 +423,13 @@ Command = (opts={}) ->
   dispose = -> free clicked
 
   {
-    label, clicked, disabled, dispose
+    label, value, clicked, disabled, dispose
     __fluid_node__: clicked
     _template: 'command'
   }
 
-Button = (opts={}) ->
-  label = toAtom opts.label or untitled()
+Button = Component (opts) ->
+  label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
   if isEvent opts.clicked
     clicked = opts.clicked
@@ -383,23 +444,23 @@ Button = (opts={}) ->
 
   {
     #TODO id
-    label, clicked, disabled, dispose
+    label, value, clicked, disabled, dispose
     _primary, _accent
     __fluid_node__: clicked
     _template: 'button'
   }
 
-Link = (opts={}) ->
-  label = toAtom opts.label or untitled()
-  address = toAtom opts.address or '#'
+Link = Component (opts) ->
+  label = value = toAtom opts.value or untitled()
+  address = toAtom opts.address or 'http://example.com/'
   {
     #TODO id
-    label, address
+    label, value, address
     _class: ''
     _template: 'link'
   }
 
-Textfield = (opts={}) ->
+Textfield = Component (opts) ->
   id = guid()
   value = toAtom opts.value or ''
   label = toAtom opts.label ? ''
