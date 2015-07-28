@@ -225,8 +225,8 @@ from = (sources..., f) ->
 # Component hierarchy:
 #   App
 #     Pages (Nav + Content)
-#       Layout
-#         Panel
+#       Grid
+#         Cell
 #
 #
 
@@ -238,26 +238,26 @@ extend = (f, opts) ->
     console.warn 'extend: argument 1 is not a function'
     noop
 
-Layout = (_contents, opts={}) ->
+Grid = (_contents, opts={}) ->
   contents = toList _contents
 
   {
     contents, _templateOf
     __fluid_list__: contents
-    _template: 'layout'
+    _template: 'grid'
   }
 
-Panel = (_contents, opts={}) ->
+Cell = (_contents, opts={}) ->
   span = clamp opts.span ? 12, 1, 12
   contents = toList _contents
 
   {
     contents, _templateOf
     __fluid_list__: contents
-    _template: "panel-#{span}"
+    _template: "cell-#{span}"
   }
 
-Panel_ = (span) -> extend Panel, span: span
+Cell_ = (span) -> extend Cell, span: span
 
 Card = (_contents, opts={}) ->
   contents = toList if _.isString _contents then [ Text _contents ] else _contents
@@ -496,20 +496,20 @@ window.fluid = fluid = {
 
   # components
   page: Page
-  layout: Layout
-  panel1: Panel_ 1
-  panel2: Panel_ 2
-  panel3: Panel_ 3
-  panel4: Panel_ 4
-  panel5: Panel_ 5
-  panel6: Panel_ 6
-  panel7: Panel_ 7
-  panel8: Panel_ 8
-  panel9: Panel_ 9
-  panel10: Panel_ 10
-  panel11: Panel_ 11
-  panel12: Panel
-  panel: Panel
+  grid: Grid
+  cell1: Cell_ 1
+  cell2: Cell_ 2
+  cell3: Cell_ 3
+  cell4: Cell_ 4
+  cell5: Cell_ 5
+  cell6: Cell_ 6
+  cell7: Cell_ 7
+  cell8: Cell_ 8
+  cell9: Cell_ 9
+  cell10: Cell_ 10
+  cell11: Cell_ 11
+  cell12: Cell
+  cell: Cell
   card: Card
   text: Text
   markup: Markup
