@@ -42,10 +42,10 @@ html(lang='en')
           // Align navigation to the right
           .mdl-layout-spacer
           .mdl-textfield.mdl-js-textfield.mdl-textfield--expandable.mdl-textfield--floating-label.mdl-textfield--align-right
-            label.mdl-button.mdl-js-button.mdl-button--icon(for='fixed-header-drawer-exp')
+            label.mdl-button.mdl-js-button.mdl-button--icon(for='fluid-app-search-box')
               i.material-icons search
             .mdl-textfield__expandable-holder
-              input#fixed-header-drawer-exp.mdl-textfield__input(type='text', name='sample')
+              input#fluid-app-search-box.mdl-textfield__input(type='text', name='sample')
 
           // ko with:header
           // ko if:_hasLinks
@@ -90,6 +90,8 @@ html(lang='en')
     include themes/mdl/cell.jade
     script(type="text/html" id="card-template")
       include themes/mdl/card.jade
+    script(type="text/html" id="tabs-template")
+      include themes/mdl/tabs.jade
     script(type="text/html" id="button-template")
       include themes/mdl/button.jade
     script(type="text/html" id="textfield-template")

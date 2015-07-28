@@ -238,6 +238,37 @@ extend = (f, opts) ->
     console.warn 'extend: argument 1 is not a function'
     noop
 
+Header = (_text, opts={}) ->
+  links = toList opts.links
+  _hasLinks = from links, length
+
+  {
+    links, _hasLinks
+  }
+
+Footer = (_text, opts={}) ->
+  text = toAtom _text
+  links = toList opts.links
+  visible = toAtom opts.visible ? yes
+  _hasText = from text, truthy
+  _hasLinks = from links, length
+
+  {
+    text, links, visible, _hasText, _hasLinks
+  }
+
+Page = (_label='Untitled', opts={}) ->
+  id = guid()
+  active = atom opts.active ? no
+  label = toAtom _label
+  contents = toList opts.contents
+  load = -> fluid.context.activatePage id
+
+  {
+    id, label, contents, load, active, _templateOf
+    __fluid_list__: contents
+  }
+
 Grid = (_contents, opts={}) ->
   contents = toList _contents
 
@@ -271,6 +302,28 @@ Card = (_contents, opts={}) ->
     _hasTitle, title, contents, _hasButtons, buttons, menu, _templateOf
     __fluid_list__: contents
     _template: 'card'
+  }
+
+Tab = (_label, opts={}) ->
+  id = guid()
+  address = "##{id}"
+  label = toAtom _label
+  contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
+  {
+    id, address, label, contents, _templateOf
+    _isActive: no
+  }
+
+Tabs = (_tabs, opts={}) ->
+  tabs = toList _tabs
+
+  # HACK
+  for item, i in tabs()
+    item._isActive = i is 0
+
+  {
+    tabs
+    _template: 'tabs'
   }
 
 Markup = (_html, opts={}) ->
@@ -362,37 +415,6 @@ Textfield = (_value, opts={}) ->
     id, label, value
     __fluid_node__: value
     _template: 'textfield'
-  }
-
-Header = (_text, opts={}) ->
-  links = toList opts.links
-  _hasLinks = from links, length
-
-  {
-    links, _hasLinks
-  }
-
-Page = (_label='Untitled', opts={}) ->
-  id = guid()
-  active = atom opts.active ? no
-  label = toAtom _label
-  contents = toList opts.contents
-  load = -> fluid.context.activatePage id
-
-  {
-    id, label, contents, load, active, _templateOf
-    __fluid_list__: contents
-  }
-
-Footer = (_text, opts={}) ->
-  text = toAtom _text
-  links = toList opts.links
-  visible = toAtom opts.visible ? yes
-  _hasText = from text, truthy
-  _hasLinks = from links, length
-
-  {
-    text, links, visible, _hasText, _hasLinks
   }
 
 Context = ->
@@ -512,6 +534,8 @@ window.fluid = fluid = {
   cell: Cell
   card: Card
   text: Text
+  tab: Tab
+  tabs: Tabs
   markup: Markup
   markdown: Markdown
   menu: Menu
