@@ -263,8 +263,8 @@ Page = (opts={}) ->
     __fluid_list__: contents
   }
 
-Grid = (opts={}) ->
-  contents = toList opts.contents
+Grid = (_contents...) ->
+  contents = toList if _.isArray _contents[0] then _contents[0] else _contents
 
   {
     contents, _templateOf
@@ -272,17 +272,15 @@ Grid = (opts={}) ->
     _template: 'grid'
   }
 
-Cell = (opts={}) ->
-  span = clamp opts.span ? 12, 1, 12
-  contents = toList opts.contents
+Cell = (span) -> 
+  (_contents...) ->
+    contents = toList if _.isArray _contents[0] then _contents[0] else _contents
 
-  {
-    contents, _templateOf
-    __fluid_list__: contents
-    _template: "cell-#{span}"
-  }
-
-Cell_ = (span) -> extend Cell, span: span
+    {
+      contents, _templateOf
+      __fluid_list__: contents
+      _template: "cell-#{span}"
+    }
 
 Card = (opts={}) ->
   contents = toList if _.isString opts.contents then [ Text opts.contents ] else opts.contents
@@ -514,19 +512,19 @@ window.fluid = fluid = {
   # components
   page: Page
   grid: Grid
-  cell1: Cell_ 1
-  cell2: Cell_ 2
-  cell3: Cell_ 3
-  cell4: Cell_ 4
-  cell5: Cell_ 5
-  cell6: Cell_ 6
-  cell7: Cell_ 7
-  cell8: Cell_ 8
-  cell9: Cell_ 9
-  cell10: Cell_ 10
-  cell11: Cell_ 11
-  cell12: Cell
-  cell: Cell
+  cell1: Cell 1
+  cell2: Cell 2
+  cell3: Cell 3
+  cell4: Cell 4
+  cell5: Cell 5
+  cell6: Cell 6
+  cell7: Cell 7
+  cell8: Cell 8
+  cell9: Cell 9
+  cell10: Cell 10
+  cell11: Cell 11
+  cell12: Cell 12
+  cell: Cell 12
   card: Card
   text: Text
   tab: Tab
