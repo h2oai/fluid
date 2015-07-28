@@ -397,6 +397,9 @@ Footer = (_text, opts={}) ->
     text, links, visible, _hasText, _hasLinks
   }
 
+local_showDrawer = do event
+local_hideDrawer = do event
+
 Application = (version) ->
   title = atom ''
   loaded = do event
@@ -414,6 +417,7 @@ Application = (version) ->
       else
         p.active no
     page target 
+    local_hideDrawer()
     return
 
   header = Header version, #FIXME version
@@ -464,10 +468,16 @@ ko.bindingHandlers.mdlu =
       componentHandler.downgradeElements element
     return
 
+preload = ->
+  $drawer = $ '#fluid-drawer'
+  bind local_showDrawer, -> $drawer.addClass 'is-visible'
+  bind local_hideDrawer, -> $drawer.removeClass 'is-visible'
+
 start = (init) ->
   app = Application 'Fluid 0.0.1'
   init app
   ko.applyBindings app
+  preload()
   app.loaded()
 
 window.fluid = fluid = {
