@@ -433,10 +433,10 @@ Application = (version) ->
 Fluid = ->
   app = Application 'Fluid 0.0.1'
   loaded = do event
-  ready = (f) -> bind loaded, f
+  create = (f) -> bind loaded, f
 
   {
-    app, loaded, ready
+    app, loaded, create
 
     add, remove, clear
 
@@ -504,8 +504,8 @@ ko.bindingHandlers.mdlu =
 window.fluid = fluid = Fluid()
 
 main = ->
+  fluid.loaded()
   ko.applyBindings fluid.app
-  fluid.loaded fluid.app
 
 if document.readyState isnt 'loading'
   main()
