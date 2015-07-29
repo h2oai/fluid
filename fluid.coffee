@@ -559,6 +559,15 @@ Radio = Component (opts) ->
     _template: 'radio'
   }
 
+Slider = Component (opts) ->
+  value = toAtom opts.value ? 0
+  min = opts.min ? 0
+  max = opts.max ? 100
+
+  {
+    value, min, max
+    _template: 'slider'
+  }
 
 Context = ->
   activatePage: do event
@@ -690,6 +699,7 @@ window.fluid = fluid = {
   textfield: Textfield
   checkbox: Checkbox
   radio: Radio
+  slider: Slider
 
 
   # Exported for testability
