@@ -5,6 +5,14 @@ always = -> yes
 never = -> no
 _templateOf = (component) -> "#{component._template}-template"
 guid = -> _.uniqueId 'fluid-'
+hashcode = (obj) ->
+  if obj
+    if hash = obj.__fluid_hash__
+      hash
+    else
+      obj.__fluid_hash__ = guid()
+  else
+    guid()
 free = (entity) -> if entity and _.isFunction entity.dispose then entity.dispose()
 
 clamp = (value, min, max) ->
@@ -525,6 +533,24 @@ Checkbox = Component (opts) ->
     _template: 'checkbox'
   }
 
+Radio = Component (opts) ->
+  id = guid()
+  item = opts.item ? guid()
+  label = toAtom opts.label or untitled()
+  value = if isAtom opts.value
+    opts.value
+  else
+    console.warn 'radio: expected value to be atom'
+    atom item
+
+  group = hashcode value
+
+  {
+    id, group, item, value, label
+    _template: 'radio'
+  }
+
+
 Context = ->
   activatePage: do event
   showDrawer: do event
@@ -654,6 +680,7 @@ window.fluid = fluid = {
   link: Link
   textfield: Textfield
   checkbox: Checkbox
+  radio: Radio
 
   # Exported for testability
   createApplication: Application
