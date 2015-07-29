@@ -520,9 +520,10 @@ Textfield = Component (opts) ->
   label = toAtom opts.label ? ''
   error = toAtom opts.error ? 'Error'
   pattern = opts.pattern
-  _template = 'textfield' + if pattern then '-masked' else ''
+  icon = opts.icon
+  _template = 'textfield' + if pattern then '-masked' else if icon then '-expandable' else ''
   {
-    id, label, value, pattern, error
+    id, label, value, pattern, error, icon
     _template
   }
 
