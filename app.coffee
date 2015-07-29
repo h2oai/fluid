@@ -44,6 +44,18 @@ window.fluid.start (context, app) ->
     title 'Color Mini FAB (Disabled)'
     button size: 'small', type: 'floating', color: 'primary', disabled: yes
 
+    title 'Plain FAB with icon'
+    button type: 'floating', icon: 'camera'
+
+    title 'Color FAB with icon'
+    button type: 'floating', color: 'primary', icon: 'camera'
+
+    title 'Plain Mini FAB with icon'
+    button size: 'small', type: 'floating', icon: 'camera'
+
+    title 'Color Mini FAB with icon'
+    button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
+
     title 'Flat Button'
     button()
 
