@@ -508,11 +508,21 @@ Link = Component (opts) ->
 
 Textfield = Component (opts) ->
   id = guid()
-  value = toAtom opts.value or ''
+  value = toAtom opts.value ? ''
   label = toAtom opts.label ? ''
   {
     id, label, value
     _template: 'textfield'
+  }
+
+Checkbox = Component (opts) ->
+  id = guid()
+  checked = value = toAtom opts.value ? no
+  label = toAtom opts.label or untitled()
+
+  {
+    id, label, value, checked
+    _template: 'checkbox'
   }
 
 Context = ->
@@ -530,12 +540,12 @@ Application = ->
 
   bind fluid.context.activatePage, (id) ->
     target = null
-    for p in pages()
-      if p.id is id
-        p.isActive yes
-        target = p
+    for item in pages()
+      if item.id is id
+        item.isActive yes
+        target = item
       else
-        p.isActive no
+        item.isActive no
     page target 
     fluid.context.hideDrawer()
     return
@@ -643,6 +653,7 @@ window.fluid = fluid = {
   button: Button
   link: Link
   textfield: Textfield
+  checkbox: Checkbox
 
   # Exported for testability
   createApplication: Application
