@@ -527,10 +527,19 @@ Checkbox = Component (opts) ->
   id = guid()
   checked = value = toAtom opts.value ? no
   label = toAtom opts.label or untitled()
+  icon = opts.icon or null
+
+  _template = if icon
+    if icon is 'switch'
+      icon
+    else
+      'icon-toggle'
+  else
+    'checkbox'
 
   {
-    id, label, value, checked
-    _template: 'checkbox'
+    id, label, value, checked, icon
+    _template
   }
 
 Radio = Component (opts) ->
@@ -681,6 +690,7 @@ window.fluid = fluid = {
   textfield: Textfield
   checkbox: Checkbox
   radio: Radio
+
 
   # Exported for testability
   createApplication: Application
