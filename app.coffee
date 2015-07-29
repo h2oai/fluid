@@ -167,3 +167,11 @@ window.fluid.start (context, app) ->
     radio radioOptions, item: 'option4', label: 'Option 4'
   ]
 
+  addSection 'Sliders', [
+    title 'Slider'
+    slider()
+
+    title 'Slider (custom range)'
+    slider 150, min: 100, max: 200
+  ]
+
