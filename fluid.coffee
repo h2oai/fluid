@@ -347,7 +347,7 @@ Component = (f) ->
     self.__fluid_component__ = yes
     self
 
-Container = (f) ->
+Components = (f) ->
   (args...) ->
     items = []
     opts = { items }
@@ -388,7 +388,7 @@ Footer = Component (opts) ->
     text, links, visible, _hasText, _hasLinks
   }
 
-Page = Container (opts) ->
+Page = Components (opts) ->
   id = guid()
   isActive = atom opts.isActive ? no
   label = toAtom opts.label or untitled()
@@ -399,38 +399,20 @@ Page = Container (opts) ->
     id, label, items, load, isActive, _templateOf
   }
 
-Grid = Container (opts) ->
-  items = toList opts.items
-
-  {
-    items, _templateOf
-    _template: 'grid'
-  }
-
-Cell = (span) -> 
-  Container (opts) ->
+Container = (template) ->
+  Components (opts) ->
     items = toList opts.items
-
     {
       items, _templateOf
-      _template: "cell-#{span}"
+      _template: template
     }
 
-Div = Container (opts) ->
-  items = toList opts.items
-  {
-    items, _templateOf
-    _template: 'div'
-  }
+Grid = Container 'grid'
+Cell = (span) -> Container "cell-#{span}"
+Div = Container 'div'
+Span = Container 'span'
 
-Span = Container (opts) ->
-  items = toList opts.items
-  {
-    items, _templateOf
-    _template: 'span'
-  }
-
-Card = Container (opts) ->
+Card = Components (opts) ->
   items = toList opts.items
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
@@ -443,7 +425,7 @@ Card = Container (opts) ->
     _template: 'card'
   }
 
-Tab = Container (opts) ->
+Tab = Components (opts) ->
   id = guid()
   address = "##{id}"
   label = toAtom opts.label or untitled()
@@ -453,7 +435,7 @@ Tab = Container (opts) ->
     _isActive: no
   }
 
-Tabs = Container (opts) ->
+Tabs = Components (opts) ->
   items = toList opts.items
 
   # HACK
@@ -492,7 +474,7 @@ Markdown = Component (opts) ->
     _template: 'html'
   }
 
-Menu = Container (opts) ->
+Menu = Components (opts) ->
   id = opts.id ? guid()
   items = toList opts.items
   #TODO support opt.icon
