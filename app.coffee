@@ -165,38 +165,69 @@ window.fluid.start (context, app) ->
 
     title 'Radio (option4)'
     radio radioOptions, item: 'option4', label: 'Option 4'
+
   ]
 
   addSection 'Sliders', [
+
     title 'Slider'
     slider()
 
     title 'Slider (custom range)'
     slider 150, min: 100, max: 200
+
   ]
 
   addSection 'Textfields', [
+
     title 'Plain'
     textfield()
+
     title 'With Value'
     textfield 'Hello!'
+
     title 'With Value and Label'
     textfield 'Hello!', label: 'Greeting'
+
     title 'Validating'
     textfield '55555', label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+
     title 'Expandable'
     textfield icon:'search'
+
     title 'Expandable with Label'
     textfield icon:'search', label:'Cat pictures'
+
   ]
 
   addSection 'Textareas', [
+
     title 'Plain'
     textarea()
+
     title 'With Value'
     textarea 'Hello World!'
+
     title 'With Label'
     textarea label: 'Message'
+
     title 'With Rows'
     textarea 'Hello World!', rows: 5
+
+  ]
+
+  addSection 'Badges', [
+
+    title 'Default'
+    aBadge = badge()
+
+    title 'With Label'
+    badge label: 'Inbox'
+
+    title 'With Value'
+    badge 5, label: 'Inbox'
+
+    title 'With Icon'
+    badge 3, icon: 'account_box'
+
   ]
