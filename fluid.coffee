@@ -416,6 +416,13 @@ Cell = (span) ->
       _template: "cell-#{span}"
     }
 
+Div = Container (opts) ->
+  items = toList opts.items
+  {
+    items, _templateOf
+    _template: 'div'
+  }
+
 Card = Container (opts) ->
   items = toList opts.items
   title = toAtom opts.title ? ''
@@ -451,9 +458,7 @@ Tabs = Container (opts) ->
     _template: 'tabs'
   }
 
-
 Markup = Component (opts) ->
-  #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
   value = html = toAtom opts.value
   {
@@ -462,7 +467,6 @@ Markup = Component (opts) ->
   }
 
 Text = Component (opts) ->
-  #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
   value = toAtom opts.value
   html = from value, _.escape
@@ -747,6 +751,7 @@ window.fluid = fluid = {
   cell11: Cell 11
   cell12: Cell 12
   cell: Cell 12
+  div: Div
   card: Card
   text: Text
   tab: Tab
