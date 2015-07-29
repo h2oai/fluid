@@ -300,6 +300,21 @@ _fire = (source, args...) -> __fire source, args
 _untitledCounter = 0
 untitled = -> "Untitled#{++_untitledCounter}"
 
+show = (source) ->
+  if (isComponent source) and source.visible
+    source.visible yes
+  else
+    console.warn 'show: source is not a component'
+  return
+
+hide = (source) ->
+  if (isComponent source) and source.visible
+    source.visible no
+  else
+    console.warn 'hide: source is not a component'
+  return
+
+
 extend = (f, opts) ->
   if _.isFunction f
     (args...) ->
