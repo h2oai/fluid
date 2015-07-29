@@ -423,6 +423,13 @@ Div = Container (opts) ->
     _template: 'div'
   }
 
+Span = Container (opts) ->
+  items = toList opts.items
+  {
+    items, _templateOf
+    _template: 'span'
+  }
+
 Card = Container (opts) ->
   items = toList opts.items
   title = toAtom opts.title ? ''
@@ -752,6 +759,7 @@ window.fluid = fluid = {
   cell12: Cell 12
   cell: Cell 12
   div: Div
+  span: Span
   card: Card
   text: Text
   tab: Tab
