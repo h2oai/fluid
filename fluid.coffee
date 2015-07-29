@@ -455,6 +455,13 @@ Markup = Component (opts) ->
     _template: 'html'
   }
 
+Pre = Component (opts) ->
+  value = toAtom opts.value
+  {
+    id, value
+    _template: 'pre'
+  }
+
 Text = Component (opts) ->
   id = opts.id ? guid()
   value = toAtom opts.value
@@ -741,6 +748,7 @@ window.fluid = fluid = {
   cell12: Cell 12
   cell: Cell 12
   div: Div
+  pre: Pre
   span: Span
   card: Card
   text: Text
