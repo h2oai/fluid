@@ -7,7 +7,7 @@
   // ko if:_hasButtons
   .mdl-card__actions.mdl-card--border
     // ko foreach:buttons
-    a.mdl-button.mdl-js-button.mdl-js-ripple-effect(data-bind="text:label, click:clicked, css:{ 'mdl-button--colored':_primary , 'mdl-button--accent':_accent }")
+    a.mdl-button.mdl-js-button.mdl-js-ripple-effect(data-bind="text:label, click:clicked, css:{ 'mdl-button--colored':_isPrimary , 'mdl-button--accent':_isAccent }")
     // /ko
   // /ko
   // ko with:menu

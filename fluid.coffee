@@ -506,17 +506,33 @@ Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
   clicked = fire = toEvent opts.clicked
-
-  _primary = opts.color is 'primary'
-  _accent = opts.color is 'accent'
-
   dispose = -> free clicked
+
+  icon = opts.icon
+
+  _isPrimary = _isAccent = _isRaised = no
+  if opts.color is 'primary'
+    _isPrimary = yes
+  else if opts.color is 'accent'
+    _isAccent = yes
+  _isRaised = opts.type is 'raised'
+  _isSmall = opts.size is 'small'
+
+  _template = if opts.type is 'floating'
+    'button-floating'
+  else
+    if icon
+      'button-icon'
+    else
+      'button'
+
+  icon = 'add' if _template is 'button-floating' and not icon
 
   {
     #TODO id
-    label, value, fire, clicked, disabled, dispose
-    _primary, _accent
-    _template: 'button'
+    label, value, icon, fire, clicked, disabled, dispose
+    _isPrimary, _isAccent, _isRaised, _isSmall
+    _template
   }
 
 Link = Component (opts) ->
