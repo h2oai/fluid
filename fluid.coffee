@@ -514,6 +514,16 @@ Link = Component (opts) ->
     _template: 'link'
   }
 
+Badge = Component (opts) ->
+  value = toAtom opts.value or '?'
+  label = toAtom opts.label
+  icon = opts.icon
+  _template = 'badge' + if icon then '-icon' else ''
+  {
+    label, value, icon
+    _template
+  }
+
 Textfield = Component (opts) ->
   id = guid()
   value = toAtom opts.value ? ''
@@ -632,12 +642,17 @@ Application = ->
 # Upgrades DOM element to MDL component.
 # e.g. data-binding="mdl:true"
 #
+# init:
+# This will be called when the binding is first applied to an element
+# Set up any initial state, event handlers, etc. here
+#
+# update:
+# This will be called once when the binding is first applied to an element,
+# and again whenever any observables/computeds that are accessed change
+# Update the DOM element based on the supplied values here.
+
 ko.bindingHandlers.mdl =
   init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
-
-    # This will be called when the binding is first applied to an element
-    # Set up any initial state, event handlers, etc. here
-
     componentHandler.upgradeElement element
     ko.utils.domNodeDisposal.addDisposeCallback element, ->
       #TODO does this leak if skipped?
@@ -646,16 +661,16 @@ ko.bindingHandlers.mdl =
 
 ko.bindingHandlers.mdlu =
   update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
-
-    # This will be called once when the binding is first applied to an element,
-    # and again whenever any observables/computeds that are accessed change
-    # Update the DOM element based on the supplied values here.
-
     componentHandler.upgradeElement element
     ko.utils.domNodeDisposal.addDisposeCallback element, ->
       #TODO does this leak if skipped?
       componentHandler.downgradeElements element
     return
+
+ko.bindingHandlers.badge =
+  update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+    value = ko.unwrap valueAccessor()
+    $(element).attr 'data-badge', "#{value}"
 
 preload = ->
   $drawer = $ '#fluid-drawer'
@@ -711,6 +726,7 @@ window.fluid = fluid = {
   command: Command
   button: Button
   link: Link
+  badge: Badge
   textfield: Textfield
   textarea: Textarea
   checkbox: Checkbox
