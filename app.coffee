@@ -175,3 +175,18 @@ window.fluid.start (context, app) ->
     slider 150, min: 100, max: 200
   ]
 
+  addSection 'Textfields', [
+    title 'Plain'
+    textfield()
+    title 'With Value'
+    textfield 'Hello!'
+    title 'With Value and Label'
+    textfield 'Hello!', label: 'Greeting'
+    title 'Validating'
+    textfield '55555', label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+    title 'Expandable'
+    textfield icon:'search'
+    title 'Expandable with Label'
+    textfield icon:'search', label:'Cat pictures'
+  ]
+
