@@ -526,6 +526,17 @@ Textfield = Component (opts) ->
     _template
   }
 
+Textarea = Component (opts) ->
+  id = guid()
+  value = toAtom opts.value ? ''
+  label = toAtom opts.label ? ''
+  rows = opts.rows ? 3
+  {
+    id, label, value, rows
+    _template: 'textarea'
+  }
+
+
 Checkbox = Component (opts) ->
   id = guid()
   checked = value = toAtom opts.value ? no
@@ -700,6 +711,7 @@ window.fluid = fluid = {
   button: Button
   link: Link
   textfield: Textfield
+  textarea: Textarea
   checkbox: Checkbox
   radio: Radio
   slider: Slider
