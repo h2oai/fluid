@@ -20,130 +20,149 @@ window.fluid.start (context, app) ->
 
   addSection 'Buttons', [
 
-    title 'Plain FAB'
-    button type: 'floating'
-
-    title 'Plain FAB (Disabled)'
-    button type: 'floating', disabled: yes
-
-    title 'Color FAB'
-    button type: 'floating', color: 'primary'
-
-    title 'Color FAB (Disabled)'
-    button type: 'floating', color: 'primary', disabled: yes
-
-    title 'Plain Mini FAB'
-    button size: 'small', type: 'floating'
-
-    title 'Plain Mini FAB (Disabled)'
-    button size: 'small', type: 'floating', disabled: yes
-
-    title 'Color Mini FAB'
-    button size: 'small', type: 'floating', color: 'primary'
-
-    title 'Color Mini FAB (Disabled)'
-    button size: 'small', type: 'floating', color: 'primary', disabled: yes
-
-    title 'Plain FAB with icon'
-    button type: 'floating', icon: 'camera'
-
-    title 'Color FAB with icon'
-    button type: 'floating', color: 'primary', icon: 'camera'
-
-    title 'Plain Mini FAB with icon'
-    button size: 'small', type: 'floating', icon: 'camera'
-
-    title 'Color Mini FAB with icon'
-    button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
-
-    title 'Flat Button'
+    title 'Flat'
     button()
 
-    title 'Flat Button (Disabled)'
+    title 'Flat (Disabled)'
     button disabled: yes
 
-    title 'Flat Color Button'
+    title 'Flat Color'
     button color: 'primary'
 
-    title 'Flat Color Button (Disabled)'
+    title 'Flat Color (Disabled)'
     button color: 'primary', disabled: yes
 
-    title 'Flat Accent Button'
+    title 'Flat Accent'
     button color: 'accent'
 
-    title 'Flat Accent Button (Disabled)'
+    title 'Flat Accent (Disabled)'
     button color: 'accent', disabled: yes
 
-    title 'Raised Button'
+    title 'Raised'
     button type: 'raised'
 
-    title 'Raised Button (Disabled)'
+    title 'Raised (Disabled)'
     button type: 'raised', disabled: yes
 
-    title 'Raised Color Button'
+    title 'Raised Color'
     button type: 'raised', color: 'primary'
 
-    title 'Raised Color Button (Disabled)'
+    title 'Raised Color (Disabled)'
     button type: 'raised', color: 'primary', disabled: yes
 
-    title 'Raised Accent Button'
+    title 'Raised Accent'
     button type: 'raised', color: 'accent'
 
-    title 'Raised Accent Button (Disabled)'
+    title 'Raised Accent (Disabled)'
     button type: 'raised', color: 'accent', disabled: yes
 
-    title 'Icon Button'
+    title 'Icon'
     button icon: 'mood'
 
-    title 'Icon Button (Disabled)'
+    title 'Icon (Disabled)'
     button icon: 'mood', disabled: yes
 
-    title 'Icon Color Button'
+    title 'Icon Color'
     button icon: 'mood', color: 'primary'
 
-    title 'Icon Color Button (Disabled)'
+    title 'Icon Color (Disabled)'
     button icon: 'mood', color: 'primary', disabled: yes
 
-    title 'Icon Accent Button'
+    title 'Icon Accent'
     button icon: 'mood', color: 'accent'
 
-    title 'Icon Accent Button (Disabled)'
+    title 'Icon Accent (Disabled)'
     button icon: 'mood', color: 'accent', disabled: yes
   ] 
+
+  addSection 'FABs', [
+
+    title 'Plain'
+    button type: 'floating'
+
+    title 'Plain (Disabled)'
+    button type: 'floating', disabled: yes
+
+    title 'Color'
+    button type: 'floating', color: 'primary'
+
+    title 'Color (Disabled)'
+    button type: 'floating', color: 'primary', disabled: yes
+
+    title 'Plain Mini'
+    button size: 'small', type: 'floating'
+
+    title 'Plain Mini (Disabled)'
+    button size: 'small', type: 'floating', disabled: yes
+
+    title 'Color Mini'
+    button size: 'small', type: 'floating', color: 'primary'
+
+    title 'Color Mini (Disabled)'
+    button size: 'small', type: 'floating', color: 'primary', disabled: yes
+
+    title 'Plain with icon'
+    button type: 'floating', icon: 'camera'
+
+    title 'Color with icon'
+    button type: 'floating', color: 'primary', icon: 'camera'
+
+    title 'Plain Mini with icon'
+    button size: 'small', type: 'floating', icon: 'camera'
+
+    title 'Color Mini with icon'
+    button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
+  ]
 
   radioOptions = atom 'option1'
 
   addSection 'Toggles', [
+
     title 'Checkbox'
     checkbox()
+
     title 'Checkbox with value'
     checkbox value: on
+
     title 'Checkbox (Off)'
     checkbox off
+
     title 'Checkbox (On)'
     checkbox on
+
     title 'Labeled Checkbox (On)'
     checkbox on, label: 'Check on'
+
     title 'Labeled Checkbox (Off)'
     checkbox off, label: 'Check off'
+
     title 'Switch (Off)'
     checkbox off, icon: 'switch'
+
     title 'Switch (On)'
     checkbox on, icon: 'switch'
+
     title 'Checkbox without label'
     checkbox label: ' '
+
     title 'Icon Toggle'
     checkbox icon: 'wifi'
+
     title 'Icon Toggle (On)'
     checkbox on, icon: 'bluetooth'
+
     title 'Icon Toggle (Off)'
     checkbox off, icon: 'favorite'
+
     title 'Radio (option1)'
     radio radioOptions, item: 'option1', label: 'Option 1'
+
     title 'Radio (option2)'
     radio radioOptions, item: 'option2', label: 'Option 2'
+
     title 'Radio (option3)'
     radio radioOptions, item: 'option3', label: 'Option 3'
+
     title 'Radio (option4)'
     radio radioOptions, item: 'option4', label: 'Option 4'
   ]
