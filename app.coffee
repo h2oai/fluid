@@ -190,3 +190,13 @@ window.fluid.start (context, app) ->
     textfield icon:'search', label:'Cat pictures'
   ]
 
+  addSection 'Textareas', [
+    title 'Plain'
+    textarea()
+    title 'With Value'
+    textarea 'Hello World!'
+    title 'With Label'
+    textarea label: 'Message'
+    title 'With Rows'
+    textarea 'Hello World!', rows: 5
+  ]
