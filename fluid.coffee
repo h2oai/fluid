@@ -518,9 +518,12 @@ Textfield = Component (opts) ->
   id = guid()
   value = toAtom opts.value ? ''
   label = toAtom opts.label ? ''
+  error = toAtom opts.error ? 'Error'
+  pattern = opts.pattern
+  _template = 'textfield' + if pattern then '-masked' else ''
   {
-    id, label, value
-    _template: 'textfield'
+    id, label, value, pattern, error
+    _template
   }
 
 Checkbox = Component (opts) ->
