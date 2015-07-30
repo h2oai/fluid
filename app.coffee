@@ -5,7 +5,7 @@
 window.fluid.start (context, app, home) ->
   app.title 'Kitchen Sink'
 
-  home.label 'Form Elements'
+  add app.pages, formPage = page label: 'Form Elements'
 
   heading = (string) -> markup "<h4>#{string}</h4>"
   strong = (string) ->  markup "<strong>#{string}</strong>"
@@ -17,8 +17,8 @@ window.fluid.start (context, app, home) ->
     grid examples
 
   addSection = (title, examples) ->
-    add app.page, grid cell heading title
-    add app.page, createExampleGrid examples
+    add formPage, grid cell heading title
+    add formPage, createExampleGrid examples
 
   addSection 'Buttons', [
 
@@ -240,8 +240,51 @@ window.fluid.start (context, app, home) ->
 
   ]
 
-  tablesPage = page label: 'Tables'
-  add app.pages, tablesPage
+  lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu."
+
+  add app.pages, cardsPage = page label: 'Cards'
+
+  cardsPage = home
+
+  add cardsPage, grid cell heading 'Cards'
+
+  add cardsPage, grid cell strong 'Basic'
+  add cardsPage, grid cell card lorem,  
+    title: 'Card'
+    buttons: [ button clicked: -> console.log 'Hello' ]
+
+  add cardsPage, grid cell strong 'With Menu'
+  add cardsPage, grid cell card lorem,  
+    title: 'Card'
+    menu: menu [
+      command 'command1', clicked: -> console.log 'command1'
+      command 'command2', clicked: -> console.log 'command2'
+    ]
+    buttons: [ button 'Button', color: 'primary', clicked: -> console.log 'Hello' ]
+
+  add cardsPage, grid cell strong 'Wide'
+  add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
+    title: 'Welcome'
+    width: 512
+    # styles:
+    #   title:
+    #     color: '#fff'
+    #     height: '176px'
+    #     background: "url('http://www.getmdl.io/assets/demos/welcome_card.jpg') center / cover"
+    buttons: [ button 'Get Started', color: 'primary', clicked: -> console.log 'Welcome!' ]
+
+  add cardsPage, grid cell strong 'Square'
+  add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',  
+    title: 'Updates'
+    width: 320
+    height: 320
+    # styles:
+    #   title:
+    #     color: '#fff'
+    #     background: "url('http://www.getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC"
+    buttons: [ button 'Get Updates', color: 'primary', clicked: -> console.log 'Welcome!' ]
+
+  add app.pages, tablesPage = page label: 'Tables'
 
   add tablesPage, grid cell heading 'Tables'
   add tablesPage, grid cell strong 'Table'
@@ -269,7 +312,7 @@ window.fluid.start (context, app, home) ->
   ]
 
   add tablesPage, grid cell strong 'Selectable Table'
-  add tablesPage, grid cell table [
+  add tablesPage, grid cell table selectable: yes, [
     tr [
       th 'Material'
       th 'Quantity'
@@ -290,5 +333,5 @@ window.fluid.start (context, app, home) ->
       td 10
       td '$2.35'
     ]
-  ], selectable: yes
+  ]
 
