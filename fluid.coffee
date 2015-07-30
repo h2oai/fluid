@@ -417,6 +417,18 @@ Cell = (span) -> Container "cell-#{span}"
 Div = Container 'div'
 Span = Container 'span'
 
+Thumbnail = Component (opts) ->
+  image = value = toAtom opts.value ? opts.image #TODO apply pattern to .value attributes of other components
+  _style =
+    width: (opts.width ? 256) + 'px'
+    height: (opts.height ? 256)   + 'px'
+    background: from image, (url) -> "url('#{url}') center / cover"
+
+  {
+    _hasTitle, title, image, value, _style
+    _template: 'thumbnail'
+  }
+
 Card = Components (opts) ->
   items = toList opts.items
   title = toAtom opts.title ? ''
@@ -787,6 +799,7 @@ window.fluid = fluid = {
   pre: Pre
   span: Span
   card: Card
+  thumbnail: Thumbnail
   text: Text
   tab: Tab
   tabs: Tabs
