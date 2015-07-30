@@ -238,28 +238,52 @@ window.fluid.start (context, app) ->
 
   ]
 
-  addSection 'Tables', [
-    title 'Table'
-    table [
-      tr [
-        th 'Material'
-        th 'Quantity'
-        th 'Unit Price'
-      ]
-      tr [
-        td 'Acrylic (Transparent)'
-        td 25
-        td '$2.90'
-      ]
-      tr [
-        td 'Plywood (Birch)'
-        td 50
-        td '$1.25'
-      ]
-      tr [
-        td 'Laminate (Gold on Blue)'
-        td 10
-        td '$2.35'
-      ]
+  add app.page, grid cell heading 'Tables'
+  add app.page, grid cell title 'Table'
+  add app.page, grid cell table [
+    tr [
+      th 'Material'
+      th 'Quantity'
+      th 'Unit Price'
+    ]
+    tr [
+      td 'Acrylic (Transparent)'
+      td 25
+      td '$2.90'
+    ]
+    tr [
+      td 'Plywood (Birch)'
+      td 50
+      td '$1.25'
+    ]
+    tr [
+      td 'Laminate (Gold on Blue)'
+      td 10
+      td '$2.35'
     ]
   ]
+
+  add app.page, grid cell title 'Selectable Table'
+  add app.page, grid cell table [
+    tr [
+      th 'Material'
+      th 'Quantity'
+      th 'Unit Price'
+    ]
+    tr [
+      td 'Acrylic (Transparent)'
+      td 25
+      td '$2.90'
+    ]
+    tr [
+      td 'Plywood (Birch)'
+      td 50
+      td '$1.25'
+    ]
+    tr [
+      td 'Laminate (Gold on Blue)'
+      td 10
+      td '$2.35'
+    ]
+  ], selectable: yes
+
