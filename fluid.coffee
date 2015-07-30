@@ -3,6 +3,7 @@ truthy = (a) -> if a then yes else no
 falsy = (a) -> if a then no else yes
 always = -> yes
 never = -> no
+px = (a) -> "#{a}px"
 _templateOf = (component) -> "#{component._template}-template"
 guid = -> _.uniqueId 'fluid-'
 hashcode = (obj) ->
@@ -423,9 +424,12 @@ Card = Components (opts) ->
   buttons = toList opts.buttons ? []
   _hasButtons = from buttons, length
   menu = toAtom opts.menu
+  _style =
+    width: if opts.width? then px opts.width else undefined
+    height: if opts.height? then px opts.height else undefined
 
   {
-    _hasTitle, title, items, _hasButtons, buttons, menu, _templateOf
+    _hasTitle, title, items, _hasButtons, buttons, menu, _style, _templateOf
     _template: 'card'
   }
 
