@@ -81,21 +81,29 @@ clear = (container) ->
 
   return
 
-event = ->
+action = (opts) ->
   _bindings = []
+  _multicast = if opts?.multicast is off then off else on
 
   self = (args...) ->
-    switch _bindings.length
-      when 0
-        undefined
-      when 1
-        _bindings[0].target args...
-      else
+    if _bindings.length is 0
+      undefined
+    else
+      if _multicast
         _bindings.map (binding) -> binding.target args...
+      else
+        _bindings[0].target args...
 
   self.subscribe = (f) ->
-    _bindings.push binding = target: f, dispose: -> _remove _bindings, binding
-    binding
+    binding = target: f, dispose: -> _remove _bindings, binding
+    if _multicast
+      _bindings.push binding
+      binding
+    else
+      if _bindings.length
+        console.warn 'action: attempt to rebind unicast action. dropping exsting binding.'
+        _bindings[0].dispose()
+      _bindings[0] = binding
 
   self.dispose = ->
     for binding in _bindings[0..]
@@ -107,7 +115,7 @@ event = ->
 
   self
 
-isEvent = (a) -> if a?.__event__ then yes else no
+isAction = (a) -> if a?.__event__ then yes else no
 
 atom = (value, equalityComparer) ->
   if arguments.length is 0
@@ -133,7 +141,7 @@ length = (a) ->
   else
     0
 
-isNode = (a) -> (isObservable a) or isEvent a
+isNode = (a) -> (isObservable a) or isAction a
 
 toAtom = (value) ->
   if isAtom value then value else atom value
@@ -151,11 +159,11 @@ toList = (a) ->
   else
     list()
 
-toEvent = (f) ->
-  if isEvent f
+toAction = (f) ->
+  if isAction f
     f
   else
-    e = do event
+    e = do action
     bind e, f if _.isFunction f
     e
 
@@ -217,9 +225,9 @@ act = (sources..., f) -> #TODO unused
 eventAt0 = (sources) ->
   if sources.length is 1
     source0 = sources[0]
-    if isEvent source0
+    if isAction source0
       source0
-    else if (isComponent source0) and isEvent source0.fire
+    else if (isComponent source0) and isAction source0.fire
       source0.fire
     else
       undefined
@@ -285,7 +293,7 @@ __fire = (source, args) ->
         _fire source.fire, args
       else
         undefined
-    else if isEvent source
+    else if isAction source
       source args...
     else
       undefined
@@ -515,7 +523,7 @@ Menu = Components (opts) ->
 Command = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  clicked = fire = toEvent opts.clicked
+  clicked = fire = toAction opts.clicked
 
   dispose = -> free clicked
 
@@ -552,7 +560,7 @@ Table = Components (opts) ->
 Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  clicked = fire = toEvent opts.clicked
+  clicked = fire = toAction opts.clicked
   dispose = -> free clicked
 
   icon = opts.icon
@@ -672,13 +680,13 @@ Slider = Component (opts) ->
   }
 
 Context = ->
-  activatePage: do event
-  showDrawer: do event
-  hideDrawer: do event
+  activatePage: do action
+  showDrawer: do action
+  hideDrawer: do action
 
 Application = ->
   title = atom ''
-  loaded = do event
+  loaded = do action
 
   home = Page label: 'Home', isActive: yes
   pages = items = list [ home ]
@@ -774,7 +782,7 @@ window.fluid = fluid = {
   get: _get, set: _set, fire: _fire
   add, remove, clear
 
-  event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from
+  action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
   extend
 
   # components

@@ -1,16 +1,16 @@
 test = QUnit.test
 
-{ event, isEvent, atom, isAtom, list, isList, bind, act, unbind, from, to } = window.fluid
+{ action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to } = window.fluid
 
-test 'isEvent', (t) ->
-  t.ok no is isEvent undefined
-  t.ok no is isEvent null
-  t.ok no is isEvent 42
-  t.ok no is isEvent '42'
-  t.ok no is isEvent ->
-  t.ok no is isEvent atom()
-  t.ok no is isEvent list()
-  t.ok yes is isEvent event()
+test 'isAction', (t) ->
+  t.ok no is isAction undefined
+  t.ok no is isAction null
+  t.ok no is isAction 42
+  t.ok no is isAction '42'
+  t.ok no is isAction ->
+  t.ok no is isAction atom()
+  t.ok no is isAction list()
+  t.ok yes is isAction action()
 
 test 'isAtom', (t) ->
   t.ok no is isAtom undefined
@@ -20,7 +20,7 @@ test 'isAtom', (t) ->
   t.ok no is isAtom ->
   t.ok yes is isAtom atom()
   t.ok no is isAtom list()
-  t.ok no is isAtom event()
+  t.ok no is isAtom action()
 
 test 'isList', (t) ->
   t.ok no is isList undefined
@@ -30,21 +30,21 @@ test 'isList', (t) ->
   t.ok no is isList ->
   t.ok no is isList atom()
   t.ok yes is isList list()
-  t.ok no is isList event()
+  t.ok no is isList action()
 
-test 'event should not fail when unbound', (t) ->
-  j = do event
+test 'action should not fail when unbound', (t) ->
+  j = do action
   result = null
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'event should propagate when linked', (t) ->
-  j = do event
+test 'action should propagate when linked', (t) ->
+  j = do action
   bind j, (a, b, c) -> a + b + c
   t.equal j(1, 2, 3), 6
 
-test 'event should stop propagating when unbound', (t) ->
-  j = do event
+test 'action should stop propagating when unbound', (t) ->
+  j = do action
   f = (a, b, c) -> a + b + c
   binding = bind j, f
   t.equal j(1, 2, 3), 6
@@ -53,8 +53,8 @@ test 'event should stop propagating when unbound', (t) ->
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'event should stop propagating when disposed', (t) ->
-  j = do event
+test 'action should stop propagating when disposed', (t) ->
+  j = do action
   f = (a, b, c) -> a + b + c
   binding = bind j, f
   t.equal j(1, 2, 3), 6
@@ -63,27 +63,27 @@ test 'event should stop propagating when disposed', (t) ->
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'event should not fail when unbound', (t) ->
-  j = do event
+test 'action should not fail when unbound', (t) ->
+  j = do action
   result = null
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'event should propagate when linked', (t) ->
-  j = do event
+test 'action should propagate when linked', (t) ->
+  j = do action
   bind j, (a, b, c) -> a + b + c
   t.equal j(1, 2, 3), 6
 
-test 'event should allow multicasting', (t) ->
-  j = do event
+test 'action should allow multicasting', (t) ->
+  j = do action
   add = (a, b, c) -> a + b + c
   multiply = (a, b, c) -> a * b * c
   bind j, add
   bind j, multiply
   t.deepEqual j(2, 3, 4), [9, 24]
 
-test 'event should stop propagating when unbound', (t) ->
-  j = do event
+test 'action should stop propagating when unbound', (t) ->
+  j = do action
   add = (a, b, c) -> a + b + c
   multiply = (a, b, c) -> a * b * c
   additionbinding = bind j, add
@@ -94,8 +94,8 @@ test 'event should stop propagating when unbound', (t) ->
   unbind multiplicationbinding
   t.ok j(2, 3, 4) is undefined
 
-test 'event should stop propagating when disposed', (t) ->
-  j = do event
+test 'action should stop propagating when disposed', (t) ->
+  j = do action
   add = (a, b, c) -> a + b + c
   multiply = (a, b, c) -> a * b * c
   additionbinding = bind j, add
