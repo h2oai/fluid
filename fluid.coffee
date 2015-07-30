@@ -506,6 +506,30 @@ Command = Component (opts) ->
     _template: 'command'
   }
 
+TableRow = Components (opts) ->
+  items = opts.items
+  {
+    items
+  }
+
+TableDataCell = Component (opts) ->
+  value = opts.value
+  _isNonNumeric = if opts.align?
+    opts.align is 'left'
+  else
+    not _.isNumber value
+  {
+    value, _isNonNumeric
+  }
+
+Table = Components (opts) ->
+  items = toList opts.items
+  _labels = items.shift()
+  {
+    _labels, items
+    _template: 'table'
+  }
+
 Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
@@ -582,7 +606,6 @@ Textarea = Component (opts) ->
     _template: 'textarea'
   }
 
-
 Checkbox = Component (opts) ->
   id = guid()
   checked = value = toAtom opts.value ? no
@@ -650,7 +673,7 @@ Application = ->
         target = item
       else
         item.isActive no
-    page target 
+    page target
     fluid.context.hideDrawer()
     return
 
@@ -751,6 +774,10 @@ window.fluid = fluid = {
   cell11: Cell 11
   cell12: Cell 12
   cell: Cell 12
+  table: Table
+  tr: TableRow
+  th: TableDataCell
+  td: TableDataCell
   div: Div
   pre: Pre
   span: Span

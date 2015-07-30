@@ -1,0 +1,15 @@
+table.mdl-data-table.mdl-js-data-table.mdl-data-table--selectable.mdl-shadow--2dp
+  thead
+    tr
+      // ko with:_labels
+      // ko foreach:items
+      th(data-bind="text:value, css:{ 'mdl-data-table__cell--non-numeric':_isNonNumeric }")
+      // /ko
+      // /ko
+  tbody
+    // ko foreach:items
+    tr
+      // ko foreach:items
+      td(data-bind="text:value, css:{ 'mdl-data-table__cell--non-numeric':_isNonNumeric }")
+      // /ko
+    // /ko
