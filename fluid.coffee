@@ -666,7 +666,7 @@ Application = ->
   title = atom ''
   loaded = do event
 
-  home = Page isActive: yes
+  home = Page label: 'Home', isActive: yes
   pages = items = list [ home ]
   page = atom home
 
