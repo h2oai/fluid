@@ -240,11 +240,50 @@ window.fluid.start (context, app, home) ->
 
   ]
 
+  add app.pages, gridsPage = page label: 'Grids'
+  sample = (label) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{label}</div"
+
+  add gridsPage, grid cell strong '1 x 12'
+  add gridsPage, grid [
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+    cell1 sample 1
+  ]
+
+  add gridsPage, grid cell strong '3 x 4'
+  add gridsPage, grid [
+    cell3 sample 3
+    cell3 sample 3
+    cell3 sample 3
+    cell3 sample 3
+  ]
+
+  add gridsPage, grid cell strong '4 x 3'
+  add gridsPage, grid [
+    cell4 sample 4
+    cell4 sample 4
+    cell4 sample 4
+  ]
+
+  add gridsPage, grid cell strong '6-4-2'
+  add gridsPage, grid [
+    cell6 sample 6
+    cell4 sample 4
+    cell2 sample 2
+  ]
+
   lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu."
 
   add app.pages, cardsPage = page label: 'Cards'
-
-  cardsPage = home
 
   add cardsPage, grid cell heading 'Cards'
 
