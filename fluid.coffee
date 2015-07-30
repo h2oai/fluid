@@ -354,6 +354,10 @@ Components = (f) ->
     for arg in args
       if isComponent arg
         items.push arg
+      else if isList arg
+        # Clobber opts.items, which means that everything that went/goes
+        #   into `items` is discarded.
+        opts.items = arg
       else if _.isArray arg
         for value in arg
           items.push value
