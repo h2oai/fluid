@@ -2,12 +2,7 @@
 { get, set, fire, add, remove, clear, event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
 
 #TODO code-gen
-window.fluid.start (context, app) ->
-
-  home = app.home
-
-  # --- end codegen ---
-
+window.fluid.start (context, app, home) ->
   app.title 'Kitchen Sink'
 
   home.label 'Form Elements'

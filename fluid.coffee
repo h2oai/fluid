@@ -739,7 +739,7 @@ preload = ->
 start = (init) ->
   fluid.context = context = do Context
   fluid.app = app = do Application
-  init context, app
+  init context, app, app.home
   ko.applyBindings app
   preload()
   app.loaded()
