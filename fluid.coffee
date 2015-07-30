@@ -731,6 +731,12 @@ Application = ->
     loaded
   }
 
+Rule = (obj) ->
+  if obj
+    rules = fluid.styles.addRule obj
+    rules[0].className
+  else
+    ''
 #
 # Upgrades DOM element to MDL component.
 # e.g. data-binding="mdl:true"
@@ -771,10 +777,12 @@ preload = ->
   bind fluid.context.hideDrawer, -> $drawer.removeClass 'is-visible'
 
 start = (init) ->
+  # Create style sheet with global selectors
+  fluid.styles = window.jss.createStyleSheet(null, named:no).attach()
   fluid.context = context = do Context
   fluid.app = app = do Application
   init context, app, app.home
-  ko.applyBindings app
+  window.ko.applyBindings app
   preload()
   app.loaded()
 
@@ -784,6 +792,7 @@ window.fluid = fluid = {
   # Available after app start (mutable, for testability)
   app: null
   context: null
+  styles: null
 
   start
 
@@ -834,6 +843,7 @@ window.fluid = fluid = {
   radio: Radio
   slider: Slider
 
+  rule: Rule
 
   # Exported for testability
   createApplication: Application
