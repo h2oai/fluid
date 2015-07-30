@@ -1,7 +1,13 @@
 .mdl-card.mdl-shadow--2dp(data-bind='style:_style')
   // ko if:_hasTitle
+  // ko if:_hasImage
+  .mdl-card__title.mdl-card--expand(data-bind='style:_titleStyle')
+    h2.mdl-card__title-text(data-bind='text:title')
+  // /ko
+  // ko ifnot:_hasImage
   .mdl-card__title.mdl-card--expand
     h2.mdl-card__title-text(data-bind='text:title')
+  // /ko
   // /ko
   .mdl-card__supporting-text(data-bind="template:{ name:_templateOf, foreach:items }")
   // ko if:_hasButtons

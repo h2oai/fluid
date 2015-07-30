@@ -265,12 +265,10 @@ window.fluid.start (context, app, home) ->
   add cardsPage, grid cell strong 'Wide'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
     title: 'Welcome'
+    height: 300
     width: 512
-    # styles:
-    #   title:
-    #     color: '#fff'
-    #     height: '176px'
-    #     background: "url('http://www.getmdl.io/assets/demos/welcome_card.jpg') center / cover"
+    color: 'white'
+    image: 'sample.jpg'
     buttons: [ button 'Get Started', color: 'primary', clicked: -> console.log 'Welcome!' ]
 
   add cardsPage, grid cell strong 'Square'
@@ -278,15 +276,13 @@ window.fluid.start (context, app, home) ->
     title: 'Updates'
     width: 320
     height: 320
-    # styles:
-    #   title:
-    #     color: '#fff'
-    #     background: "url('http://www.getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC"
+    color: 'white'
+    image: 'sample.jpg'
     buttons: [ button 'Get Updates', color: 'primary', clicked: -> console.log 'Welcome!' ]
 
 
   add cardsPage, grid cell strong 'Thumbnail'
-  add cardsPage, grid cell thumbnail 'http://www.getmdl.io/assets/demos/image_card.jpg', title: 'Image.jpg'
+  add cardsPage, grid cell thumbnail 'sample.jpg', title: 'Spaceman'
 
   add app.pages, tablesPage = page label: 'Tables'
 

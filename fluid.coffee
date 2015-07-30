@@ -446,12 +446,20 @@ Card = Components (opts) ->
   buttons = toList opts.buttons ? []
   _hasButtons = from buttons, length
   menu = toAtom opts.menu
+  image = toAtom opts.image
+  _hasImage = from image, truthy
+
   _style =
     width: if opts.width? then px opts.width else undefined
     height: if opts.height? then px opts.height else undefined
 
+  _titleStyle =
+    background: from image, (url) -> "url('#{url}') center / cover"
+
+  _titleStyle.color = opts.color if opts.color
+
   {
-    _hasTitle, title, items, _hasButtons, buttons, menu, _style, _templateOf
+    _hasTitle, title, items, _hasButtons, buttons, menu, image, _hasImage, _style, _titleStyle, _templateOf
     _template: 'card'
   }
 
