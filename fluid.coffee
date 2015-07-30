@@ -465,11 +465,11 @@ Card = Components (opts) ->
 
 Tab = Components (opts) ->
   id = guid()
-  address = "##{id}"
+  _address = "##{id}"
   label = toAtom opts.label or untitled()
   items = toList opts.items
   {
-    id, address, label, items, _templateOf
+    id, _address, label, items, _templateOf
     _isActive: no
   }
 
