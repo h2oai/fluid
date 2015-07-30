@@ -419,6 +419,8 @@ Span = Container 'span'
 
 Thumbnail = Component (opts) ->
   image = value = toAtom opts.value ? opts.image #TODO apply pattern to .value attributes of other components
+  title = toAtom opts.title ? ''
+  _hasTitle = from title, truthy
   _style =
     width: (opts.width ? 256) + 'px'
     height: (opts.height ? 256)   + 'px'
