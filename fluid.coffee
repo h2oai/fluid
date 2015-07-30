@@ -360,7 +360,7 @@ Components = (f) ->
       else if _.isString arg
         items.push Text arg
       else if _.isObject arg
-        for key, value of arg when key isnt 'items'
+        for key, value of arg
           opts[key] = value
       else
         items.push String arg
