@@ -240,7 +240,20 @@ window.fluid.start (context, app, home) ->
 
   ]
 
+  lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu."
+
+
+  add app.pages, tabsPage = page label: 'Tabs'
+  tabsPage = home
+  add tabsPage, grid cell heading 'Tabs'
+  add tabsPage, grid cell tabs [
+    tab "Acrylic: #{lorem}", label: 'Acrylic'
+    tab "Plywood: #{lorem}", label: 'Plywood'
+    tab "Laminate: #{lorem}", label: 'Laminate'
+  ]
+
   add app.pages, gridsPage = page label: 'Grids'
+  add gridsPage, grid cell heading 'Grids'
   sample = (label) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{label}</div"
 
   add gridsPage, grid cell strong '1 x 12'
@@ -281,10 +294,7 @@ window.fluid.start (context, app, home) ->
     cell2 sample 2
   ]
 
-  lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu."
-
   add app.pages, cardsPage = page label: 'Cards'
-
   add cardsPage, grid cell heading 'Cards'
 
   add cardsPage, grid cell strong 'Basic'
