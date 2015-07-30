@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
+{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider, tags, style, rule } = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -244,13 +244,13 @@ window.fluid.start (context, app, home) ->
 
 
   add app.pages, tabsPage = page label: 'Tabs'
-  tabsPage = home
   add tabsPage, grid cell heading 'Tabs'
   add tabsPage, grid cell tabs [
     tab "Acrylic: #{lorem}", label: 'Acrylic'
     tab "Plywood: #{lorem}", label: 'Plywood'
     tab "Laminate: #{lorem}", label: 'Laminate'
   ]
+
 
   add app.pages, gridsPage = page label: 'Grids'
   add gridsPage, grid cell heading 'Grids'
@@ -383,4 +383,19 @@ window.fluid.start (context, app, home) ->
       td '$2.35'
     ]
   ]
+
+  add app.pages, customPage = page label: 'Custom'
+
+  # Markup
+  add customPage, markup "<div style='background:blue; color:white; padding:5px;'>I am blue</div>"
+
+  # Inline styles
+  greenish = style background: 'green', color: 'white', padding: '5px' 
+  greenishDiv = tags "div style='#{greenish}'"
+  add customPage, markup greenishDiv 'I am green'
+
+  # CSS rules
+  reddish = rule background: 'red', color: 'white', padding: '5px'
+  reddishDiv = tags ".#{reddish}"
+  add customPage, markup reddishDiv 'I am red'
 
