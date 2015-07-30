@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
+{ get, set, fire, add, remove, clear, event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -283,6 +283,10 @@ window.fluid.start (context, app, home) ->
     #     color: '#fff'
     #     background: "url('http://www.getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC"
     buttons: [ button 'Get Updates', color: 'primary', clicked: -> console.log 'Welcome!' ]
+
+
+  add cardsPage, grid cell strong 'Thumbnail'
+  add cardsPage, grid cell thumbnail 'http://www.getmdl.io/assets/demos/image_card.jpg', title: 'Image.jpg'
 
   add app.pages, tablesPage = page label: 'Tables'
 
