@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, div, span, card, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
+{ get, set, fire, add, remove, clear, event, isEvent, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider } = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app) ->
@@ -186,8 +186,14 @@ window.fluid.start (context, app) ->
     title 'With Value'
     textfield 'Hello!'
 
+    title 'With Value'
+    textfield label: 'Message'
+
     title 'With Value and Label'
-    textfield 'Hello!', label: 'Greeting'
+    textfield 'Hello!', label: 'Message'
+
+    title 'Validating'
+    textfield label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
 
     title 'Validating'
     textfield '55555', label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
@@ -219,7 +225,7 @@ window.fluid.start (context, app) ->
   addSection 'Badges', [
 
     title 'Default'
-    aBadge = badge()
+    badge()
 
     title 'With Label'
     badge label: 'Inbox'
@@ -230,4 +236,30 @@ window.fluid.start (context, app) ->
     title 'With Icon'
     badge 3, icon: 'account_box'
 
+  ]
+
+  addSection 'Tables', [
+    title 'Table'
+    table [
+      tr [
+        th 'Material'
+        th 'Quantity'
+        th 'Unit Price'
+      ]
+      tr [
+        td 'Acrylic (Transparent)'
+        td 25
+        td '$2.90'
+      ]
+      tr [
+        td 'Plywood (Birch)'
+        td 50
+        td '$1.25'
+      ]
+      tr [
+        td 'Laminate (Gold on Blue)'
+        td 10
+        td '$2.35'
+      ]
+    ]
   ]
