@@ -737,6 +737,12 @@ Rule = (obj) ->
     rules[0].className
   else
     ''
+
+Style = (obj) ->
+  styles = for key, value of obj when obj?
+    "#{key}:#{value}"
+  "#{styles.join ';'};"
+
 #
 # Upgrades DOM element to MDL component.
 # e.g. data-binding="mdl:true"
@@ -842,8 +848,9 @@ window.fluid = fluid = {
   checkbox: Checkbox
   radio: Radio
   slider: Slider
-
+  tags: window.diecut
   rule: Rule
+  style: Style
 
   # Exported for testability
   createApplication: Application
