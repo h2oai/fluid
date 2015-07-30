@@ -524,9 +524,10 @@ TableDataCell = Component (opts) ->
 
 Table = Components (opts) ->
   items = toList opts.items
+  selectable = opts.selectable ? no
   _labels = items.shift()
   {
-    _labels, items
+    _labels, items, selectable
     _template: 'table'
   }
 
