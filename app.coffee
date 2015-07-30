@@ -3,114 +3,121 @@
 
 #TODO code-gen
 window.fluid.start (context, app) ->
-  app.title 'Kitchen Sink'
+
+  { title, home, pages } = app
+  page = home
+  bind app.page, (it) -> page = it
+
+  # --- end codegen ---
+
+  title 'Kitchen Sink'
 
   heading = (string) -> markup "<h4>#{string}</h4>"
-  title = (string) ->  markup "<strong>#{string}</strong>"
+  strong = (string) ->  markup "<strong>#{string}</strong>"
 
   createExampleGrid = (elements) ->
     examples = []
     for element, i in elements when i % 2 is 0
-      examples.push cell3 div element, elements[i + 1]
+      examples.push cell3 div (strong element), elements[i + 1]
     grid examples
 
   addSection = (title, examples) ->
-    add app.page, grid cell heading title
-    add app.page, createExampleGrid examples
+    add page, grid cell heading title
+    add page, createExampleGrid examples
 
   addSection 'Buttons', [
 
-    title 'Flat'
+    'Flat'
     button()
 
-    title 'Flat (Disabled)'
+    'Flat (Disabled)'
     button disabled: yes
 
-    title 'Flat Color'
+    'Flat Color'
     button color: 'primary'
 
-    title 'Flat Color (Disabled)'
+    'Flat Color (Disabled)'
     button color: 'primary', disabled: yes
 
-    title 'Flat Accent'
+    'Flat Accent'
     button color: 'accent'
 
-    title 'Flat Accent (Disabled)'
+    'Flat Accent (Disabled)'
     button color: 'accent', disabled: yes
 
-    title 'Raised'
+    'Raised'
     button type: 'raised'
 
-    title 'Raised (Disabled)'
+    'Raised (Disabled)'
     button type: 'raised', disabled: yes
 
-    title 'Raised Color'
+    'Raised Color'
     button type: 'raised', color: 'primary'
 
-    title 'Raised Color (Disabled)'
+    'Raised Color (Disabled)'
     button type: 'raised', color: 'primary', disabled: yes
 
-    title 'Raised Accent'
+    'Raised Accent'
     button type: 'raised', color: 'accent'
 
-    title 'Raised Accent (Disabled)'
+    'Raised Accent (Disabled)'
     button type: 'raised', color: 'accent', disabled: yes
 
-    title 'Icon'
+    'Icon'
     button icon: 'mood'
 
-    title 'Icon (Disabled)'
+    'Icon (Disabled)'
     button icon: 'mood', disabled: yes
 
-    title 'Icon Color'
+    'Icon Color'
     button icon: 'mood', color: 'primary'
 
-    title 'Icon Color (Disabled)'
+    'Icon Color (Disabled)'
     button icon: 'mood', color: 'primary', disabled: yes
 
-    title 'Icon Accent'
+    'Icon Accent'
     button icon: 'mood', color: 'accent'
 
-    title 'Icon Accent (Disabled)'
+    'Icon Accent (Disabled)'
     button icon: 'mood', color: 'accent', disabled: yes
   ] 
 
   addSection 'FABs', [
 
-    title 'Plain'
+    'Plain'
     button type: 'floating'
 
-    title 'Plain (Disabled)'
+    'Plain (Disabled)'
     button type: 'floating', disabled: yes
 
-    title 'Color'
+    'Color'
     button type: 'floating', color: 'primary'
 
-    title 'Color (Disabled)'
+    'Color (Disabled)'
     button type: 'floating', color: 'primary', disabled: yes
 
-    title 'Plain Mini'
+    'Plain Mini'
     button size: 'small', type: 'floating'
 
-    title 'Plain Mini (Disabled)'
+    'Plain Mini (Disabled)'
     button size: 'small', type: 'floating', disabled: yes
 
-    title 'Color Mini'
+    'Color Mini'
     button size: 'small', type: 'floating', color: 'primary'
 
-    title 'Color Mini (Disabled)'
+    'Color Mini (Disabled)'
     button size: 'small', type: 'floating', color: 'primary', disabled: yes
 
-    title 'Plain with icon'
+    'Plain with icon'
     button type: 'floating', icon: 'camera'
 
-    title 'Color with icon'
+    'Color with icon'
     button type: 'floating', color: 'primary', icon: 'camera'
 
-    title 'Plain Mini with icon'
+    'Plain Mini with icon'
     button size: 'small', type: 'floating', icon: 'camera'
 
-    title 'Color Mini with icon'
+    'Color Mini with icon'
     button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
   ]
 
@@ -118,129 +125,129 @@ window.fluid.start (context, app) ->
 
   addSection 'Toggles', [
 
-    title 'Checkbox'
+    'Checkbox'
     checkbox()
 
-    title 'Checkbox with value'
+    'Checkbox with value'
     checkbox value: on
 
-    title 'Checkbox (Off)'
+    'Checkbox (Off)'
     checkbox off
 
-    title 'Checkbox (On)'
+    'Checkbox (On)'
     checkbox on
 
-    title 'Labeled Checkbox (On)'
+    'Labeled Checkbox (On)'
     checkbox on, label: 'Check on'
 
-    title 'Labeled Checkbox (Off)'
+    'Labeled Checkbox (Off)'
     checkbox off, label: 'Check off'
 
-    title 'Switch (Off)'
+    'Switch (Off)'
     checkbox off, icon: 'switch'
 
-    title 'Switch (On)'
+    'Switch (On)'
     checkbox on, icon: 'switch'
 
-    title 'Checkbox without label'
+    'Checkbox without label'
     checkbox label: ' '
 
-    title 'Icon Toggle'
+    'Icon Toggle'
     checkbox icon: 'wifi'
 
-    title 'Icon Toggle (On)'
+    'Icon Toggle (On)'
     checkbox on, icon: 'bluetooth'
 
-    title 'Icon Toggle (Off)'
+    'Icon Toggle (Off)'
     checkbox off, icon: 'favorite'
 
-    title 'Radio (option1)'
+    'Radio (option1)'
     radio radioOptions, item: 'option1', label: 'Option 1'
 
-    title 'Radio (option2)'
+    'Radio (option2)'
     radio radioOptions, item: 'option2', label: 'Option 2'
 
-    title 'Radio (option3)'
+    'Radio (option3)'
     radio radioOptions, item: 'option3', label: 'Option 3'
 
-    title 'Radio (option4)'
+    'Radio (option4)'
     radio radioOptions, item: 'option4', label: 'Option 4'
 
   ]
 
   addSection 'Sliders', [
 
-    title 'Slider'
+    'Slider'
     slider()
 
-    title 'Slider (custom range)'
+    'Slider (custom range)'
     slider 150, min: 100, max: 200
 
   ]
 
   addSection 'Textfields', [
 
-    title 'Plain'
+    'Plain'
     textfield()
 
-    title 'With Value'
+    'With Value'
     textfield 'Hello!'
 
-    title 'With Value'
+    'With Value'
     textfield label: 'Message'
 
-    title 'With Value and Label'
+    'With Value and Label'
     textfield 'Hello!', label: 'Message'
 
-    title 'Validating'
+    'Validating'
     textfield label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
 
-    title 'Validating'
+    'Validating'
     textfield '55555', label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
 
-    title 'Expandable'
+    'Expandable'
     textfield icon:'search'
 
-    title 'Expandable with Label'
+    'Expandable with Label'
     textfield icon:'search', label:'Cat pictures'
 
   ]
 
   addSection 'Textareas', [
 
-    title 'Plain'
+    'Plain'
     textarea()
 
-    title 'With Value'
+    'With Value'
     textarea 'Hello World!'
 
-    title 'With Label'
+    'With Label'
     textarea label: 'Message'
 
-    title 'With Rows'
+    'With Rows'
     textarea 'Hello World!', rows: 5
 
   ]
 
   addSection 'Badges', [
 
-    title 'Default'
+    'Default'
     badge()
 
-    title 'With Label'
+    'With Label'
     badge label: 'Inbox'
 
-    title 'With Value'
+    'With Value'
     badge 5, label: 'Inbox'
 
-    title 'With Icon'
+    'With Icon'
     badge 3, icon: 'account_box'
 
   ]
 
-  add app.page, grid cell heading 'Tables'
-  add app.page, grid cell title 'Table'
-  add app.page, grid cell table [
+  add page, grid cell heading 'Tables'
+  add page, grid cell strong 'Table'
+  add page, grid cell table [
     tr [
       th 'Material'
       th 'Quantity'
@@ -263,8 +270,8 @@ window.fluid.start (context, app) ->
     ]
   ]
 
-  add app.page, grid cell title 'Selectable Table'
-  add app.page, grid cell table [
+  add page, grid cell strong 'Selectable Table'
+  add page, grid cell table [
     tr [
       th 'Material'
       th 'Quantity'

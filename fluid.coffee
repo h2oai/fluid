@@ -662,9 +662,9 @@ Application = ->
   title = atom ''
   loaded = do event
 
-  page0 = Page isActive: yes
-  pages = items = list [ page0 ]
-  page = atom page0
+  home = Page isActive: yes
+  pages = items = list [ home ]
+  page = atom home
 
   bind fluid.context.activatePage, (id) ->
     target = null
@@ -693,7 +693,7 @@ Application = ->
   bind title, (title) -> document.title = title
 
   {
-    title, header, items, page, pages, footer, _templateOf
+    title, header, items, home, page, pages, footer, _templateOf
     loaded
   }
 
