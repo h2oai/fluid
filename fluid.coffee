@@ -492,9 +492,9 @@ Markdown = Component (opts) ->
 Menu = Components (opts) ->
   id = opts.id ? guid()
   items = toList opts.items
-  #TODO support opt.icon
+  icon = opts.icon ? 'more_vert'
   {
-    id, items
+    id, items, icon
     _template: 'none'
   }
 
