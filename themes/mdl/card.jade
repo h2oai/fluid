@@ -1,6 +1,6 @@
-.mdl-card.mdl-shadow--2dp
+.mdl-card.mdl-shadow--2dp(data-bind='style:_style')
   // ko if:_hasTitle
-  .mdl-card__title
+  .mdl-card__title.mdl-card--expand
     h2.mdl-card__title-text(data-bind='text:title')
   // /ko
   .mdl-card__supporting-text(data-bind="template:{ name:_templateOf, foreach:items }")
