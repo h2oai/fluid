@@ -4,13 +4,13 @@
 #TODO code-gen
 window.fluid.start (context, app) ->
 
-  { title, home, pages } = app
-  page = home
-  bind app.page, (it) -> page = it
+  home = app.home
 
   # --- end codegen ---
 
-  title 'Kitchen Sink'
+  app.title 'Kitchen Sink'
+
+  home.label 'Form Elements'
 
   heading = (string) -> markup "<h4>#{string}</h4>"
   strong = (string) ->  markup "<strong>#{string}</strong>"
@@ -22,8 +22,8 @@ window.fluid.start (context, app) ->
     grid examples
 
   addSection = (title, examples) ->
-    add page, grid cell heading title
-    add page, createExampleGrid examples
+    add app.page, grid cell heading title
+    add app.page, createExampleGrid examples
 
   addSection 'Buttons', [
 
@@ -245,9 +245,12 @@ window.fluid.start (context, app) ->
 
   ]
 
-  add page, grid cell heading 'Tables'
-  add page, grid cell strong 'Table'
-  add page, grid cell table [
+  tablesPage = page label: 'Tables'
+  add app.pages, tablesPage
+
+  add tablesPage, grid cell heading 'Tables'
+  add tablesPage, grid cell strong 'Table'
+  add tablesPage, grid cell table [
     tr [
       th 'Material'
       th 'Quantity'
@@ -270,8 +273,8 @@ window.fluid.start (context, app) ->
     ]
   ]
 
-  add page, grid cell strong 'Selectable Table'
-  add page, grid cell table [
+  add tablesPage, grid cell strong 'Selectable Table'
+  add tablesPage, grid cell table [
     tr [
       th 'Material'
       th 'Quantity'
