@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
+{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, thumbnail, tabset, tab, text, markup, markdown, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -35,19 +35,220 @@ window.fluid.start (context, app, home) ->
     body1 'Body 1: no wrap', wrap: off
   ]
 
-  add app.pages, formPage = page title: 'Controls'
+  allIcons = [
+    '3d_rotation'
+    'accessibility'
+    'account_balance'
+    'account_balance_wallet'
+    'account_box'
+    'account_circle'
+    'add_shopping_cart'
+    'alarm'
+    'alarm_add'
+    'alarm_off'
+    'alarm_on'
+    'android'
+    'announcement'
+    'aspect_ratio'
+    'assessment'
+    'assignment'
+    'assignment_ind'
+    'assignment_late'
+    'assignment_return'
+    'assignment_returned'
+    'assignment_turned_in'
+    'autorenew'
+    'backup'
+    'book'
+    'bookmark'
+    'bookmark_border'
+    'bug_report'
+    'build'
+    'cached'
+    'camera_enhance'
+    'card_giftcard'
+    'card_membership'
+    'card_travel'
+    'change_history'
+    'check_circle'
+    'chrome_reader_mode'
+    'class'
+    'code'
+    'credit_card'
+    'dashboard'
+    'delete'
+    'description'
+    'dns'
+    'done'
+    'done_all'
+    'eject'
+    'event'
+    'event_seat'
+    'exit_to_app'
+    'explore'
+    'extension'
+    'face'
+    'favorite'
+    'favorite_border'
+    'feedback'
+    'find_in_page'
+    'find_replace'
+    'flight_land'
+    'flight_takeoff'
+    'flip_to_back'
+    'flip_to_front'
+    'get_app'
+    'gif'
+    'grade'
+    'group_work'
+    'help'
+    'help_outline'
+    'highlight_off'
+    'history'
+    'home'
+    'hourglass_empty'
+    'hourglass_full'
+    'http'
+    'https'
+    'info'
+    'info_outline'
+    'input'
+    'invert_colors'
+    'label'
+    'label_outline'
+    'language'
+    'launch'
+    'list'
+    'lock'
+    'lock_open'
+    'lock_outline'
+    'loyalty'
+    'markunread_mailbox'
+    'note_add'
+    'offline_pin'
+    'open_in_browser'
+    'open_in_new'
+    'open_with'
+    'pageview'
+    'payment'
+    'perm_camera_mic'
+    'perm_contact_calendar'
+    'perm_data_setting'
+    'perm_device_information'
+    'perm_identity'
+    'perm_media'
+    'perm_phone_msg'
+    'perm_scan_wifi'
+    'picture_in_picture'
+    'play_for_work'
+    'polymer'
+    'power_settings_new'
+    'print'
+    'query_builder'
+    'question_answer'
+    'receipt'
+    'redeem'
+    'reorder'
+    'report_problem'
+    'restore'
+    'room'
+    'schedule'
+    'search'
+    'settings'
+    'settings_applications'
+    'settings_backup_restore'
+    'settings_bluetooth'
+    'settings_brightness'
+    'settings_cell'
+    'settings_ethernet'
+    'settings_input_antenna'
+    'settings_input_component'
+    'settings_input_composite'
+    'settings_input_hdmi'
+    'settings_input_svideo'
+    'settings_overscan'
+    'settings_phone'
+    'settings_power'
+    'settings_remote'
+    'settings_voice'
+    'shop'
+    'shop_two'
+    'shopping_basket'
+    'shopping_cart'
+    'speaker_notes'
+    'spellcheck'
+    'star_rate'
+    'stars'
+    'store'
+    'subject'
+    'supervisor_account'
+    'swap_horiz'
+    'swap_vert'
+    'swap_vertical_circle'
+    'system_update_alt'
+    'tab'
+    'tab_unselected'
+    'theaters'
+    'thumb_down'
+    'thumb_up'
+    'thumbs_up_down'
+    'toc'
+    'today'
+    'toll'
+    'track_changes'
+    'translate'
+    'trending_down'
+    'trending_flat'
+    'trending_up'
+    'turned_in'
+    'turned_in_not'
+    'verified_user'
+    'view_agenda'
+    'view_array'
+    'view_carousel'
+    'view_column'
+  ]
 
-  heading = (string) -> markup "<h4>#{string}</h4>"
-  strong = (string) ->  markup "<strong>#{string}</strong>"
+  add app.pages, iconsPage = page title: 'Icons', [
+    title 'Icons'
+
+    subhead 'Icon sizes'
+    grid ['small', 'medium', 'large', 'x-large'].map (size) ->
+      cell2 block [
+        icon 'face', size: size
+        caption size
+      ]
+
+    subhead 'Icon state'
+    grid [
+      cell2 block [
+        icon 'face', size: 'x-large'
+        caption 'active'
+      ]
+      cell2 block [
+        icon 'face', size: 'x-large', disabled: yes
+        caption 'inactive'
+      ]
+    ]
+
+    subhead 'All Icons'
+    grid allIcons.map (name) ->
+      cell2 block [
+        icon name, size: 'x-large'
+        caption name
+      ]
+  ]
+
+  add app.pages, formPage = page title: 'Controls'
 
   createExampleGrid = (elements) ->
     examples = []
     for element, i in elements when i % 2 is 0
-      examples.push cell3 block (strong element), elements[i + 1]
+      examples.push cell3 block (title element), elements[i + 1]
     grid examples
 
   addSection = (title, examples) ->
-    add formPage, grid cell heading title
+    add formPage, grid cell headline title
     add formPage, createExampleGrid examples
 
   addSection 'Buttons', [
@@ -273,8 +474,8 @@ window.fluid.start (context, app, home) ->
 
 
   add app.pages, tabsPage = page title: 'Tabs'
-  add tabsPage, grid cell heading 'Tabs'
-  add tabsPage, grid cell tabs [
+  add tabsPage, grid cell headline 'Tabs'
+  add tabsPage, grid cell tabset [
     tab "Acrylic: #{lorem}", title: 'Acrylic'
     tab "Plywood: #{lorem}", title: 'Plywood'
     tab "Laminate: #{lorem}", title: 'Laminate'
@@ -282,10 +483,10 @@ window.fluid.start (context, app, home) ->
 
 
   add app.pages, gridsPage = page title: 'Grids'
-  add gridsPage, grid cell heading 'Grids'
+  add gridsPage, grid cell headline 'Grids'
   sample = (title) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{title}</div"
 
-  add gridsPage, grid cell strong '1 x 12'
+  add gridsPage, grid cell title '1 x 12'
   add gridsPage, grid [
     cell1 sample 1
     cell1 sample 1
@@ -301,7 +502,7 @@ window.fluid.start (context, app, home) ->
     cell1 sample 1
   ]
 
-  add gridsPage, grid cell strong '3 x 4'
+  add gridsPage, grid cell title '3 x 4'
   add gridsPage, grid [
     cell3 sample 3
     cell3 sample 3
@@ -309,14 +510,14 @@ window.fluid.start (context, app, home) ->
     cell3 sample 3
   ]
 
-  add gridsPage, grid cell strong '4 x 3'
+  add gridsPage, grid cell title '4 x 3'
   add gridsPage, grid [
     cell4 sample 4
     cell4 sample 4
     cell4 sample 4
   ]
 
-  add gridsPage, grid cell strong '6-4-2'
+  add gridsPage, grid cell title '6-4-2'
   add gridsPage, grid [
     cell6 sample 6
     cell4 sample 4
@@ -324,14 +525,14 @@ window.fluid.start (context, app, home) ->
   ]
 
   add app.pages, cardsPage = page title: 'Cards'
-  add cardsPage, grid cell heading 'Cards'
+  add cardsPage, grid cell headline 'Cards'
 
-  add cardsPage, grid cell strong 'Basic'
+  add cardsPage, grid cell title 'Basic'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
     buttons: [ button -> console.log 'Hello' ]
 
-  add cardsPage, grid cell strong 'With Menu'
+  add cardsPage, grid cell title 'With Menu'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
     menu: menu [
@@ -340,13 +541,13 @@ window.fluid.start (context, app, home) ->
     ]
     buttons: [ button 'Button', color: 'primary', -> console.log 'Hello' ]
 
-  add cardsPage, grid cell strong 'Auto-width'
+  add cardsPage, grid cell title 'Auto-width'
   add cardsPage, grid cell card lorem,
     title: 'Card'
     width: 'auto'
     buttons: [ button -> console.log 'Hello' ]
 
-  add cardsPage, grid cell strong 'Custom width'
+  add cardsPage, grid cell title 'Custom width'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
     title: 'Welcome'
     height: 300
@@ -355,7 +556,7 @@ window.fluid.start (context, app, home) ->
     image: 'sample.jpg'
     buttons: [ button 'Get Started', color: 'primary', -> console.log 'Welcome!' ]
 
-  add cardsPage, grid cell strong 'Square'
+  add cardsPage, grid cell title 'Square'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',  
     title: 'Updates'
     width: 320
@@ -365,13 +566,13 @@ window.fluid.start (context, app, home) ->
     buttons: [ button 'Get Updates', color: 'primary', -> console.log 'Welcome!' ]
 
 
-  add cardsPage, grid cell strong 'Thumbnail'
+  add cardsPage, grid cell title 'Thumbnail'
   add cardsPage, grid cell thumbnail 'sample.jpg', title: 'Spaceman'
 
   add app.pages, tablesPage = page title: 'Tables'
 
-  add tablesPage, grid cell heading 'Tables'
-  add tablesPage, grid cell strong 'Table'
+  add tablesPage, grid cell headline 'Tables'
+  add tablesPage, grid cell title 'Table'
   add tablesPage, grid cell table [
     tr [
       th 'Material'
@@ -395,7 +596,7 @@ window.fluid.start (context, app, home) ->
     ]
   ]
 
-  add tablesPage, grid cell strong 'Selectable Table'
+  add tablesPage, grid cell title 'Selectable Table'
   add tablesPage, grid cell table selectable: yes, [
     tr [
       th 'Material'
