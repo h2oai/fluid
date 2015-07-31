@@ -74,7 +74,7 @@ html(lang='en')
         .mdl-mini-footer--left-section
           .mdl-logo(data-bind='text:text, visible:_hasText')
           // ko if:_hasLinks
-          ul.mdl-mini-footer--link-list
+          ul.mdl-mini-footer--link-list.mdl-cell--hide-tablet.mdl-cell--hide-phone
             // ko foreach:links
             li
               a(data-bind="attr:{ href:address }, text:title", target='_blank')
