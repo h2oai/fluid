@@ -437,8 +437,11 @@ Container = (template) ->
     }
 
 Grid = Container 'grid'
+
 Cell = (span) -> Container "cell-#{span}"
+
 Block = Container 'div'
+
 Inline = Container 'span'
 
 Thumbnail = Component (opts) ->
@@ -489,7 +492,7 @@ Tab = Components (opts) ->
     _isActive: no
   }
 
-Tabs = Components (opts) ->
+Tabset = Components (opts) ->
   items = toList opts.items
 
   # HACK
@@ -656,6 +659,32 @@ Badge = Component (opts) ->
     _template
   }
 
+Icon = Component (opts) ->
+  icon = value = opts.value ? opts.icon ? 'extension'
+  disabled = opts.disabled #TODO atom?
+  size = opts.size
+
+  sizeStyle = switch size
+    when 'small'
+      ' md-18'
+    when 'medium'
+      ' md-24'
+    when 'large'
+      ' md-36'
+    when 'x-large'
+      ' md-48'
+    else
+      ''
+
+  disabledStyle = if disabled then ' md-inactive' else ''
+
+  _class = "material-icons md-dark #{sizeStyle}#{disabledStyle}"
+
+  {
+    value, icon, _class 
+    _template: 'icon'
+  }
+  
 Textfield = Component (opts) ->
   id = guid()
   value = toAtom opts.value ? ''
@@ -874,7 +903,7 @@ window.fluid = fluid = {
   thumbnail: Thumbnail
   text: Text
   tab: Tab
-  tabs: Tabs
+  tabset: Tabset
   markup: Markup
   markdown: Markdown
   menu: Menu
@@ -882,6 +911,7 @@ window.fluid = fluid = {
   button: Button
   link: Link
   badge: Badge
+  icon: Icon
   textfield: Textfield
   textarea: Textarea
   checkbox: Checkbox
