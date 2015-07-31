@@ -13,7 +13,7 @@
   // ko if:_hasButtons
   .mdl-card__actions.mdl-card--border
     // ko foreach:buttons
-    a.mdl-button.mdl-js-button.mdl-js-ripple-effect(data-bind="text:label, click:clicked, css:{ 'mdl-button--colored':_isPrimary , 'mdl-button--accent':_isAccent }")
+    a.mdl-button.mdl-js-button.mdl-js-ripple-effect(data-bind="text:title, click:clicked, css:{ 'mdl-button--colored':_isPrimary , 'mdl-button--accent':_isAccent }")
     // /ko
   // /ko
   // ko with:menu
@@ -22,6 +22,6 @@
       i.material-icons(data-bind='text:icon')
     ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(data-bind="attr:{ 'for':id }")
       // ko foreach:items
-      li.mdl-menu__item(data-bind="attr:{ disabled:disabled }, text:label, click:clicked")
+      li.mdl-menu__item(data-bind="attr:{ disabled:disabled }, text:title, click:clicked")
       // /ko
   // /ko

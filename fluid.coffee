@@ -412,12 +412,12 @@ Footer = Component (opts) ->
 Page = Components (opts) ->
   id = guid()
   isActive = atom opts.isActive ? no
-  label = toAtom opts.label or untitled()
+  title = toAtom opts.title or untitled()
   items = toList opts.items
   load = -> fluid.context.activatePage id
 
   {
-    id, label, items, load, isActive, _templateOf
+    id, title, items, load, isActive, _templateOf
   }
 
 Container = (template) ->
@@ -474,10 +474,10 @@ Card = Components (opts) ->
 Tab = Components (opts) ->
   id = guid()
   _address = "##{id}"
-  label = toAtom opts.label or untitled()
+  title = toAtom opts.title or untitled()
   items = toList opts.items
   {
-    id, _address, label, items, _templateOf
+    id, _address, title, items, _templateOf
     _isActive: no
   }
 
@@ -546,9 +546,9 @@ TableDataCell = Component (opts) ->
 Table = Components (opts) ->
   items = toList opts.items
   selectable = opts.selectable ? no
-  _labels = items.shift()
+  _headers = items.shift()
   {
-    _labels, items, selectable
+    _headers, items, selectable
     _template: 'table'
   }
 
@@ -562,19 +562,19 @@ Menu = Components (opts) ->
   }
 
 Command = Component (opts) ->
-  label = value = toAtom opts.value or untitled()
+  title = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
   clicked = fire = toAction opts.clicked ? opts.action
 
   dispose = -> free clicked
 
   {
-    label, value, fire, clicked, disabled, dispose
+    title, value, fire, clicked, disabled, dispose
     _template: 'command'
   }
 
 Button = Component (opts) ->
-  label = value = toAtom opts.value or untitled()
+  title = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
   clicked = fire = toAction opts.clicked ? opts.action
   dispose = -> free clicked
@@ -601,58 +601,58 @@ Button = Component (opts) ->
 
   {
     #TODO id
-    label, value, icon, fire, clicked, disabled, dispose
+    title, value, icon, fire, clicked, disabled, dispose
     _isPrimary, _isAccent, _isRaised, _isSmall
     _template
   }
 
 Link = Component (opts) ->
-  label = value = toAtom opts.value or untitled()
+  title = value = toAtom opts.value or untitled()
   address = toAtom opts.address or 'http://example.com/'
   {
     #TODO id
-    label, value, address
+    title, value, address
     _class: ''
     _template: 'link'
   }
 
 Badge = Component (opts) ->
   value = toAtom opts.value or '?'
-  label = toAtom opts.label
+  title = toAtom opts.title
   icon = opts.icon
   _template = 'badge' + if icon then '-icon' else ''
   {
-    label, value, icon
+    title, value, icon
     _template
   }
 
 Textfield = Component (opts) ->
   id = guid()
   value = toAtom opts.value ? ''
-  label = toAtom opts.label ? ''
+  title = toAtom opts.title ? ''
   error = toAtom opts.error ? 'Error'
   pattern = opts.pattern
   icon = opts.icon
   _template = 'textfield' + if pattern then '-masked' else if icon then '-expandable' else ''
   {
-    id, label, value, pattern, error, icon
+    id, title, value, pattern, error, icon
     _template
   }
 
 Textarea = Component (opts) ->
   id = guid()
   value = toAtom opts.value ? ''
-  label = toAtom opts.label ? ''
+  title = toAtom opts.title ? ''
   rows = opts.rows ? 3
   {
-    id, label, value, rows
+    id, title, value, rows
     _template: 'textarea'
   }
 
 Checkbox = Component (opts) ->
   id = guid()
   checked = value = toAtom opts.value ? no
-  label = toAtom opts.label or untitled()
+  title = toAtom opts.title or untitled()
   icon = opts.icon or null
 
   _template = if icon
@@ -664,14 +664,14 @@ Checkbox = Component (opts) ->
     'checkbox'
 
   {
-    id, label, value, checked, icon
+    id, title, value, checked, icon
     _template
   }
 
 Radio = Component (opts) ->
   id = guid()
   item = opts.item ? guid()
-  label = toAtom opts.label or untitled()
+  title = toAtom opts.title or untitled()
   value = if isAtom opts.value
     opts.value
   else
@@ -681,7 +681,7 @@ Radio = Component (opts) ->
   group = hashcode value
 
   {
-    id, group, item, value, label
+    id, group, item, value, title
     _template: 'radio'
   }
 
@@ -704,7 +704,7 @@ Application = ->
   title = atom ''
   loaded = do action
 
-  home = Page label: 'Home', isActive: yes
+  home = Page title: 'Home', isActive: yes
   pages = items = list [ home ]
   page = atom home
 

@@ -51,7 +51,7 @@ html(lang='en')
           // ko if:_hasLinks
           nav.mdl-navigation.mdl-layout--large-screen-only
             // ko foreach:links
-            a.mdl-navigation__link(data-bind="attr:{ href:address }, text:label" target='_blank')
+            a.mdl-navigation__link(data-bind="attr:{ href:address }, text:title" target='_blank')
             // /ko
           // /ko
           // /ko
@@ -60,7 +60,7 @@ html(lang='en')
         span.mdl-layout-title Title
         nav.mdl-navigation
           // ko foreach:pages
-          a.mdl-navigation__link(data-bind='text:label, click:load')
+          a.mdl-navigation__link(data-bind='text:title, click:load')
           // /ko
 
       main.mdl-layout__content.mdl-color--grey-100
@@ -76,7 +76,7 @@ html(lang='en')
           ul.mdl-mini-footer--link-list
             // ko foreach:links
             li
-              a(data-bind="attr:{ href:address }, text:label", target='_blank')
+              a(data-bind="attr:{ href:address }, text:title", target='_blank')
             // /ko
           // /ko
       // /ko

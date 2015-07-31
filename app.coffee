@@ -5,7 +5,7 @@
 window.fluid.start (context, app, home) ->
   app.title 'Kitchen Sink'
 
-  add app.pages, formPage = page label: 'Form Elements'
+  add app.pages, formPage = page title: 'Form Elements'
 
   heading = (string) -> markup "<h4>#{string}</h4>"
   strong = (string) ->  markup "<strong>#{string}</strong>"
@@ -132,11 +132,11 @@ window.fluid.start (context, app, home) ->
     'Checkbox (On)'
     checkbox on
 
-    'Labeled Checkbox (On)'
-    checkbox on, label: 'Check on'
+    'Checkbox with title (On)'
+    checkbox on, title: 'Check on'
 
-    'Labeled Checkbox (Off)'
-    checkbox off, label: 'Check off'
+    'Checkbox with title (Off)'
+    checkbox off, title: 'Check off'
 
     'Switch (Off)'
     checkbox off, icon: 'switch'
@@ -144,8 +144,8 @@ window.fluid.start (context, app, home) ->
     'Switch (On)'
     checkbox on, icon: 'switch'
 
-    'Checkbox without label'
-    checkbox label: ' '
+    'Checkbox without title'
+    checkbox title: ' '
 
     'Icon Toggle'
     checkbox icon: 'wifi'
@@ -157,16 +157,16 @@ window.fluid.start (context, app, home) ->
     checkbox off, icon: 'favorite'
 
     'Radio (option1)'
-    radio radioOptions, item: 'option1', label: 'Option 1'
+    radio radioOptions, item: 'option1', title: 'Option 1'
 
     'Radio (option2)'
-    radio radioOptions, item: 'option2', label: 'Option 2'
+    radio radioOptions, item: 'option2', title: 'Option 2'
 
     'Radio (option3)'
-    radio radioOptions, item: 'option3', label: 'Option 3'
+    radio radioOptions, item: 'option3', title: 'Option 3'
 
     'Radio (option4)'
-    radio radioOptions, item: 'option4', label: 'Option 4'
+    radio radioOptions, item: 'option4', title: 'Option 4'
 
   ]
 
@@ -189,22 +189,22 @@ window.fluid.start (context, app, home) ->
     textfield 'Hello!'
 
     'With Value'
-    textfield label: 'Message'
+    textfield title: 'Message'
 
-    'With Value and Label'
-    textfield 'Hello!', label: 'Message'
-
-    'Validating'
-    textfield label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+    'With Value and Title'
+    textfield 'Hello!', title: 'Message'
 
     'Validating'
-    textfield '55555', label: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+    textfield title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+
+    'Validating'
+    textfield '55555', title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
 
     'Expandable'
     textfield icon:'search'
 
-    'Expandable with Label'
-    textfield icon:'search', label:'Cat pictures'
+    'Expandable with Title'
+    textfield icon:'search', title:'Cat pictures'
 
   ]
 
@@ -216,8 +216,8 @@ window.fluid.start (context, app, home) ->
     'With Value'
     textarea 'Hello World!'
 
-    'With Label'
-    textarea label: 'Message'
+    'With Title'
+    textarea title: 'Message'
 
     'With Rows'
     textarea 'Hello World!', rows: 5
@@ -229,11 +229,11 @@ window.fluid.start (context, app, home) ->
     'Default'
     badge()
 
-    'With Label'
-    badge label: 'Inbox'
+    'With Title'
+    badge title: 'Inbox'
 
     'With Value'
-    badge 5, label: 'Inbox'
+    badge 5, title: 'Inbox'
 
     'With Icon'
     badge 3, icon: 'account_box'
@@ -243,18 +243,18 @@ window.fluid.start (context, app, home) ->
   lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu."
 
 
-  add app.pages, tabsPage = page label: 'Tabs'
+  add app.pages, tabsPage = page title: 'Tabs'
   add tabsPage, grid cell heading 'Tabs'
   add tabsPage, grid cell tabs [
-    tab "Acrylic: #{lorem}", label: 'Acrylic'
-    tab "Plywood: #{lorem}", label: 'Plywood'
-    tab "Laminate: #{lorem}", label: 'Laminate'
+    tab "Acrylic: #{lorem}", title: 'Acrylic'
+    tab "Plywood: #{lorem}", title: 'Plywood'
+    tab "Laminate: #{lorem}", title: 'Laminate'
   ]
 
 
-  add app.pages, gridsPage = page label: 'Grids'
+  add app.pages, gridsPage = page title: 'Grids'
   add gridsPage, grid cell heading 'Grids'
-  sample = (label) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{label}</div"
+  sample = (title) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{title}</div"
 
   add gridsPage, grid cell strong '1 x 12'
   add gridsPage, grid [
@@ -294,7 +294,7 @@ window.fluid.start (context, app, home) ->
     cell2 sample 2
   ]
 
-  add app.pages, cardsPage = page label: 'Cards'
+  add app.pages, cardsPage = page title: 'Cards'
   add cardsPage, grid cell heading 'Cards'
 
   add cardsPage, grid cell strong 'Basic'
@@ -339,7 +339,7 @@ window.fluid.start (context, app, home) ->
   add cardsPage, grid cell strong 'Thumbnail'
   add cardsPage, grid cell thumbnail 'sample.jpg', title: 'Spaceman'
 
-  add app.pages, tablesPage = page label: 'Tables'
+  add app.pages, tablesPage = page title: 'Tables'
 
   add tablesPage, grid cell heading 'Tables'
   add tablesPage, grid cell strong 'Table'
@@ -390,7 +390,7 @@ window.fluid.start (context, app, home) ->
     ]
   ]
 
-  add app.pages, customPage = page label: 'Custom'
+  add app.pages, customPage = page title: 'Custom'
 
   # Markup
   add customPage, markup "<div style='background:blue; color:white; padding:5px;'>I am blue</div>"
