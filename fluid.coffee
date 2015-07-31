@@ -444,6 +444,14 @@ Block = Container 'div'
 
 Inline = Container 'span'
 
+Spinner = Component (opts) ->
+  visible = toAtom opts.visible ? yes
+
+  {
+    visible
+    _template: 'spinner'
+  }
+
 Thumbnail = Component (opts) ->
   image = value = toAtom opts.value ? opts.image #TODO apply pattern to .value attributes of other components
   title = toAtom opts.title ? ''
@@ -900,6 +908,7 @@ window.fluid = fluid = {
   pre: Pre
   inline: Inline
   card: Card
+  spinner: Spinner
   thumbnail: Thumbnail
   text: Text
   tab: Tab
