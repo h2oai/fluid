@@ -311,7 +311,13 @@ window.fluid.start (context, app, home) ->
     ]
     buttons: [ button 'Button', color: 'primary', clicked: -> console.log 'Hello' ]
 
-  add cardsPage, grid cell strong 'Wide'
+  add cardsPage, grid cell strong 'Auto-width'
+  add cardsPage, grid cell card lorem,
+    title: 'Card'
+    width: 'auto'
+    buttons: [ button clicked: -> console.log 'Hello' ]
+
+  add cardsPage, grid cell strong 'Custom width'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
     title: 'Welcome'
     height: 300
