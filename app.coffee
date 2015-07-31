@@ -5,6 +5,7 @@
 window.fluid.start (context, app, home) ->
   app.title 'Kitchen Sink'
 
+  add app.footer.buttons, button icon: 'search', -> console.log 'foo'
   add app.pages, formPage = page title: 'Form Elements'
 
   heading = (string) -> markup "<h4>#{string}</h4>"

@@ -80,6 +80,15 @@ html(lang='en')
               a(data-bind="attr:{ href:address }, text:title", target='_blank')
             // /ko
           // /ko
+        // ko if:_hasButtons
+        .mdl-mini-footer__right-section.mdl-cell--hide-phone
+          // ko foreach:buttons
+          // ko if:icon
+          button.mdl-mini-footer__social-btn(data-bind='click:clicked')
+            i.material-icons(data-bind='text:icon')
+          // /ko
+          // /ko
+        // /ko
       // /ko
 
     //-

@@ -401,12 +401,14 @@ Header = Component (opts) ->
 Footer = Component (opts) ->
   text = toAtom opts.text or untitled()
   links = toList opts.links
+  buttons = toList opts.buttons
+
   visible = toAtom opts.visible ? yes
   _hasText = from text, truthy
   _hasLinks = from links, length
-
+  _hasButtons = from buttons, length
   {
-    text, links, visible, _hasText, _hasLinks
+    text, links, buttons, visible, _hasText, _hasLinks, _hasButtons
   }
 
 Page = Components (opts) ->
