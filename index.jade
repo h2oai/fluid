@@ -58,7 +58,7 @@ html(lang='en')
           // /ko
 
       #fluid-drawer.mdl-layout__drawer
-        span.mdl-layout-title Title
+        span.mdl-layout-title(data-bind='text:title')
         nav.mdl-navigation
           // ko foreach:pages
           a.mdl-navigation__link(href='' data-bind='text:title, click:load')
