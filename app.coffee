@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, thumbnail, tabset, tab, text, markup, markdown, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
+{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -619,6 +619,24 @@ window.fluid.start (context, app, home) ->
       td '$2.35'
     ]
   ]
+
+  add app.pages, page title: 'Progress', [
+    title 'Progress Bars and Spinners'
+
+    subhead 'Indeterminate Progress Bar'
+    progress()
+
+    subhead 'Updatable Progress Bar'
+    block [
+      progress1 = progress()
+      progress1Button = button 'Update', ->
+        progress1.progress Math.floor Math.random() * 100
+    ]
+
+    subhead 'Spinner'
+    block spinner()
+  ]
+
 
   add app.pages, customPage = page title: 'Custom'
 
