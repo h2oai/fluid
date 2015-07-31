@@ -30,14 +30,17 @@ clamp = (value, min, max) ->
 
 add = (container, elements...) ->
   if container
-    if (isList container) or (_.isArray container)
-      container.push elements...
-    else if (isComponent container) and container.items
-      add container.items, elements...
-    else if isAtom container
-      add container(), elements...
+    if elements.length
+      if (isList container) or (_.isArray container)
+        container.push elements...
+      else if (isComponent container) and container.items
+        add container.items, elements...
+      else if isAtom container
+        add container(), elements...
+      else
+        console.warn 'add: source is not a container'
     else
-      console.warn 'add: source is not a container'
+      console.warn 'add: no elements to add'
   else
     console.warn 'add: source is not a container'
   return
@@ -49,17 +52,20 @@ _remove = (array, element) ->
 
 remove = (container, elements...) ->
   if container
-    if isList container
-      container.removeAll elements
-    else if _.isArray container
-      for element in elements
-        _remove container, element
-    else if (isComponent container) and container.items
-      remove container.items, elements...
-    else if isAtom container
-      remove container(), elements...
+    if elements.length
+      if isList container
+        container.removeAll elements
+      else if _.isArray container
+        for element in elements
+          _remove container, element
+      else if (isComponent container) and container.items
+        remove container.items, elements...
+      else if isAtom container
+        remove container(), elements...
+      else
+        console.warn 'remove: source is not a container'
     else
-      console.warn 'remove: source is not a container'
+      console.warn 'remove: no elements to remove'
   else
     console.warn 'remove: source is not a container'
   return
