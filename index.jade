@@ -34,7 +34,7 @@ html(lang='en')
         font-family: 'Roboto', 'Helvetica', sans-serif;
       }
 
-  body
+  body.mdl-color--grey-50
     .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
       header.mdl-layout__header
         .mdl-layout-icon
@@ -64,7 +64,7 @@ html(lang='en')
           a.mdl-navigation__link(href='' data-bind='text:title, click:load')
           // /ko
 
-      main.mdl-layout__content.mdl-color--grey-100
+      main.mdl-layout__content
         // ko foreach:pages
         .page-content(data-bind="template:{ name:_templateOf, foreach:items }, visible:isActive")
         // /ko
