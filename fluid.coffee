@@ -452,6 +452,16 @@ Spinner = Component (opts) ->
     _template: 'spinner'
   }
 
+Progress = Component (opts) ->
+  visible = toAtom opts.visible ? yes
+  progress = toAtom opts.progress ? 0
+  _indeterminate = from progress, (progress) -> progress <= 0 or progress > 100
+
+  {
+    progress, visible, _indeterminate
+    _template: 'progress'
+  }
+
 Thumbnail = Component (opts) ->
   image = value = toAtom opts.value ? opts.image #TODO apply pattern to .value attributes of other components
   title = toAtom opts.title ? ''
@@ -853,6 +863,18 @@ ko.bindingHandlers.badge =
     value = ko.unwrap valueAccessor()
     $(element).attr 'data-badge', "#{value}"
 
+
+ko.bindingHandlers.progress =
+  init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+    value = ko.unwrap valueAccessor()
+    element.addEventListener 'mdl-componentupgraded', ->
+      @MaterialProgress.setProgress value
+
+  update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+    value = ko.unwrap valueAccessor()
+    if el = element.MaterialProgress
+      el.setProgress value
+
 preload = ->
   $drawer = $ '#fluid-drawer'
   bind fluid.context.showDrawer, -> $drawer.addClass 'is-visible'
@@ -909,6 +931,7 @@ window.fluid = fluid = {
   inline: Inline
   card: Card
   spinner: Spinner
+  progress: Progress
   thumbnail: Thumbnail
   text: Text
   tab: Tab
