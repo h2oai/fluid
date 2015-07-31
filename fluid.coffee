@@ -525,6 +525,47 @@ Text = Component (opts) ->
     _template: 'html'
   }
 
+makeFontTemplate = (tag, type, opts) ->
+  classNames = []
+  classNames.push "mdl-typography--#{type}" + if opts.alt then '-color-contrast' else ''
+  for opt, selected of opts when opt isnt 'value' and opt isnt 'alt'
+    switch opt
+      when 'center', 'justify', 'left', 'right', 'capitalize', 'lowercase', 'uppercase'
+        classNames.push "mdl-typography--text-#{opt}" if selected
+      when 'wrap'
+        classNames.push "mdl-typography--text-nowrap" if not selected
+  [ "<#{tag} class='#{classNames.join ' '}'>", "</#{tag}>" ]
+
+Font = do ->
+  component_ = (tag, type) ->
+    Component (opts) ->
+      id = opts.id ? guid()
+      value = toAtom opts.value
+      [ prefix, suffix ] = makeFontTemplate tag, type, opts
+      html = from value, (value) -> prefix + _.escape(value) + suffix
+      {
+        id, value, html
+        _template: 'html'
+      }
+
+  h1 = display4 = component_ 'h1', 'display-4'
+  h2 = display3 = component_ 'h2', 'display-3'
+  h3 = display2 = component_ 'h3', 'display-2'
+  h4 = display1 = component_ 'h4', 'display-1'
+  h5 = headline = component_ 'h5', 'headline'
+  h6 = title = component_ 'h6', 'title'
+  subhead = component_ 'p', 'subhead'
+  body2 = component_ 'p', 'body-2'
+  p = body1 = component_ 'p', 'body-1'
+  caption = component_ 'p', 'caption'
+
+  {
+    h1, h2, h3, h4, h5, h6
+    display4, display3, display2, display1
+    headline, title, subhead, p
+    body2, body1, caption
+  }
+
 Markdown = Component (opts) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
@@ -759,6 +800,7 @@ Style = (obj) ->
     "#{key}:#{value}"
   "#{styles.join ';'};"
 
+
 #
 # Upgrades DOM element to MDL component.
 # e.g. data-binding="mdl:true"
@@ -864,9 +906,11 @@ window.fluid = fluid = {
   checkbox: Checkbox
   radio: Radio
   slider: Slider
+  font: Font
   tags: window.diecut
   rule: Rule
   style: Style
+
 
   # Exported for testability
   createApplication: Application
