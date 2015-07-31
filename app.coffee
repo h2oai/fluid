@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, div, span, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider, font, tags, style, rule } = window.fluid
+{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, thumbnail, tabs, tab, text, markup, markdown, menu, command, button, link, badge, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -10,29 +10,29 @@ window.fluid.start (context, app, home) ->
   add app.footer.buttons, button icon: 'search', -> console.log 'foo'
 
   add app.pages, typographyPage = page title: 'Typography', items: [
-    font.display4 'Display 4: Light 112px'  
-    font.display3 'Display 3: Regular 56px'
-    font.display2 'Display 2: Regular 45px'
-    font.display1 'Display 1: Regular 34px'
-    font.display1 'Display 1: Color Contrast', alt: on
-    font.headline 'Headline: Regular 24px'
-    font.title 'Title: Medium 20px'
-    font.title 'Title: Color Contrast', alt: on
-    font.subhead 'Subhead: Regular 16px (Device), Regular 15px (Desktop)'
-    font.subhead 'Subhead: Color Contrast', alt: on
-    font.body2 'Body 2: Medium 14px (Device), Medium 13px (Desktop)'
-    font.body2 'Body 2 Color Contrast', alt: on
-    font.body1 'Body 1: Regular 14px (Device), Regular 13px (Desktop)'
-    font.caption 'Caption: Regular 12px'
-    font.caption 'Caption: Color Contrast', alt: on
-    font.body1 'Body 1: capitalize', capitalize: on
-    font.body1 'Body 1: lowercase', lowercase: on
-    font.body1 'Body 1: uppercase', uppercase: on
-    font.body1 'Body 1: center align', center: on
-    font.body1 'Body 1: justify', justify: on
-    font.body1 'Body 1: left align', left: on
-    font.body1 'Body 1: right align', right: on
-    font.body1 'Body 1: no wrap', wrap: off
+    display4 'Display 4: Light 112px'
+    display3 'Display 3: Regular 56px'
+    display2 'Display 2: Regular 45px'
+    display1 'Display 1: Regular 34px'
+    display1 'Display 1: Color Contrast', alt: on
+    headline 'Headline: Regular 24px'
+    title 'Title: Medium 20px'
+    title 'Title: Color Contrast', alt: on
+    subhead 'Subhead: Regular 16px (Device), Regular 15px (Desktop)'
+    subhead 'Subhead: Color Contrast', alt: on
+    body2 'Body 2: Medium 14px (Device), Medium 13px (Desktop)'
+    body2 'Body 2 Color Contrast', alt: on
+    body1 'Body 1: Regular 14px (Device), Regular 13px (Desktop)'
+    caption 'Caption: Regular 12px'
+    caption 'Caption: Color Contrast', alt: on
+    body1 'Body 1: capitalize', capitalize: on
+    body1 'Body 1: lowercase', lowercase: on
+    body1 'Body 1: uppercase', uppercase: on
+    body1 'Body 1: center align', center: on
+    body1 'Body 1: justify', justify: on
+    body1 'Body 1: left align', left: on
+    body1 'Body 1: right align', right: on
+    body1 'Body 1: no wrap', wrap: off
   ]
 
   add app.pages, formPage = page title: 'Controls'
@@ -43,7 +43,7 @@ window.fluid.start (context, app, home) ->
   createExampleGrid = (elements) ->
     examples = []
     for element, i in elements when i % 2 is 0
-      examples.push cell3 div (strong element), elements[i + 1]
+      examples.push cell3 block (strong element), elements[i + 1]
     grid examples
 
   addSection = (title, examples) ->
