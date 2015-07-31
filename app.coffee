@@ -300,22 +300,22 @@ window.fluid.start (context, app, home) ->
   add cardsPage, grid cell strong 'Basic'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
-    buttons: [ button clicked: -> console.log 'Hello' ]
+    buttons: [ button -> console.log 'Hello' ]
 
   add cardsPage, grid cell strong 'With Menu'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
     menu: menu [
-      command 'command1', clicked: -> console.log 'command1'
-      command 'command2', clicked: -> console.log 'command2'
+      command 'command1', -> console.log 'command1'
+      command 'command2', -> console.log 'command2'
     ]
-    buttons: [ button 'Button', color: 'primary', clicked: -> console.log 'Hello' ]
+    buttons: [ button 'Button', color: 'primary', -> console.log 'Hello' ]
 
   add cardsPage, grid cell strong 'Auto-width'
   add cardsPage, grid cell card lorem,
     title: 'Card'
     width: 'auto'
-    buttons: [ button clicked: -> console.log 'Hello' ]
+    buttons: [ button -> console.log 'Hello' ]
 
   add cardsPage, grid cell strong 'Custom width'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
@@ -324,7 +324,7 @@ window.fluid.start (context, app, home) ->
     width: 512
     color: 'white'
     image: 'sample.jpg'
-    buttons: [ button 'Get Started', color: 'primary', clicked: -> console.log 'Welcome!' ]
+    buttons: [ button 'Get Started', color: 'primary', -> console.log 'Welcome!' ]
 
   add cardsPage, grid cell strong 'Square'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',  
@@ -333,7 +333,7 @@ window.fluid.start (context, app, home) ->
     height: 320
     color: 'white'
     image: 'sample.jpg'
-    buttons: [ button 'Get Updates', color: 'primary', clicked: -> console.log 'Welcome!' ]
+    buttons: [ button 'Get Updates', color: 'primary', -> console.log 'Welcome!' ]
 
 
   add cardsPage, grid cell strong 'Thumbnail'

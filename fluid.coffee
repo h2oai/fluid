@@ -115,11 +115,11 @@ action = (opts) ->
     _bindings.length = 0
     return
 
-  self.__event__ = yes
+  self.__fluid_action__ = yes
 
   self
 
-isAction = (a) -> if a?.__event__ then yes else no
+isAction = (a) -> if a?.__fluid_action__ then yes else no
 
 atom = (value, equalityComparer) ->
   if arguments.length is 0
@@ -226,7 +226,7 @@ act = (sources..., f) -> #TODO unused
   sources.map (source) ->
     _bind source, -> _apply sources, f
 
-eventAt0 = (sources) ->
+actionAt0 = (sources) ->
   if sources.length is 1
     source0 = sources[0]
     if isAction source0
@@ -239,7 +239,7 @@ eventAt0 = (sources) ->
     undefined
 
 bind = (sources..., f) ->
-  if evt = eventAt0 sources
+  if evt = actionAt0 sources
     _bind evt, f
   else
     sources.map (source) ->
@@ -350,6 +350,8 @@ Component = (f) ->
         # noop
       else if _.isString arg
         opts.value = arg
+      else if _.isFunction arg
+        opts.action = arg
       else if _.isObject arg
         for key, value of arg
           opts[key] = value
@@ -376,6 +378,8 @@ Components = (f) ->
           items.push value
       else if _.isString arg
         items.push Text arg
+      else if _.isFunction arg
+        opts.action = arg
       else if _.isObject arg
         for key, value of arg
           opts[key] = value
@@ -523,27 +527,6 @@ Markdown = Component (opts) ->
     _template: 'html'
   }
 
-Menu = Components (opts) ->
-  id = opts.id ? guid()
-  items = toList opts.items
-  icon = opts.icon ? 'more_vert'
-  {
-    id, items, icon
-    _template: 'none'
-  }
-
-Command = Component (opts) ->
-  label = value = toAtom opts.value or untitled()
-  disabled = toAtom opts.disabled ? no
-  clicked = fire = toAction opts.clicked
-
-  dispose = -> free clicked
-
-  {
-    label, value, fire, clicked, disabled, dispose
-    _template: 'command'
-  }
-
 TableRow = Components (opts) ->
   items = opts.items
   {
@@ -569,10 +552,31 @@ Table = Components (opts) ->
     _template: 'table'
   }
 
+Menu = Components (opts) ->
+  id = opts.id ? guid()
+  items = toList opts.items
+  icon = opts.icon ? 'more_vert'
+  {
+    id, items, icon
+    _template: 'none'
+  }
+
+Command = Component (opts) ->
+  label = value = toAtom opts.value or untitled()
+  disabled = toAtom opts.disabled ? no
+  clicked = fire = toAction opts.clicked ? opts.action
+
+  dispose = -> free clicked
+
+  {
+    label, value, fire, clicked, disabled, dispose
+    _template: 'command'
+  }
+
 Button = Component (opts) ->
   label = value = toAtom opts.value or untitled()
   disabled = toAtom opts.disabled ? no
-  clicked = fire = toAction opts.clicked
+  clicked = fire = toAction opts.clicked ? opts.action
   dispose = -> free clicked
 
   icon = opts.icon
