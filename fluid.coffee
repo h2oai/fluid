@@ -28,6 +28,21 @@ clamp = (value, min, max) ->
   else
     value
 
+at = (container, index) ->
+  if container
+    if isList container
+      if container() then container[index] else undefined
+    else if _.isArray container
+      container[index]
+    else if (isComponent container) and container.items
+      at container.items, index
+    else
+      console.warn 'at: source is not a container'
+  else
+    console.warn 'at: source is not a container'
+    undefined
+  return
+
 add = (container, elements...) ->
   if container
     if elements.length
@@ -901,9 +916,10 @@ window.fluid = fluid = {
   start
 
   get: _get, set: _set, fire: _fire
-  add, remove, clear
+  at, add, remove, clear
 
   action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
+
   extend
 
   # components
