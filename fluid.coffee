@@ -1,3 +1,4 @@
+print = (a...) -> console.log a...
 noop = ->
 truthy = (a) -> if a then yes else no
 falsy = (a) -> if a then no else yes
@@ -920,6 +921,7 @@ window.fluid = fluid = {
 
   action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
 
+  extend, print
   extend
 
   # components

@@ -1,5 +1,5 @@
 #TODO code-gen
-{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption} = window.fluid
+{ get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption, extend, print } = window.fluid
 
 #TODO code-gen
 window.fluid.start (context, app, home) ->
@@ -7,7 +7,14 @@ window.fluid.start (context, app, home) ->
 
   app.title 'Kitchen Sink'
 
-  add app.footer.buttons, button icon: 'search', -> console.log 'foo'
+  app.header.menu menu [
+    command 'command1', -> print 'command1'
+    command 'command2', -> print 'command2'
+  ]
+  add app.footer.buttons, button icon: 'search', -> print 'foo'
+
+  home.items [
+  ]
 
   add app.pages, typographyPage = page title: 'Typography', items: [
     display4 'Display 4: Light 112px'
@@ -244,11 +251,14 @@ window.fluid.start (context, app, home) ->
   createExampleGrid = (elements) ->
     examples = []
     for element, i in elements when i % 2 is 0
-      examples.push cell3 block (title element), elements[i + 1]
+      examples.push cell3 block [
+        elements[i + 1]
+        caption element
+      ]
     grid examples
 
-  addSection = (title, examples) ->
-    add formPage, grid cell headline title
+  addSection = (name, examples) ->
+    add formPage, grid cell title name
     add formPage, createExampleGrid examples
 
   addSection 'Buttons', [
@@ -471,51 +481,26 @@ window.fluid.start (context, app, home) ->
 
   ]
 
-
-
   add app.pages, tabsPage = page title: 'Tabs'
-  add tabsPage, grid cell headline 'Tabs'
+  add tabsPage, grid cell title 'Tabs'
   add tabsPage, grid cell tabset [
     tab "Acrylic: #{lorem}", title: 'Acrylic'
     tab "Plywood: #{lorem}", title: 'Plywood'
     tab "Laminate: #{lorem}", title: 'Laminate'
   ]
 
-
   add app.pages, gridsPage = page title: 'Grids'
   add gridsPage, grid cell headline 'Grids'
   sample = (title) -> markup "<div style='padding:5px;color:white;background:#aaa;height:75px'>#{title}</div"
 
   add gridsPage, grid cell title '1 x 12'
-  add gridsPage, grid [
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-    cell1 sample 1
-  ]
+  add gridsPage, grid [1 .. 12].map -> cell1 sample 1
 
   add gridsPage, grid cell title '3 x 4'
-  add gridsPage, grid [
-    cell3 sample 3
-    cell3 sample 3
-    cell3 sample 3
-    cell3 sample 3
-  ]
+  add gridsPage, grid [1 .. 4].map -> cell3 sample 3
 
   add gridsPage, grid cell title '4 x 3'
-  add gridsPage, grid [
-    cell4 sample 4
-    cell4 sample 4
-    cell4 sample 4
-  ]
+  add gridsPage, grid [1 .. 3].map -> cell4 sample 4
 
   add gridsPage, grid cell title '6-4-2'
   add gridsPage, grid [
@@ -530,22 +515,22 @@ window.fluid.start (context, app, home) ->
   add cardsPage, grid cell title 'Basic'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
-    buttons: [ button -> console.log 'Hello' ]
+    buttons: [ button -> print 'Hello' ]
 
   add cardsPage, grid cell title 'With Menu'
   add cardsPage, grid cell card lorem,  
     title: 'Card'
     menu: menu [
-      command 'command1', -> console.log 'command1'
-      command 'command2', -> console.log 'command2'
+      command 'command1', -> print 'command1'
+      command 'command2', -> print 'command2'
     ]
-    buttons: [ button 'Button', color: 'primary', -> console.log 'Hello' ]
+    buttons: [ button 'Button', color: 'primary', -> print 'Hello' ]
 
   add cardsPage, grid cell title 'Auto-width'
   add cardsPage, grid cell card lorem,
     title: 'Card'
     width: 'auto'
-    buttons: [ button -> console.log 'Hello' ]
+    buttons: [ button -> print 'Hello' ]
 
   add cardsPage, grid cell title 'Custom width'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
@@ -554,7 +539,7 @@ window.fluid.start (context, app, home) ->
     width: 512
     color: 'white'
     image: 'sample.jpg'
-    buttons: [ button 'Get Started', color: 'primary', -> console.log 'Welcome!' ]
+    buttons: [ button 'Get Started', color: 'primary', -> print 'Welcome!' ]
 
   add cardsPage, grid cell title 'Square'
   add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',  
@@ -563,61 +548,61 @@ window.fluid.start (context, app, home) ->
     height: 320
     color: 'white'
     image: 'sample.jpg'
-    buttons: [ button 'Get Updates', color: 'primary', -> console.log 'Welcome!' ]
+    buttons: [ button 'Get Updates', color: 'primary', -> print 'Welcome!' ]
 
 
   add cardsPage, grid cell title 'Thumbnail'
   add cardsPage, grid cell thumbnail 'sample.jpg', title: 'Spaceman'
 
-  add app.pages, tablesPage = page title: 'Tables'
+  add app.pages, tablesPage = page title: 'Tables', [
+    subhead 'Tables'
+    table [
+      tr [
+        th 'Material'
+        th 'Quantity'
+        th 'Unit Price'
+      ]
+      tr [
+        td 'Acrylic (Transparent)'
+        td 25
+        td '$2.90'
+      ]
+      tr [
+        td 'Plywood (Birch)'
+        td 50
+        td '$1.25'
+      ]
+      tr [
+        td 'Laminate (Gold on Blue)'
+        td 10
+        td '$2.35'
+      ]
+    ]
 
-  add tablesPage, grid cell headline 'Tables'
-  add tablesPage, grid cell title 'Table'
-  add tablesPage, grid cell table [
-    tr [
-      th 'Material'
-      th 'Quantity'
-      th 'Unit Price'
+    caption 'Plain Table'
+    table selectable: yes, [
+      tr [
+        th 'Material'
+        th 'Quantity'
+        th 'Unit Price'
+      ]
+      tr [
+        td 'Acrylic (Transparent)'
+        td 25
+        td '$2.90'
+      ]
+      tr [
+        td 'Plywood (Birch)'
+        td 50
+        td '$1.25'
+      ]
+      tr [
+        td 'Laminate (Gold on Blue)'
+        td 10
+        td '$2.35'
+      ]
     ]
-    tr [
-      td 'Acrylic (Transparent)'
-      td 25
-      td '$2.90'
-    ]
-    tr [
-      td 'Plywood (Birch)'
-      td 50
-      td '$1.25'
-    ]
-    tr [
-      td 'Laminate (Gold on Blue)'
-      td 10
-      td '$2.35'
-    ]
-  ]
-
-  add tablesPage, grid cell title 'Selectable Table'
-  add tablesPage, grid cell table selectable: yes, [
-    tr [
-      th 'Material'
-      th 'Quantity'
-      th 'Unit Price'
-    ]
-    tr [
-      td 'Acrylic (Transparent)'
-      td 25
-      td '$2.90'
-    ]
-    tr [
-      td 'Plywood (Birch)'
-      td 50
-      td '$1.25'
-    ]
-    tr [
-      td 'Laminate (Gold on Blue)'
-      td 10
-      td '$2.35'
-    ]
+    caption 'Selectable Table'
   ]
 
   add app.pages, page title: 'Progress', [
@@ -636,7 +621,6 @@ window.fluid.start (context, app, home) ->
     subhead 'Spinner'
     block spinner()
   ]
-
 
   add app.pages, customPage = page title: 'Custom'
 
