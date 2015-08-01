@@ -32,17 +32,17 @@ clamp = (value, min, max) ->
 at = (container, index) ->
   if container
     if isList container
-      if container() then container[index] else undefined
+      container()[index]
     else if _.isArray container
       container[index]
     else if (isComponent container) and container.items
       at container.items, index
     else
       console.warn 'at: source is not a container'
+      undefined
   else
     console.warn 'at: source is not a container'
     undefined
-  return
 
 add = (container, elements...) ->
   if container
