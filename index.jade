@@ -51,6 +51,14 @@ html(lang='en')
             a.mdl-navigation__link(data-bind="attr:{ href:address }, text:title" target='_blank')
             // /ko
           // /ko
+          // ko with:menu
+          button#fluid-app-menu.mdl-button.mdl-js-button.mdl-button--icon.mdl-js-ripple-effect
+            i.material-icons more_vert
+          ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for='fluid-app-menu')
+            // ko foreach:items
+            li.mdl-menu__item(data-bind="attr:{ disabled:disabled }, text:title, click:clicked")
+            // /ko
+          // /ko
           // /ko
 
       #fluid-drawer.mdl-layout__drawer
@@ -90,6 +98,7 @@ html(lang='en')
     //-
     //- Templates
     //-
+
     script(type="text/html" id="grid-template")
       include themes/mdl/grid.jade
     include themes/mdl/cell.jade

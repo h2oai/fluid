@@ -103,7 +103,6 @@ clear = (container) ->
       console.warn 'clear: source is not a container'
   else
     console.warn 'clear: source is not a container'
-
   return
 
 action = (opts) ->
@@ -414,9 +413,10 @@ Components = (f) ->
 Header = Component (opts) ->
   links = toList opts.links
   _hasLinks = from links, length
+  menu = atom null
 
   {
-    links, _hasLinks
+    links, _hasLinks, menu
   }
 
 Footer = Component (opts) ->
