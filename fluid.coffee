@@ -571,14 +571,17 @@ makeFontTemplate = (tag, type, opts) ->
         classNames.push "mdl-typography--text-#{opt}" if selected
       when 'wrap'
         classNames.push "mdl-typography--text-nowrap" if not selected
-  [ "<#{tag} class='#{classNames.join ' '}'>", "</#{tag}>" ]
+
+  prefix = "<#{tag} class='#{classNames.join ' '}'>"
+  suffix = "</#{tag}>"
+  (content) -> prefix + _.escape(content) + suffix
+
 
 Styled = (tag, type) ->
   Component (opts) ->
     id = opts.id ? guid()
     value = toAtom opts.value
-    [ prefix, suffix ] = makeFontTemplate tag, type, opts
-    html = from value, (value) -> prefix + _.escape(value) + suffix
+    html = from value, makeFontTemplate tag, type, opts
     {
       id, value, html
       _template: 'html'
