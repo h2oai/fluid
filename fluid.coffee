@@ -1,3 +1,15 @@
+if module?.exports?
+  _ = require 'lodash'
+  marked = require 'marked'
+  diecut = require 'diecut'
+  jss = require 'jss'
+  ko = require 'knockout'
+else
+  marked = window.marked
+  diecut = window.diecut
+  jss = window.jss
+  ko = window.ko
+
 print = (a...) -> console.log a...
 noop = ->
 truthy = (a) -> if a then yes else no
@@ -591,7 +603,7 @@ Markdown = Component (opts) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
   value = toAtom opts.value
-  html = from value, window.marked
+  html = from value, marked
   {
     id, value, html
     _template: 'html'
@@ -901,15 +913,15 @@ preload = ->
 
 start = (init) ->
   # Create style sheet with global selectors
-  fluid.styles = window.jss.createStyleSheet(null, named:no).attach()
+  fluid.styles = jss.createStyleSheet(null, named:no).attach()
   fluid.context = context = do Context
   fluid.app = app = do Application
   init context, app, app.home
-  window.ko.applyBindings app
+  ko.applyBindings app
   preload()
   app.loaded()
 
-window.fluid = fluid = {
+fluid = {
   version: 'Fluid 0.0.1'
 
   # Available after app start (mutable, for testability)
@@ -925,7 +937,6 @@ window.fluid = fluid = {
   action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
 
   extend, print
-  extend
 
   # components
   page: Page
@@ -970,7 +981,7 @@ window.fluid = fluid = {
   checkbox: Checkbox
   radio: Radio
   slider: Slider
-  tags: window.diecut
+  tags: diecut
   rule: Rule
   style: Style
 
@@ -986,9 +997,13 @@ window.fluid = fluid = {
   body1: Styled 'p', 'body-1'
   caption: Styled 'p', 'caption'
 
-
   # Exported for testability
   createApplication: Application
   createContext: Context
 
 }
+
+if module?.exports?
+  module.exports = fluid
+else
+  window.fluid = fluid
