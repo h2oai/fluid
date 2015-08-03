@@ -249,12 +249,12 @@ _resolve = (source) ->
       else if source.items
         source.items()
       else
-        console.warn 'cannot resolve source'
+        console.warn 'resolve: cannot resolve source'
     else
-      console.warn 'cannot resolve source'
+      console.warn 'resolve: cannot resolve source'
       undefined
   else
-    console.warn 'cannot resolve source'
+    console.warn 'resolve: cannot resolve source'
     undefined
 
 _apply = (sources, f) ->
