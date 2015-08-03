@@ -160,6 +160,10 @@ action = (opts) ->
 
 isAction = (a) -> if a?.__fluid_action__ then yes else no
 
+fixed = (value) -> value: value, __fluid_fixed__: yes
+
+isFixed = (a) -> if a?.__fluid_fixed__ then yes else no
+
 atom = (value, equalityComparer) ->
   if arguments.length is 0
     atom undefined, never
@@ -187,11 +191,18 @@ length = (a) ->
 isNode = (a) -> (isObservable a) or isAction a
 
 toAtom = (value) ->
-  if isAtom value then value else atom value
+  if isFixed value
+    value.value
+  else if isAtom value
+    value
+  else
+    atom value
 
 toList = (a) ->
   if a
-    if isList a
+    if isFixed a
+      a.value
+    else if isList a
       a
     else if isAtom a
       list a()
@@ -941,6 +952,8 @@ fluid = {
   at, add, remove, clear
 
   action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
+
+  fixed
 
   extend, print
 
