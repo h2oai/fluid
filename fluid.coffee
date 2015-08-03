@@ -5,24 +5,30 @@ if module?.exports?
   jss = require 'jss'
   ko = require 'knockout'
 else
-  marked = window.marked
-  diecut = window.diecut
-  jss = window.jss
-  ko = window.ko
+  { _, marked, diecut, jss, ko } = window
 
 print = (a...) -> console.log a...
+
 noop = ->
+
 truthy = (a) -> if a then yes else no
+
 falsy = (a) -> if a then no else yes
+
 always = -> yes
+
 never = -> no
+
 px = (value) ->
   if value is 'auto' or value is 'initial' or value is 'inherit'
     value
   else
     "#{value}px"
+
 _templateOf = (component) -> "#{component._template}-template"
+
 guid = -> _.uniqueId 'fluid-'
+
 hashcode = (obj) ->
   if obj
     if hash = obj.__fluid_hash__
