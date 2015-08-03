@@ -6,7 +6,7 @@
   "scripts": {
     "start": "coffee --watch --compile *.coffee & \njade --pretty --watch index.jade & \nbrowser-sync start --server --files \"*.js,*.css,*.html\"",
     "pack": "coffee pack.coffee",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "coffee tests.coffee"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,10 @@
   },
   "homepage": "https://github.com/h2oai/fluid",
   "devDependencies": {
+    "bower": "^1.4.1",
     "browser-sync": "^2.8.0",
-    "bower": "^1.4.1"
+    "istanbul": "^0.3.17",
+    "tape": "^4.0.2"
   },
   "dependencies": {
     "coffee-script": "^1.9.3",

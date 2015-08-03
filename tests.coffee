@@ -1,6 +1,22 @@
-test = QUnit.test
 
-{ action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to } = window.fluid
+if module?.exports?
+  fluid = require './fluid.coffee'
+  tape = require 'tape'
+  through = (o, m) -> (args...) -> m.apply o, args
+  test = (name, f) ->
+    tape name, (t) ->
+      stub =
+        ok: through t, t.ok
+        expect: through t, t.plan
+        strictEqual: through t, t.strictEqual
+        deepEqual: through t, t.deepEqual
+      f stub
+      t.end()
+else
+  fluid = window.fluid
+  test = QUnit.test
+
+{ action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to } = fluid
 
 test 'isAction', (t) ->
   t.ok no is isAction undefined
