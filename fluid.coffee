@@ -356,7 +356,7 @@ __fire = (source, args) ->
   if source
     if isComponent source
       if source.fire
-        _fire source.fire, args
+        __fire source.fire, args
       else
         undefined
     else if isAction source
