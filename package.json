@@ -6,7 +6,8 @@
   "scripts": {
     "start": "coffee --watch --compile *.coffee & \njade --pretty --watch index.jade & \nbrowser-sync start --server --files \"*.js,*.css,*.html\"",
     "pack": "coffee pack.coffee",
-    "test": "coffee tests.coffee"
+    "pretest": "coffee --compile *.coffee",
+    "test": "istanbul cover tests.js | faucet"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "bower": "^1.4.1",
     "browser-sync": "^2.8.0",
+    "faucet": "0.0.1",
     "istanbul": "^0.3.17",
     "tape": "^4.0.2"
   },

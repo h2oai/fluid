@@ -1,7 +1,6 @@
-
 if module?.exports?
-  fluid = require './fluid.coffee'
   tape = require 'tape'
+  fluid = require './fluid.js'
   through = (o, m) -> (args...) -> m.apply o, args
   test = (name, f) ->
     tape name, (t) ->
