@@ -518,17 +518,21 @@ test 'bind(component)', (t) ->
   t.strictEqual bound, yes
 
 test 'get()', (t) ->
-  a = undefined
-  t.strictEqual fluid.get(a), a
+  it = undefined
+  t.strictEqual fluid.get(it), it
 
-  a = null
-  t.strictEqual fluid.get(a), a
+  it = null
+  t.strictEqual fluid.get(it), it
 
-  a = {}
-  t.strictEqual fluid.get(a), a
+  it = {}
+  t.strictEqual fluid.get(it), it
 
+  a = answer:42
   it = atom a
   t.strictEqual fluid.get(it), a
+
+  it = list [a]
+  t.deepEqual fluid.get(it), [a]
 
   it = fluid.spinner()
   t.strictEqual fluid.get(it), undefined
