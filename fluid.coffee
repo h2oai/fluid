@@ -974,7 +974,7 @@ fluid = {
 
   fixed, isFixed
 
-  extend, print
+  show, hide, extend, print
 
   # components
   page: Page
