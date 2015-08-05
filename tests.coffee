@@ -583,6 +583,32 @@ test 'set()', (t) ->
   fluid.set it, [ 'bar' ]
   t.deepEqual fluid.get(it), [ 'bar' ]
 
+test 'fire()', (t) ->
+  t.strictEqual fluid.fire(undefined), undefined
+  t.strictEqual fluid.fire(null), undefined
+  t.strictEqual fluid.fire(42), undefined
+  t.strictEqual fluid.fire(fluid.spinner()), undefined
+
+  it = action()
+  a = null
+  b = null
+  c = {}
+  d = {}
+  bind it, (aa, bb) -> a = aa; b = bb
+  fluid.fire it, c, d
+  t.strictEqual a, c
+  t.strictEqual b, d
+
+  it = fluid.command()
+  a = null
+  b = null
+  c = {}
+  d = {}
+  bind it, (aa, bb) -> a = aa; b = bb
+  fluid.fire it, c, d
+  t.strictEqual a, c
+  t.strictEqual b, d
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?
