@@ -492,10 +492,9 @@ test 'clear()', (t) ->
 test 'bind() - invalid values', (t) ->
   it = atom 42
   bind it, null # issues harmless warning
-
   bind {}, null # issues harmless warning
-
   bind null, null # issues harmless warning
+  t.ok yes
 
 test 'bind(command)', (t) ->
   it = fluid.command()
@@ -517,6 +516,31 @@ test 'bind(component)', (t) ->
   bind it, -> bound = yes
   fluid.set it, {}
   t.strictEqual bound, yes
+
+test 'get()', (t) ->
+  a = undefined
+  t.strictEqual fluid.get(a), a
+
+  a = null
+  t.strictEqual fluid.get(a), a
+
+  a = {}
+  t.strictEqual fluid.get(a), a
+
+  it = atom a
+  t.strictEqual fluid.get(it), a
+
+  it = fluid.spinner()
+  t.strictEqual fluid.get(it), undefined
+
+  it = fluid.pre 'foo'
+  t.strictEqual fluid.get(it), 'foo'
+
+  it = fluid.block [ 'foo' ]
+  t.deepEqual fluid.get(it), [ 'foo' ]
+
+# test 'set()', (t) ->
+
 
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
