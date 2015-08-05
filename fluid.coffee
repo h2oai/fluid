@@ -277,10 +277,11 @@ _resolve = (source) ->
 _apply = (sources, f) ->
   f (sources.map _resolve)...
 
-act = (sources..., f) -> #TODO unused
-  _apply sources, f
-  sources.map (source) ->
-    _bind source, -> _apply sources, f
+#TODO unused
+# act = (sources..., f) ->
+#   _apply sources, f
+#   sources.map (source) ->
+#     _bind source, -> _apply sources, f
 
 actionAt0 = (sources) ->
   if sources.length is 1
