@@ -569,25 +569,29 @@ Tabset = Components (opts) ->
 
 Markup = Component (opts) ->
   id = opts.id ? guid()
+  visible = toAtom opts.visible ? yes
   value = html = toAtom opts.value
   {
-    id, value, html
+    id, visible, value, html
     _template: 'html'
   }
 
 Pre = Component (opts) ->
+  id = opts.id ? guid()
+  visible = toAtom opts.visible ? yes
   value = toAtom opts.value
   {
-    id, value
+    id, visible, value
     _template: 'pre'
   }
 
 Text = Component (opts) ->
   id = opts.id ? guid()
+  visible = toAtom opts.visible ? yes
   value = toAtom opts.value
   html = from value, _.escape
   {
-    id, value, html
+    id, visible, value, html
     _template: 'html'
   }
 
@@ -609,20 +613,22 @@ makeFontTemplate = (tag, type, opts) ->
 Styled = (tag, type) ->
   Component (opts) ->
     id = opts.id ? guid()
+    visible = toAtom opts.visible ? yes
     value = toAtom opts.value
     html = from value, makeFontTemplate tag, type, opts
     {
-      id, value, html
+      id, visible, value, html
       _template: 'html'
     }
 
 Markdown = Component (opts) ->
   #TODO support bare: yes/no (use spans for bare)
   id = opts.id ? guid()
+  visible = toAtom opts.visible ? yes
   value = toAtom opts.value
   html = from value, marked
   {
-    id, value, html
+    id, visible, value, html
     _template: 'html'
   }
 
