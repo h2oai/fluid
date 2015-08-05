@@ -112,13 +112,11 @@ clear = (container) ->
   if container
     if isList container
       container.removeAll()
-    else if isAtom container
-      container undefined
     else if _.isArray container
       result = container[0...]
       container.length = 0
       result
-    else if (isComponent container) and container.items
+    else if isContainer container
       clear container.items
     else if isAtom container
       clear container()
