@@ -351,6 +351,44 @@ test 'add()', (t) ->
   it = {}
   fluid.add it, b, c
 
+test 'remove()', (t) ->
+  a = {}
+  b = {}
+  c = {}
+
+  it = [ a, b, c ]
+  fluid.remove it, a, c
+  t.strictEqual fluid.length(it), 1
+  t.strictEqual fluid.at(it, 0), b
+
+  it = list [ a, b, c ]
+  fluid.remove it, a, c
+  t.strictEqual fluid.length(it), 1
+  t.strictEqual fluid.at(it, 0), b
+
+  it = [ a, b, c ]
+  atom_it = atom it
+  fluid.remove atom_it, a, c
+  t.strictEqual fluid.length(atom_it), 1
+  t.strictEqual fluid.at(atom_it, 0), b
+
+  it = fluid.block [ a, b, c ]
+  fluid.remove it, a, c
+  t.strictEqual fluid.length(it), 1
+  t.strictEqual fluid.at(it, 0), b
+
+  # noop
+  it = null
+  fluid.remove it, b, c
+
+  # noop
+  it = {}
+  fluid.remove it
+
+  # noop
+  it = {}
+  fluid.remove it, b, c
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?

@@ -96,7 +96,7 @@ remove = (container, elements...) ->
       else if _.isArray container
         for element in elements
           _remove container, element
-      else if (isComponent container) and container.items
+      else if isContainer container
         remove container.items, elements...
       else if isAtom container
         remove container(), elements...
@@ -391,6 +391,7 @@ extend = (f, opts) ->
     noop
 
 isComponent = (a) -> if a?.__fluid_component__ then yes else no
+isContainer = (a) -> (isComponent a) and a.items
 
 Component = (f) ->
   (args...) ->
