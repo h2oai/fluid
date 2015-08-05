@@ -609,6 +609,28 @@ test 'fire()', (t) ->
   t.strictEqual a, c
   t.strictEqual b, d
 
+test 'show()', (t) ->
+  t.strictEqual fluid.show(undefined), undefined
+  t.strictEqual fluid.show(null), undefined
+  t.strictEqual fluid.show(42), undefined
+  t.strictEqual fluid.show({}), undefined
+
+  it = fluid.pre visible:no
+  t.strictEqual it.visible(), no
+  fluid.show it
+  t.strictEqual it.visible(), yes
+
+test 'hide()', (t) ->
+  t.strictEqual fluid.hide(undefined), undefined
+  t.strictEqual fluid.hide(null), undefined
+  t.strictEqual fluid.hide(42), undefined
+  t.strictEqual fluid.hide({}), undefined
+
+  it = fluid.pre()
+  t.strictEqual it.visible(), yes
+  fluid.hide it
+  t.strictEqual it.visible(), no
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?
