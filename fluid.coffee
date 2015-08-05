@@ -449,7 +449,7 @@ Container = (f) ->
         for key, value of arg
           opts[key] = value
       else
-        items.push String arg
+        items.push Text String arg
 
     self = f opts
     self.__fluid_component__ = yes
