@@ -305,7 +305,56 @@ test 'from', (t) ->
   width 7
   t.strictEqual area(), 42
 
+test 'fixed', (t) ->
+  it = fluid.fixed 42
+  t.strictEqual fluid.isFixed(it), yes
 
+test 'toAtom()', (t) ->
+  t.strictEqual fluid._toAtom(fluid.fixed 42), 42
+  t.strictEqual fluid._toAtom(atom 42)(), 42
+  t.strictEqual fluid._toAtom(42)(), 42
+
+test 'toList()', (t) ->
+  t.strictEqual fluid._toList(fluid.fixed 42), 42
+
+  it = list [ 42 ]
+  t.ok isList fluid._toList(it)
+  t.strictEqual fluid._toList(it)()[0], 42
+
+  it = atom [ 42 ]
+  t.ok isList fluid._toList(it)
+  t.strictEqual fluid._toList(it)()[0], 42
+
+  it = [ 42 ]
+  t.ok isList fluid._toList(it)
+  t.strictEqual fluid._toList(it)()[0], 42
+
+  it = 42
+  t.ok isList fluid._toList(it)
+  t.strictEqual fluid._toList(it)()[0], 42
+
+  it = undefined
+  t.ok isList fluid._toList(it)
+
+test 'toAction()', (t) ->
+  it = action()
+  t.strictEqual fluid._toAction(it), it
+
+  it = (a) -> a * a
+  t.deepEqual fluid._toAction(it)(6), [ 36 ]
+
+test 'length()', (t) ->
+  a = {}
+  b = {}
+  c = {}
+
+  t.strictEqual fluid.length([ a, b, c ]), 3
+  t.strictEqual fluid.length(list [ a, b, c ]), 3
+  t.strictEqual fluid.length(fluid.block [ a, b, c ]), 3
+  t.strictEqual fluid.length(atom [ a, b, c ]), 3
+  t.strictEqual fluid.length(null), 0
+  t.strictEqual fluid.length(undefined), 0
+  t.strictEqual fluid.length(3), 0
 
 test 'at()', (t) ->
   a = {}

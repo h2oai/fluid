@@ -183,10 +183,14 @@ list = (array=[]) -> ko.observableArray array
 isList = (a) -> (isObservable a) and _.isFunction a.remove
 
 length = (a) ->
-  if _.isArray
+  if _.isArray a
     a.length
   else if isList a
     a().length
+  else if isContainer a
+    a.items().length
+  else if isAtom a
+    length a()
   else
     0
 
@@ -962,7 +966,7 @@ fluid = {
 
   action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from
 
-  fixed
+  fixed, isFixed
 
   extend, print
 
@@ -1028,7 +1032,9 @@ fluid = {
   # Exported for testability
   createApplication: Application
   createContext: Context
-
+  _toAtom: toAtom
+  _toList: toList
+  _toAction: toAction
 }
 
 if module?.exports?
