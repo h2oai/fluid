@@ -399,7 +399,7 @@ extend = (f, opts) ->
     noop
 
 isComponent = (a) -> if a?.__fluid_component__ then yes else no
-isContainer = (a) -> (isComponent a) and a.items
+isContainer = (a) -> if (isComponent a) and a.items then yes else no
 
 Component = (f) ->
   (args...) ->
@@ -436,6 +436,8 @@ Container = (f) ->
         # Clobber opts.items, which means that everything that went/goes
         #   into `items` is discarded.
         opts.items = arg
+      else if isAtom arg
+        items.push arg()
       else if _.isArray arg
         for value in arg
           items.push value
