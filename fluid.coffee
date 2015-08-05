@@ -425,7 +425,7 @@ Component = (f) ->
     self.__fluid_component__ = yes
     self
 
-Components = (f) ->
+Container = (f) ->
   (args...) ->
     items = []
     opts = { items }
@@ -475,7 +475,7 @@ Footer = Component (opts) ->
     text, links, buttons, visible, _hasText, _hasLinks, _hasButtons
   }
 
-Page = Components (opts) ->
+Page = Container (opts) ->
   id = guid()
   isActive = atom opts.isActive ? no
   title = toAtom opts.title or untitled()
@@ -486,21 +486,21 @@ Page = Components (opts) ->
     id, title, items, load, isActive, _templateOf
   }
 
-Container = (template) ->
-  Components (opts) ->
+GenericContainer = (template) ->
+  Container (opts) ->
     items = toList opts.items
     {
       items, _templateOf
       _template: template
     }
 
-Grid = Container 'grid'
+Grid = GenericContainer 'grid'
 
-Cell = (span) -> Container "cell-#{span}"
+Cell = (span) -> GenericContainer "cell-#{span}"
 
-Block = Container 'div'
+Block = GenericContainer 'div'
 
-Inline = Container 'span'
+Inline = GenericContainer 'span'
 
 Spinner = Component (opts) ->
   visible = toAtom opts.visible ? yes
@@ -534,7 +534,7 @@ Thumbnail = Component (opts) ->
     _template: 'thumbnail'
   }
 
-Card = Components (opts) ->
+Card = Container (opts) ->
   items = toList opts.items
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
@@ -558,7 +558,7 @@ Card = Components (opts) ->
     _template: 'card'
   }
 
-Tab = Components (opts) ->
+Tab = Container (opts) ->
   id = guid()
   _address = "##{id}"
   title = toAtom opts.title or untitled()
@@ -568,7 +568,7 @@ Tab = Components (opts) ->
     _isActive: no
   }
 
-Tabset = Components (opts) ->
+Tabset = Container (opts) ->
   items = toList opts.items
 
   # HACK
@@ -645,7 +645,7 @@ Markdown = Component (opts) ->
     _template: 'html'
   }
 
-TableRow = Components (opts) ->
+TableRow = Container (opts) ->
   items = opts.items
   {
     items
@@ -661,7 +661,7 @@ TableDataCell = Component (opts) ->
     value, _isNonNumeric
   }
 
-Table = Components (opts) ->
+Table = Container (opts) ->
   items = toList opts.items
   selectable = opts.selectable ? no
   _headers = items.shift()
@@ -670,7 +670,7 @@ Table = Components (opts) ->
     _template: 'table'
   }
 
-Menu = Components (opts) ->
+Menu = Container (opts) ->
   id = opts.id ? guid()
   items = toList opts.items
   icon = opts.icon ? 'more_vert'
@@ -1038,6 +1038,8 @@ fluid = {
   # Exported for testability
   createApplication: Application
   createContext: Context
+  createComponent: Component
+  createContainer: Container
   _toAtom: toAtom
   _toList: toList
   _toAction: toAction
