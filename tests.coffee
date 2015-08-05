@@ -313,6 +313,44 @@ test 'at()', (t) ->
   it = 10
   t.strictEqual fluid.at(it, 0), undefined
 
+test 'add()', (t) ->
+  a = {}
+  b = {}
+  c = {}
+
+  it = [ a ]
+  fluid.add it, b, c
+  t.strictEqual fluid.at(it, 1), b
+  t.strictEqual fluid.at(it, 2), c
+
+  it = list [ a ]
+  fluid.add it, b, c
+  t.strictEqual fluid.at(it, 1), b
+  t.strictEqual fluid.at(it, 2), c
+
+  it = [ a ]
+  atom_it = atom it
+  fluid.add atom_it, b, c
+  t.strictEqual fluid.at(atom_it, 1), b
+  t.strictEqual fluid.at(atom_it, 2), c
+
+  it = fluid.block [ a ]
+  fluid.add it, b, c
+  t.strictEqual fluid.at(it, 1), b
+  t.strictEqual fluid.at(it, 2), c
+
+  # noop
+  it = null
+  fluid.add it, b, c
+
+  # noop
+  it = {}
+  fluid.add it
+
+  # noop
+  it = {}
+  fluid.add it, b, c
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?
