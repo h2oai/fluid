@@ -631,6 +631,41 @@ test 'hide()', (t) ->
   fluid.hide it
   t.strictEqual it.visible(), no
 
+test 'component cons / arg coalescing', (t) ->
+  opts = null
+  cons = fluid.createComponent (arg) -> opts = arg; {}
+
+  it = cons()
+  t.ok fluid.isComponent it
+  t.deepEqual opts, {}
+
+  it = cons a = cons()
+  t.strictEqual opts.value, a
+
+  it = cons a = []
+  t.strictEqual opts.value, undefined
+
+  it = cons a = undefined
+  t.strictEqual opts.value, a
+
+  it = cons a = null
+  t.strictEqual opts.value, a
+
+  it = cons a = 42
+  t.strictEqual opts.value, a
+
+  it = cons a = 'foo'
+  t.strictEqual opts.value, a
+
+  it = cons a = atom 42
+  t.strictEqual opts.value, a
+
+  it = cons a = ->
+  t.strictEqual opts.action, a
+
+  it = cons a = foo: 42, bar: 43
+  t.deepEqual opts, a
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?
