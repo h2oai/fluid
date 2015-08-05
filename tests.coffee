@@ -543,8 +543,45 @@ test 'get()', (t) ->
   it = fluid.block [ 'foo' ]
   t.deepEqual fluid.get(it), [ 'foo' ]
 
-# test 'set()', (t) ->
+test 'set()', (t) ->
+  it = undefined
+  t.strictEqual fluid.set(it, 42), undefined
 
+  it = null
+  t.strictEqual fluid.set(it, 42), undefined
+
+  it = {}
+  t.deepEqual fluid.set(it, 42), undefined
+
+  a = answer:42
+  b = answer:43
+
+  it = atom a
+  fluid.set(it, b)
+  t.strictEqual fluid.get(it), b
+
+  it = list [ a ]
+  fluid.set(it, [ b ])
+  t.deepEqual fluid.get(it), [ b ]
+
+  it = list [ a ]
+  fluid.set(it, b)
+  t.deepEqual fluid.get(it), [ b ]
+
+  it = fluid.spinner()
+  t.strictEqual fluid.set(it, a), undefined
+
+  it = fluid.pre 'foo'
+  fluid.set it, 'bar'
+  t.strictEqual fluid.get(it), 'bar'
+
+  it = fluid.block [ 'foo' ]
+  fluid.set it, 'bar'
+  t.deepEqual fluid.get(it), [ 'bar' ]
+
+  it = fluid.block [ 'foo' ]
+  fluid.set it, [ 'bar' ]
+  t.deepEqual fluid.get(it), [ 'bar' ]
 
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
