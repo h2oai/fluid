@@ -340,8 +340,13 @@ _set = (source, value) ->
         _set source.items, value
       else
         undefined
-    else if isObservable source
+    else if isAtom source
       source value
+    else if isList source
+      if _.isArray value
+        source value
+      else
+        source [ value ]
     else
       undefined
   else
