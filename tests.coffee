@@ -289,3 +289,22 @@ test 'from', (t) ->
   t.strictEqual area(), 42
 
 
+
+test 'pre(string)', (t) ->
+  it = fluid.pre 'foo'
+  t.ok it.id?
+  t.strictEqual it.visible(), yes
+  t.strictEqual it.value(), 'foo'
+  t.strictEqual it._template, 'pre'
+
+test 'pre(value:string)', (t) ->
+  it = fluid.pre value:'foo'
+  t.strictEqual it.value(), 'foo'
+
+test 'pre(id:id)', (t) ->
+  it = fluid.pre id:'foo'
+  t.strictEqual it.id, 'foo'
+
+test 'pre(visible:visible)', (t) ->
+  it = fluid.pre visible:no
+  t.strictEqual it.visible(), no
