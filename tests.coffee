@@ -489,6 +489,35 @@ test 'clear()', (t) ->
   it = {}
   fluid.clear it
 
+test 'bind() - invalid values', (t) ->
+  it = atom 42
+  bind it, null # issues harmless warning
+
+  bind {}, null # issues harmless warning
+
+  bind null, null # issues harmless warning
+
+test 'bind(command)', (t) ->
+  it = fluid.command()
+  bound = no
+  bind it, -> bound = yes
+  it.clicked()
+  t.strictEqual bound, yes
+
+test 'bind(container)', (t) ->
+  it = fluid.block()
+  bound = no
+  bind it, -> bound = yes
+  fluid.add it, {}
+  t.strictEqual bound, yes
+
+test 'bind(component)', (t) ->
+  it = fluid.pre()
+  bound = no
+  bind it, -> bound = yes
+  fluid.set it, {}
+  t.strictEqual bound, yes
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?
