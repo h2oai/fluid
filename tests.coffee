@@ -290,6 +290,29 @@ test 'from', (t) ->
 
 
 
+test 'at()', (t) ->
+  a = {}
+  it = [ a ]
+  t.strictEqual fluid.at(it, 0), a
+
+  it = list [ a ]
+  t.strictEqual fluid.at(it, 0), a
+
+  it = fluid.block [ a ]
+  t.strictEqual fluid.at(it, 0), a
+
+  it = 0:a
+  t.strictEqual fluid.at(it, 0), a
+
+  it = foo:a
+  t.strictEqual fluid.at(it, 'foo'), a
+
+  it = null
+  t.strictEqual fluid.at(it, 0), undefined
+
+  it = 10
+  t.strictEqual fluid.at(it, 0), undefined
+
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
   t.ok it.id?

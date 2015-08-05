@@ -53,8 +53,12 @@ at = (container, index) ->
       container()[index]
     else if _.isArray container
       container[index]
-    else if (isComponent container) and container.items
+    else if isContainer container
       at container.items, index
+    else if isAtom container
+      at container(), index
+    else if (_.isObject container)
+      container[index]
     else
       console.warn 'at: source is not a container'
       undefined
