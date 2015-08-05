@@ -78,19 +78,36 @@ test 'action should stop propagating when disposed', (t) ->
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'action should not fail when unbound', (t) ->
-  j = do action
+test 'unicast action should not fail when unbound', (t) ->
+  j = action multicast:off
   result = null
   result = j 1, 2, 3
   t.ok result is undefined
 
-test 'action should propagate when linked', (t) ->
-  j = do action
+test 'unicast action should propagate when linked', (t) ->
+  j = action multicast:off
   bind j, (a, b, c) -> a + b + c
-  t.deepEqual j(1, 2, 3), [6]
+  t.deepEqual j(1, 2, 3), 6
+
+test 'unicast action should allow rebinding', (t) ->
+  j = action multicast:off
+  bind j, (a, b, c) -> a + b + c
+  t.deepEqual j(1, 2, 3), 6
+  bind j, (a, b, c) -> a + b * c # issues harmless warning
+  t.deepEqual j(1, 2, 3), 7
+
+test 'unicast action should stop propagating when unbound', (t) ->
+  j = action multicast:off
+  f = (a, b, c) -> a + b + c
+  binding = bind j, f
+  t.deepEqual j(1, 2, 3), 6
+  unbind binding
+  result = null
+  result = j 1, 2, 3
+  t.ok result is undefined
 
 test 'action should allow multicasting', (t) ->
-  j = do action
+  j = action multicast:on # default, but anyway...
   add = (a, b, c) -> a + b + c
   multiply = (a, b, c) -> a * b * c
   bind j, add
