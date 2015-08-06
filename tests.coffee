@@ -17,7 +17,7 @@ else
   fluid = window.fluid
   test = QUnit.test
 
-{ at, get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, fixed, isFixed, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, pre, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption, show, hide, extend, print, _toAtom, _toList, _toAction, createComponent, createContainer, isComponent, _header, _footer } = fluid
+{ at, get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, fixed, isFixed, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, pre, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, css, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption, show, hide, extend, print, _toAtom, _toList, _toAction, createComponent, createContainer, isComponent, _header, _footer } = fluid
 
 test 'isAction', (t) ->
   t.ok no is isAction undefined

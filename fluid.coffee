@@ -888,7 +888,7 @@ Application = ->
     loaded
   }
 
-Rule = (obj) ->
+Css = (obj) ->
   if obj
     rules = fluid.styles.addRule obj
     rules[0].className
@@ -1025,7 +1025,7 @@ fluid = {
   radio: Radio
   slider: Slider
   tags: diecut
-  rule: Rule
+  css: Css
   style: Style
 
   # Typography
