@@ -110,30 +110,30 @@ test 'unicast action should stop propagating when unbound', (t) ->
 
 test 'action should allow multicasting', (t) ->
   j = action multicast:on # default, but anyway...
-  add = (a, b, c) -> a + b + c
-  multiply = (a, b, c) -> a * b * c
-  bind j, add
-  bind j, multiply
+  f1 = (a, b, c) -> a + b + c
+  f2 = (a, b, c) -> a * b * c
+  bind j, f1
+  bind j, f2
   t.deepEqual j(2, 3, 4), [9, 24]
 
 test 'action should stop propagating when unbound', (t) ->
   j = do action
-  add = (a, b, c) -> a + b + c
-  multiply = (a, b, c) -> a * b * c
-  additionbinding = bind j, add
-  multiplicationbinding = bind j, multiply
+  f1 = (a, b, c) -> a + b + c
+  f2 = (a, b, c) -> a * b * c
+  binding1 = bind j, f1
+  binding2 = bind j, f2
   t.deepEqual j(2, 3, 4), [9, 24]
-  unbind additionbinding
+  unbind binding1
   t.deepEqual j(2, 3, 4), [24]
-  unbind multiplicationbinding
+  unbind binding2
   t.ok j(2, 3, 4) is undefined
 
 test 'action should stop propagating when disposed', (t) ->
   j = do action
-  add = (a, b, c) -> a + b + c
-  multiply = (a, b, c) -> a * b * c
-  additionbinding = bind j, add
-  multiplicationbinding = bind j, multiply
+  f1 = (a, b, c) -> a + b + c
+  f2 = (a, b, c) -> a * b * c
+  binding1 = bind j, f1
+  binding2 = bind j, f2
   t.deepEqual j(2, 3, 4), [9, 24]
   j.dispose()
   t.ok j(2, 3, 4) is undefined
