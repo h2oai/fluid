@@ -493,9 +493,10 @@ Page = Container (opts) ->
 
 GenericContainer = (template) ->
   Container (opts) ->
+    visible = toAtom opts.visible ? yes
     items = toList opts.items
     {
-      items, _templateOf
+      items, visible, _templateOf
       _template: template
     }
 
@@ -527,6 +528,7 @@ Progress = Component (opts) ->
 
 Thumbnail = Component (opts) ->
   image = value = toAtom opts.value ? opts.image #TODO apply pattern to .value attributes of other components
+  visible = toAtom opts.visible ? yes
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   _style =
@@ -535,12 +537,13 @@ Thumbnail = Component (opts) ->
     background: from image, (url) -> "url('#{url}') center / cover"
 
   {
-    _hasTitle, title, image, value, _style
+    _hasTitle, title, image, visible, value, _style
     _template: 'thumbnail'
   }
 
 Card = Container (opts) ->
   items = toList opts.items
+  visible = toAtom opts.visible ? yes
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
@@ -559,7 +562,7 @@ Card = Container (opts) ->
   _titleStyle.color = opts.color if opts.color
 
   {
-    _hasTitle, title, items, _hasButtons, buttons, menu, image, _hasImage, _style, _titleStyle, _templateOf
+    _hasTitle, visible, title, items, _hasButtons, buttons, menu, image, _hasImage, _style, _titleStyle, _templateOf
     _template: 'card'
   }
 
@@ -575,13 +578,14 @@ Tab = Container (opts) ->
 
 Tabset = Container (opts) ->
   items = toList opts.items
+  visible = toAtom opts.visible ? yes
 
   # HACK
   for item, i in items()
     item._isActive = i is 0
 
   {
-    items
+    items, visible
     _template: 'tabs'
   }
 
@@ -668,10 +672,11 @@ TableDataCell = Component (opts) ->
 
 Table = Container (opts) ->
   items = toList opts.items
+  visible = toAtom opts.visible ? yes
   selectable = opts.selectable ? no
   _headers = items.shift()
   {
-    _headers, items, selectable
+    _headers, visible, items, selectable
     _template: 'table'
   }
 
@@ -698,6 +703,7 @@ Command = Component (opts) ->
 
 Button = Component (opts) ->
   title = value = toAtom opts.value or untitled()
+  visible = toAtom opts.visible ? yes
   disabled = toAtom opts.disabled ? no
   clicked = fire = toAction opts.clicked ? opts.action
   dispose = -> free clicked
@@ -724,33 +730,36 @@ Button = Component (opts) ->
 
   {
     #TODO id
-    title, value, icon, fire, clicked, disabled, dispose
+    title, visible, value, icon, fire, clicked, disabled, dispose
     _isPrimary, _isAccent, _isRaised, _isSmall
     _template
   }
 
 Link = Component (opts) ->
   title = value = toAtom opts.value or untitled()
+  visible = toAtom opts.visible ? yes
   address = toAtom opts.address or 'http://example.com/'
   {
     #TODO id
-    title, value, address
+    title, value, visible, address
     _class: ''
     _template: 'link'
   }
 
 Badge = Component (opts) ->
   value = toAtom opts.value or '?'
+  visible = toAtom opts.visible ? yes
   title = toAtom opts.title
   icon = opts.icon
   _template = 'badge' + if icon then '-icon' else ''
   {
-    title, value, icon
+    title, visible, value, icon
     _template
   }
 
 Icon = Component (opts) ->
   icon = value = opts.value ? opts.icon ? 'extension'
+  visible = toAtom opts.visible ? yes
   disabled = opts.disabled #TODO atom?
   size = opts.size
 
@@ -771,12 +780,13 @@ Icon = Component (opts) ->
   _class = "material-icons md-dark #{sizeStyle}#{disabledStyle}"
 
   {
-    value, icon, _class 
+    value, visible, icon, _class 
     _template: 'icon'
   }
   
 Textfield = Component (opts) ->
   id = guid()
+  visible = toAtom opts.visible ? yes
   value = toAtom opts.value ? ''
   title = toAtom opts.title ? ''
   error = toAtom opts.error ? 'Error'
@@ -784,22 +794,24 @@ Textfield = Component (opts) ->
   icon = opts.icon
   _template = 'textfield' + if pattern then '-masked' else if icon then '-expandable' else ''
   {
-    id, title, value, pattern, error, icon
+    id, title, value, visible, pattern, error, icon
     _template
   }
 
 Textarea = Component (opts) ->
   id = guid()
+  visible = toAtom opts.visible ? yes
   value = toAtom opts.value ? ''
   title = toAtom opts.title ? ''
   rows = opts.rows ? 3
   {
-    id, title, value, rows
+    id, title, value, visible, rows
     _template: 'textarea'
   }
 
 Checkbox = Component (opts) ->
   id = guid()
+  visible = toAtom opts.visible ? yes
   checked = value = toAtom opts.value ? no
   title = toAtom opts.title or untitled()
   icon = opts.icon or null
@@ -813,12 +825,13 @@ Checkbox = Component (opts) ->
     'checkbox'
 
   {
-    id, title, value, checked, icon
+    id, title, value, checked, visible, icon
     _template
   }
 
 Radio = Component (opts) ->
   id = guid()
+  visible = toAtom opts.visible ? yes
   item = opts.item ? guid()
   title = toAtom opts.title or untitled()
   value = if isAtom opts.value
@@ -830,17 +843,18 @@ Radio = Component (opts) ->
   group = hashcode value
 
   {
-    id, group, item, value, title
+    id, group, item, value, visible, title
     _template: 'radio'
   }
 
 Slider = Component (opts) ->
   value = toAtom opts.value ? 0
+  visible = toAtom opts.visible ? yes
   min = opts.min ? 0
   max = opts.max ? 100
 
   {
-    value, min, max
+    value, min, max, visible
     _template: 'slider'
   }
 
