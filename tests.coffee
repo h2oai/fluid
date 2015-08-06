@@ -17,7 +17,7 @@ else
   fluid = window.fluid
   test = QUnit.test
 
-{ action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to } = fluid
+{ fixed, isFixed, action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to , fixed, _toAtom, _toList, _toAction, at, add, remove, clear, get, set, fire, length, command, block, pre, spinner, show, hide, createContainer, createComponent, isComponent } = fluid
 
 test 'isAction', (t) ->
   t.ok no is isAction undefined
@@ -308,78 +308,78 @@ test 'from', (t) ->
   t.strictEqual area(), 42
 
 test 'fixed', (t) ->
-  it = fluid.fixed 42
-  t.strictEqual fluid.isFixed(it), yes
+  it = fixed 42
+  t.strictEqual isFixed(it), yes
 
 test 'toAtom()', (t) ->
-  t.strictEqual fluid._toAtom(fluid.fixed 42), 42
-  t.strictEqual fluid._toAtom(atom 42)(), 42
-  t.strictEqual fluid._toAtom(42)(), 42
+  t.strictEqual _toAtom(fixed 42), 42
+  t.strictEqual _toAtom(atom 42)(), 42
+  t.strictEqual _toAtom(42)(), 42
 
 test 'toList()', (t) ->
-  t.strictEqual fluid._toList(fluid.fixed 42), 42
+  t.strictEqual _toList(fixed 42), 42
 
   it = list [ 42 ]
-  t.ok isList fluid._toList(it)
-  t.strictEqual fluid._toList(it)()[0], 42
+  t.ok isList _toList(it)
+  t.strictEqual _toList(it)()[0], 42
 
   it = atom [ 42 ]
-  t.ok isList fluid._toList(it)
-  t.strictEqual fluid._toList(it)()[0], 42
+  t.ok isList _toList(it)
+  t.strictEqual _toList(it)()[0], 42
 
   it = [ 42 ]
-  t.ok isList fluid._toList(it)
-  t.strictEqual fluid._toList(it)()[0], 42
+  t.ok isList _toList(it)
+  t.strictEqual _toList(it)()[0], 42
 
   it = 42
-  t.ok isList fluid._toList(it)
-  t.strictEqual fluid._toList(it)()[0], 42
+  t.ok isList _toList(it)
+  t.strictEqual _toList(it)()[0], 42
 
   it = undefined
-  t.ok isList fluid._toList(it)
+  t.ok isList _toList(it)
 
 test 'toAction()', (t) ->
   it = action()
-  t.strictEqual fluid._toAction(it), it
+  t.strictEqual _toAction(it), it
 
   it = (a) -> a * a
-  t.deepEqual fluid._toAction(it)(6), [ 36 ]
+  t.deepEqual _toAction(it)(6), [ 36 ]
 
 test 'length()', (t) ->
   a = {}
   b = {}
   c = {}
 
-  t.strictEqual fluid.length([ a, b, c ]), 3
-  t.strictEqual fluid.length(list [ a, b, c ]), 3
-  t.strictEqual fluid.length(fluid.block [ a, b, c ]), 3
-  t.strictEqual fluid.length(atom [ a, b, c ]), 3
-  t.strictEqual fluid.length(null), 0
-  t.strictEqual fluid.length(undefined), 0
-  t.strictEqual fluid.length(3), 0
+  t.strictEqual length([ a, b, c ]), 3
+  t.strictEqual length(list [ a, b, c ]), 3
+  t.strictEqual length(block [ a, b, c ]), 3
+  t.strictEqual length(atom [ a, b, c ]), 3
+  t.strictEqual length(null), 0
+  t.strictEqual length(undefined), 0
+  t.strictEqual length(3), 0
 
 test 'at()', (t) ->
   a = {}
   it = [ a ]
-  t.strictEqual fluid.at(it, 0), a
+  t.strictEqual at(it, 0), a
 
   it = list [ a ]
-  t.strictEqual fluid.at(it, 0), a
+  t.strictEqual at(it, 0), a
 
-  it = fluid.block [ a ]
-  t.strictEqual fluid.at(it, 0), a
+  it = block [ a ]
+  t.strictEqual at(it, 0), a
 
   it = 0:a
-  t.strictEqual fluid.at(it, 0), a
+  t.strictEqual at(it, 0), a
 
   it = foo:a
-  t.strictEqual fluid.at(it, 'foo'), a
+  t.strictEqual at(it, 'foo'), a
 
   it = null
-  t.strictEqual fluid.at(it, 0), undefined
+  t.strictEqual at(it, 0), undefined
 
   it = 10
-  t.strictEqual fluid.at(it, 0), undefined
+  t.strictEqual at(it, 0), undefined
 
 test 'add()', (t) ->
   a = {}
@@ -387,37 +387,37 @@ test 'add()', (t) ->
   c = {}
 
   it = [ a ]
-  fluid.add it, b, c
-  t.strictEqual fluid.at(it, 1), b
-  t.strictEqual fluid.at(it, 2), c
+  add it, b, c
+  t.strictEqual at(it, 1), b
+  t.strictEqual at(it, 2), c
 
   it = list [ a ]
-  fluid.add it, b, c
-  t.strictEqual fluid.at(it, 1), b
-  t.strictEqual fluid.at(it, 2), c
+  add it, b, c
+  t.strictEqual at(it, 1), b
+  t.strictEqual at(it, 2), c
 
   it = [ a ]
   atom_it = atom it
-  fluid.add atom_it, b, c
-  t.strictEqual fluid.at(atom_it, 1), b
-  t.strictEqual fluid.at(atom_it, 2), c
+  add atom_it, b, c
+  t.strictEqual at(atom_it, 1), b
+  t.strictEqual at(atom_it, 2), c
 
-  it = fluid.block [ a ]
-  fluid.add it, b, c
-  t.strictEqual fluid.at(it, 1), b
-  t.strictEqual fluid.at(it, 2), c
+  it = block [ a ]
+  add it, b, c
+  t.strictEqual at(it, 1), b
+  t.strictEqual at(it, 2), c
 
   # noop
   it = null
-  fluid.add it, b, c
+  add it, b, c
 
   # noop
   it = {}
-  fluid.add it
+  add it
 
   # noop
   it = {}
-  fluid.add it, b, c
+  add it, b, c
 
 test 'remove()', (t) ->
   a = {}
@@ -425,37 +425,37 @@ test 'remove()', (t) ->
   c = {}
 
   it = [ a, b, c ]
-  fluid.remove it, a, c
-  t.strictEqual fluid.length(it), 1
-  t.strictEqual fluid.at(it, 0), b
+  remove it, a, c
+  t.strictEqual length(it), 1
+  t.strictEqual at(it, 0), b
 
   it = list [ a, b, c ]
-  fluid.remove it, a, c
-  t.strictEqual fluid.length(it), 1
-  t.strictEqual fluid.at(it, 0), b
+  remove it, a, c
+  t.strictEqual length(it), 1
+  t.strictEqual at(it, 0), b
 
   it = [ a, b, c ]
   atom_it = atom it
-  fluid.remove atom_it, a, c
-  t.strictEqual fluid.length(atom_it), 1
-  t.strictEqual fluid.at(atom_it, 0), b
+  remove atom_it, a, c
+  t.strictEqual length(atom_it), 1
+  t.strictEqual at(atom_it, 0), b
 
-  it = fluid.block [ a, b, c ]
-  fluid.remove it, a, c
-  t.strictEqual fluid.length(it), 1
-  t.strictEqual fluid.at(it, 0), b
+  it = block [ a, b, c ]
+  remove it, a, c
+  t.strictEqual length(it), 1
+  t.strictEqual at(it, 0), b
 
   # noop
   it = null
-  fluid.remove it, b, c
+  remove it, b, c
 
   # noop
   it = {}
-  fluid.remove it
+  remove it
 
   # noop
   it = {}
-  fluid.remove it, b, c
+  remove it, b, c
 
 test 'clear()', (t) ->
   a = {}
@@ -463,33 +463,33 @@ test 'clear()', (t) ->
   c = {}
 
   it = [ a, b, c ]
-  t.strictEqual fluid.length(it), 3
-  fluid.clear it
-  t.strictEqual fluid.length(it), 0
+  t.strictEqual length(it), 3
+  clear it
+  t.strictEqual length(it), 0
 
   it = list [ a, b, c ]
-  t.strictEqual fluid.length(it), 3
-  fluid.clear it
-  t.strictEqual fluid.length(it), 0
+  t.strictEqual length(it), 3
+  clear it
+  t.strictEqual length(it), 0
 
   it = [ a, b, c ]
   atom_it = atom it
-  t.strictEqual fluid.length(atom_it), 3
-  fluid.clear atom_it
-  t.strictEqual fluid.length(atom_it), 0
+  t.strictEqual length(atom_it), 3
+  clear atom_it
+  t.strictEqual length(atom_it), 0
 
-  it = fluid.block [ a, b, c ]
-  t.strictEqual fluid.length(it), 3
-  fluid.clear it
-  t.strictEqual fluid.length(it), 0
+  it = block [ a, b, c ]
+  t.strictEqual length(it), 3
+  clear it
+  t.strictEqual length(it), 0
 
   # noop
   it = null
-  fluid.clear it
+  clear it
 
   # noop
   it = {}
-  fluid.clear it
+  clear it
 
 test 'bind() - invalid values', (t) ->
   it = atom 42
@@ -499,97 +499,97 @@ test 'bind() - invalid values', (t) ->
   t.ok yes
 
 test 'bind(command)', (t) ->
-  it = fluid.command()
+  it = command()
   bound = no
   bind it, -> bound = yes
   it.clicked()
   t.strictEqual bound, yes
 
 test 'bind(container)', (t) ->
-  it = fluid.block()
+  it = block()
   bound = no
   bind it, -> bound = yes
-  fluid.add it, {}
+  add it, {}
   t.strictEqual bound, yes
 
 test 'bind(component)', (t) ->
-  it = fluid.pre()
+  it = pre()
   bound = no
   bind it, -> bound = yes
-  fluid.set it, {}
+  set it, {}
   t.strictEqual bound, yes
 
 test 'get()', (t) ->
   it = undefined
-  t.strictEqual fluid.get(it), it
+  t.strictEqual get(it), it
 
   it = null
-  t.strictEqual fluid.get(it), it
+  t.strictEqual get(it), it
 
   it = {}
-  t.strictEqual fluid.get(it), it
+  t.strictEqual get(it), it
 
   a = answer:42
   it = atom a
-  t.strictEqual fluid.get(it), a
+  t.strictEqual get(it), a
 
   it = list [a]
-  t.deepEqual fluid.get(it), [a]
+  t.deepEqual get(it), [a]
 
-  it = fluid.spinner()
-  t.strictEqual fluid.get(it), undefined
+  it = spinner()
+  t.strictEqual get(it), undefined
 
-  it = fluid.pre 'foo'
-  t.strictEqual fluid.get(it), 'foo'
+  it = pre 'foo'
+  t.strictEqual get(it), 'foo'
 
-  it = fluid.block [ 'foo' ]
-  t.deepEqual fluid.get(it), [ 'foo' ]
+  it = block [ 'foo' ]
+  t.deepEqual get(it), [ 'foo' ]
 
 test 'set()', (t) ->
   it = undefined
-  t.strictEqual fluid.set(it, 42), undefined
+  t.strictEqual set(it, 42), undefined
 
   it = null
-  t.strictEqual fluid.set(it, 42), undefined
+  t.strictEqual set(it, 42), undefined
 
   it = {}
-  t.deepEqual fluid.set(it, 42), undefined
+  t.deepEqual set(it, 42), undefined
 
   a = answer:42
   b = answer:43
 
   it = atom a
-  fluid.set(it, b)
-  t.strictEqual fluid.get(it), b
+  set(it, b)
+  t.strictEqual get(it), b
 
   it = list [ a ]
-  fluid.set(it, [ b ])
-  t.deepEqual fluid.get(it), [ b ]
+  set(it, [ b ])
+  t.deepEqual get(it), [ b ]
 
   it = list [ a ]
-  fluid.set(it, b)
-  t.deepEqual fluid.get(it), [ b ]
+  set(it, b)
+  t.deepEqual get(it), [ b ]
 
-  it = fluid.spinner()
-  t.strictEqual fluid.set(it, a), undefined
+  it = spinner()
+  t.strictEqual set(it, a), undefined
 
-  it = fluid.pre 'foo'
-  fluid.set it, 'bar'
-  t.strictEqual fluid.get(it), 'bar'
+  it = pre 'foo'
+  set it, 'bar'
+  t.strictEqual get(it), 'bar'
 
-  it = fluid.block [ 'foo' ]
-  fluid.set it, 'bar'
-  t.deepEqual fluid.get(it), [ 'bar' ]
+  it = block [ 'foo' ]
+  set it, 'bar'
+  t.deepEqual get(it), [ 'bar' ]
 
-  it = fluid.block [ 'foo' ]
-  fluid.set it, [ 'bar' ]
-  t.deepEqual fluid.get(it), [ 'bar' ]
+  it = block [ 'foo' ]
+  set it, [ 'bar' ]
+  t.deepEqual get(it), [ 'bar' ]
 
 test 'fire()', (t) ->
-  t.strictEqual fluid.fire(undefined), undefined
-  t.strictEqual fluid.fire(null), undefined
-  t.strictEqual fluid.fire(42), undefined
-  t.strictEqual fluid.fire(fluid.spinner()), undefined
+  t.strictEqual fire(undefined), undefined
+  t.strictEqual fire(null), undefined
+  t.strictEqual fire(42), undefined
+  t.strictEqual fire(spinner()), undefined
 
   it = action()
   a = null
@@ -597,48 +597,48 @@ test 'fire()', (t) ->
   c = {}
   d = {}
   bind it, (aa, bb) -> a = aa; b = bb
-  fluid.fire it, c, d
+  fire it, c, d
   t.strictEqual a, c
   t.strictEqual b, d
 
-  it = fluid.command()
+  it = command()
   a = null
   b = null
   c = {}
   d = {}
   bind it, (aa, bb) -> a = aa; b = bb
-  fluid.fire it, c, d
+  fire it, c, d
   t.strictEqual a, c
   t.strictEqual b, d
 
 test 'show()', (t) ->
-  t.strictEqual fluid.show(undefined), undefined
-  t.strictEqual fluid.show(null), undefined
-  t.strictEqual fluid.show(42), undefined
-  t.strictEqual fluid.show({}), undefined
+  t.strictEqual show(undefined), undefined
+  t.strictEqual show(null), undefined
+  t.strictEqual show(42), undefined
+  t.strictEqual show({}), undefined
 
-  it = fluid.pre visible:no
+  it = pre visible:no
   t.strictEqual it.visible(), no
-  fluid.show it
+  show it
   t.strictEqual it.visible(), yes
 
 test 'hide()', (t) ->
-  t.strictEqual fluid.hide(undefined), undefined
-  t.strictEqual fluid.hide(null), undefined
-  t.strictEqual fluid.hide(42), undefined
-  t.strictEqual fluid.hide({}), undefined
+  t.strictEqual hide(undefined), undefined
+  t.strictEqual hide(null), undefined
+  t.strictEqual hide(42), undefined
+  t.strictEqual hide({}), undefined
 
-  it = fluid.pre()
+  it = pre()
   t.strictEqual it.visible(), yes
-  fluid.hide it
+  hide it
   t.strictEqual it.visible(), no
 
 test 'component cons / arg coalescing', (t) ->
   opts = null
-  cons = fluid.createComponent (arg) -> opts = arg; {}
+  cons = createComponent (arg) -> opts = arg; {}
 
   it = cons()
-  t.ok fluid.isComponent it
+  t.ok isComponent it
   t.deepEqual opts, {}
 
   it = cons a = cons()
@@ -670,17 +670,17 @@ test 'component cons / arg coalescing', (t) ->
 
 test 'container cons / arg coalescing', (t) ->
   opts = null
-  cons = fluid.createContainer (arg) -> opts = arg; {}
+  cons = createContainer (arg) -> opts = arg; {}
 
   it = cons()
-  t.ok fluid.isComponent it
+  t.ok isComponent it
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 0
 
   it = cons a = cons()
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 1
-  t.strictEqual fluid.at(opts.items, 0), a
+  t.strictEqual at(opts.items, 0), a
 
   it = cons a = [ 42, 43, 44 ]
   t.deepEqual opts.items, a
@@ -688,25 +688,25 @@ test 'container cons / arg coalescing', (t) ->
   it = cons a = undefined
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 1
-  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.ok isComponent b = at(opts.items, 0)
   t.strictEqual b.value(), 'undefined'
 
   it = cons a = null
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 1
-  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.ok isComponent b = at(opts.items, 0)
   t.strictEqual b.value(), 'null'
 
   it = cons a = 42
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 1
-  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.ok isComponent b = at(opts.items, 0)
   t.strictEqual b.value(), '42'
 
   it = cons a = 'foo'
   t.ok _.isArray opts.items
   t.strictEqual opts.items.length, 1
-  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.ok isComponent b = at(opts.items, 0)
   t.strictEqual b.value(), a
 
   it = cons a = atom 42
@@ -729,20 +729,20 @@ test 'container cons / arg coalescing', (t) ->
 
 
 test 'pre(string)', (t) ->
-  it = fluid.pre 'foo'
+  it = pre 'foo'
   t.ok it.id?
   t.strictEqual it.visible(), yes
   t.strictEqual it.value(), 'foo'
   t.strictEqual it._template, 'pre'
 
 test 'pre(value:string)', (t) ->
-  it = fluid.pre value:'foo'
+  it = pre value:'foo'
   t.strictEqual it.value(), 'foo'
 
 test 'pre(id:id)', (t) ->
-  it = fluid.pre id:'foo'
+  it = pre id:'foo'
   t.strictEqual it.id, 'foo'
 
 test 'pre(visible:visible)', (t) ->
-  it = fluid.pre visible:no
+  it = pre visible:no
   t.strictEqual it.visible(), no
