@@ -1,5 +1,6 @@
 if module?.exports?
   tape = require 'tape'
+  _ = require 'lodash'
   fluid = require './fluid.js'
   through = (o, m) -> (args...) -> m.apply o, args
   test = (name, f) ->
@@ -12,6 +13,7 @@ if module?.exports?
       f stub
       t.end()
 else
+  _ = window._
   fluid = window.fluid
   test = QUnit.test
 
@@ -665,6 +667,66 @@ test 'component cons / arg coalescing', (t) ->
 
   it = cons a = foo: 42, bar: 43
   t.deepEqual opts, a
+
+test 'container cons / arg coalescing', (t) ->
+  opts = null
+  cons = fluid.createContainer (arg) -> opts = arg; {}
+
+  it = cons()
+  t.ok fluid.isComponent it
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 0
+
+  it = cons a = cons()
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.strictEqual fluid.at(opts.items, 0), a
+
+  it = cons a = [ 42, 43, 44 ]
+  t.deepEqual opts.items, a
+
+  it = cons a = undefined
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.strictEqual b.value(), 'undefined'
+
+  it = cons a = null
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.strictEqual b.value(), 'null'
+
+  it = cons a = 42
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.strictEqual b.value(), '42'
+
+  it = cons a = 'foo'
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.ok fluid.isComponent b = fluid.at(opts.items, 0)
+  t.strictEqual b.value(), a
+
+  it = cons a = atom 42
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 1
+  t.deepEqual opts.items, [ 42 ]
+
+  it = cons a = ->
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 0
+  t.strictEqual opts.action, a
+
+  it = cons a = foo: 42, bar: 43
+  t.ok _.isArray opts.items
+  t.strictEqual opts.items.length, 0
+  t.deepEqual opts, foo: 42, bar: 43, items: []
+
+  it = cons a = list [ 42, 43, 44 ]
+  t.strictEqual opts.items, a
+
 
 test 'pre(string)', (t) ->
   it = fluid.pre 'foo'
