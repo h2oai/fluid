@@ -910,7 +910,7 @@ Css = (obj) ->
     ''
 
 Style = (obj) ->
-  styles = for key, value of obj when obj?
+  styles = for key, value of obj when value?
     "#{key}:#{value}"
   "#{styles.join ';'};"
 
