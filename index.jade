@@ -76,7 +76,7 @@ html(lang='en')
       // ko with:footer
       footer.mdl-mini-footer.mdl-cell--hide-phone(data-bind='visible:visible')
         .mdl-mini-footer--left-section
-          .mdl-logo(data-bind='text:text, visible:_hasText')
+          .mdl-logo(data-bind='text:title, visible:_hasTitle')
           // ko if:_hasLinks
           ul.mdl-mini-footer--link-list
             // ko foreach:links

@@ -194,6 +194,8 @@ length = (a) ->
   else
     0
 
+hasLength = (a) -> if length a then yes else no
+
 isNode = (a) -> (isObservable a) or isAction a
 
 toAtom = (value) ->
@@ -457,7 +459,7 @@ Container = (f) ->
 
 Header = Component (opts) ->
   links = toList opts.links
-  _hasLinks = from links, length
+  _hasLinks = from links, hasLength
   menu = atom null
 
   {
@@ -465,16 +467,17 @@ Header = Component (opts) ->
   }
 
 Footer = Component (opts) ->
-  text = toAtom opts.text or untitled()
+  title = toAtom opts.title or untitled()
   links = toList opts.links
   buttons = toList opts.buttons
 
   visible = toAtom opts.visible ? yes
-  _hasText = from text, truthy
-  _hasLinks = from links, length
-  _hasButtons = from buttons, length
+  _hasTitle = from title, truthy
+  _hasLinks = from links, hasLength
+  _hasButtons = from buttons, hasLength
+
   {
-    text, links, buttons, visible, _hasText, _hasLinks, _hasButtons
+    title, links, buttons, visible, _hasTitle, _hasLinks, _hasButtons
   }
 
 Page = Container (opts) ->
@@ -541,7 +544,7 @@ Card = Container (opts) ->
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
   buttons = toList opts.buttons ? []
-  _hasButtons = from buttons, length
+  _hasButtons = from buttons, hasLength
   menu = toAtom opts.menu
   image = toAtom opts.image
   _hasImage = from image, truthy
@@ -872,7 +875,7 @@ Application = ->
     ]
 
   footer = Footer
-    text: fluid.version
+    title: fluid.version
     links: [
       Link 'Source', address: 'https://github.com/h2oai/fluid'
       Link 'H2O.ai', address: 'http://h2o.ai/'
@@ -1045,6 +1048,8 @@ fluid = {
   _toAtom: toAtom
   _toList: toList
   _toAction: toAction
+  _header: Header
+  _footer: Footer
 }
 
 if module?.exports?
