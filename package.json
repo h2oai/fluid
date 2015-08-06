@@ -6,8 +6,9 @@
   "scripts": {
     "start": "coffee --watch --compile *.coffee & \njade --pretty --watch index.jade & \nbrowser-sync start --server --files \"*.js,*.css,*.html\"",
     "pack": "coffee pack.coffee",
-    "pretest": "coffee --compile *.coffee",
-    "test": "istanbul cover tests.js | faucet"
+    "test": "coffee --compile *.coffee && node tests.js | faucet",
+    "coverage": "coffee --compile *.coffee && istanbul cover tests.js",
+    "coveralls": "coffee --compile *.coffee && istanbul cover test.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "bower": "^1.4.1",
     "browser-sync": "^2.8.0",
+    "coveralls": "^2.11.3",
     "faucet": "0.0.1",
     "istanbul": "^0.3.17",
     "tape": "^4.0.2"
