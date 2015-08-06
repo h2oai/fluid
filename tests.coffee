@@ -17,7 +17,7 @@ else
   fluid = window.fluid
   test = QUnit.test
 
-{ fixed, isFixed, action, isAction, atom, isAtom, list, isList, bind, act, unbind, from, to , fixed, _toAtom, _toList, _toAction, at, add, remove, clear, get, set, fire, length, command, block, pre, spinner, show, hide, createContainer, createComponent, isComponent } = fluid
+{ at, get, set, fire, add, remove, clear, action, isAction, atom, isAtom, list, isList, length, bind, unbind, to, from, fixed, isFixed, page, grid, cell, cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9, cell10, cell11, cell12, table, tr, th, td, block, inline, card, spinner, progress, thumbnail, tabset, tab, text, markup, markdown, pre, menu, command, button, link, badge, icon, textfield, textarea, checkbox, radio, slider, tags, style, rule, display4, display3, display2, display1, headline, title, subhead, body2, body1, caption, show, hide, extend, print, _toAtom, _toList, _toAction, createComponent, createContainer, isComponent, _header, _footer } = fluid
 
 test 'isAction', (t) ->
   t.ok no is isAction undefined
@@ -727,6 +727,27 @@ test 'container cons / arg coalescing', (t) ->
   it = cons a = list [ 42, 43, 44 ]
   t.strictEqual opts.items, a
 
+test 'header()', (t) ->
+  it = _header()
+  t.ok isList it.links
+  t.strictEqual length(it.links), 0
+
+  it = _header links: [ 
+    link 'Help', address: 'http://example.com/help' 
+  ]
+
+  t.ok isList it.links
+  t.strictEqual it._hasLinks(), yes
+
+test 'footer()', (t) ->
+  it = _footer()
+  t.ok if it.title() then yes else no
+  t.ok isList it.links
+  t.strictEqual length(it.links), 0
+  t.ok isList it.buttons
+  t.strictEqual length(it.buttons), 0
+  t.ok isAtom it.visible
+  t.strictEqual it.visible(), yes
 
 test 'pre(string)', (t) ->
   it = pre 'foo'
@@ -735,14 +756,12 @@ test 'pre(string)', (t) ->
   t.strictEqual it.value(), 'foo'
   t.strictEqual it._template, 'pre'
 
-test 'pre(value:string)', (t) ->
   it = pre value:'foo'
   t.strictEqual it.value(), 'foo'
 
-test 'pre(id:id)', (t) ->
   it = pre id:'foo'
   t.strictEqual it.id, 'foo'
 
-test 'pre(visible:visible)', (t) ->
   it = pre visible:no
   t.strictEqual it.visible(), no
+
