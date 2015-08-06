@@ -8,7 +8,7 @@
     "pack": "coffee pack.coffee",
     "test": "coffee --compile *.coffee && node tests.js | faucet",
     "coverage": "coffee --compile *.coffee && istanbul cover tests.js",
-    "coveralls": "coffee --compile *.coffee && istanbul cover test.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "coffee --compile *.coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
