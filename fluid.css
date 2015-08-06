@@ -17,3 +17,47 @@ html, body {
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
+#fluid-developer {
+  display: none;
+  position: absolute;
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid #ddd;
+}
+
+#fluid-editor-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 100px;
+}
+
+#fluid-repl-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100px;
+  border-top: 1px solid #ddd;
+}
+
+.CodeMirror {
+  width: 100%;
+  height: 100%;
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+}
+
+
+body.fluid-is-editing .mdl-layout__container {
+  left: 0;
+  right: 50%;
+  width: auto;
+}
+
+body.fluid-is-editing #fluid-developer {
+  display: block;
+}

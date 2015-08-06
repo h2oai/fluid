@@ -860,11 +860,11 @@ Slider = Component (opts) ->
 
 Context = ->
   activatePage: do action
-  showDrawer: do action
-  hideDrawer: do action
+  toggleDrawer: do action
+  toggleEditor: do action
 
 Application = ->
-  title = atom ''
+  title = atom 'Fluid'
   loaded = do action
 
   home = Page title: 'Home', isActive: yes
@@ -880,7 +880,7 @@ Application = ->
       else
         item.isActive no
     page target
-    fluid.context.hideDrawer()
+    fluid.context.toggleDrawer()
     return
 
   header = Header
@@ -963,8 +963,8 @@ ko.bindingHandlers.progress =
 
 preload = ->
   $drawer = $ '#fluid-drawer'
-  bind fluid.context.showDrawer, -> $drawer.addClass 'is-visible'
-  bind fluid.context.hideDrawer, -> $drawer.removeClass 'is-visible'
+  bind fluid.context.toggleDrawer, -> $drawer.toggleClass 'is-visible'
+  bind fluid.context.toggleEditor, -> $('body').toggleClass 'fluid-is-editing'
 
 start = (init) ->
   # Create style sheet with global selectors
@@ -974,6 +974,13 @@ start = (init) ->
   init context, app, app.home
   ko.applyBindings app
   preload()
+
+  editor = CodeMirror.fromTextArea document.getElementById('fluid-editor'),
+    lineNumbers: yes
+
+  repl = CodeMirror.fromTextArea document.getElementById('fluid-repl'),
+    lineNumbers: yes
+
   app.loaded()
 
 fluid = {
