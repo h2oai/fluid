@@ -980,6 +980,35 @@ saveSettings = (spool) ->
         history: spool
   return
 
+createSpool = ->
+  _entries = []
+  _index = -1
+
+  if settings = loadSettings()
+    if settings.version is '1'
+      _entries = settings.repl.history
+      _index = _entries.length - 1
+
+  push: (source) ->
+    if source isnt _entries[_entries.length - 1]
+      _entries.push source
+      if _entries.length > 100
+        _entries.shift() 
+    _index = _entries.length - 1
+    saveSettings _entries
+
+  prev: ->
+    if 0 <= i = _index
+      _index--
+      _entries[i]
+
+  next: ->
+    if _entries.length > i = _index + 1
+      _index++
+      _entries[i]
+
+
+createRepl = (elementId) ->
 _start = (init) ->
   # Create style sheet with global selectors
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
@@ -988,13 +1017,7 @@ _start = (init) ->
   init context, app, app.home
   ko.applyBindings app
   preload()
-
-  editor = CodeMirror.fromTextArea document.getElementById('fluid-editor'),
-    lineNumbers: yes
-
-  repl = CodeMirror.fromTextArea document.getElementById('fluid-repl'),
-    lineNumbers: yes
-
+  createRepl 'fluid-editor'
   app.loaded()
 
 fluid = {
