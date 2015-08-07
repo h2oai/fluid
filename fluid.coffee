@@ -1007,15 +1007,16 @@ createSpool = ->
       _index++
       _entries[i]
 
+listModuleSymbols = ->
+  (k for k of fluid when '_' isnt k.charAt 0)
 
 createRepl = (elementId) ->
   _spool = createSpool()
 
   _lastReplResult = undefined
+
   _prelude = do ->
-    syms = for k of fluid when '_' isnt k.charAt 0
-      k
-    "{#{syms.join ','}} = window.fluid"
+    "{#{listModuleSymbols().join ','}} = window.fluid"
 
   evaluateSnippet = ->
     source = editor.getValue()
@@ -1029,6 +1030,7 @@ createRepl = (elementId) ->
       closure = new Function 'context', 'app', 'home', 'last', js
       console.log _lastReplResult = closure fluid.context, fluid.app, fluid.app.home, _lastReplResult
       editor.setValue ''
+      _spool.push source
     catch error
       console.error error
     finally
@@ -1041,6 +1043,7 @@ createRepl = (elementId) ->
     editor.setValue source if source = _spool.next()
 
   editor = CodeMirror.fromTextArea document.getElementById(elementId),
+    theme: 'eclipse'
     extraKeys:
       'Alt-Up': loadPreviousSnippet
       'Alt-Down': loadNextSnippet
@@ -1144,6 +1147,9 @@ fluid = {
   _toAction: toAction
   _header: Header
   _footer: Footer
+
+  # Exported for codemirror mode keyword support.
+  _symbols: listModuleSymbols
 }
 
 if module?.exports?
