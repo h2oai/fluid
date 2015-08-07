@@ -966,6 +966,19 @@ preload = ->
   bind fluid.context.toggleDrawer, -> $drawer.toggleClass 'is-visible'
   bind fluid.context.toggleEditor, -> $('body').toggleClass 'fluid-is-editing'
 
+loadSettings = ->
+  if window.localStorage?
+    if data = window.localStorage['fluid_data']
+      return JSON.parse data
+  return
+
+saveSettings = (spool) ->
+  if window.localStorage?
+    window.localStorage['fluid_data'] = JSON.stringify
+      version: '1'
+      repl:
+        history: spool
+  return
 start = (init) ->
   # Create style sheet with global selectors
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
