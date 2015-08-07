@@ -30,6 +30,7 @@
     "marked": "~0.3.3",
     "jquery": "~2.1.4",
     "jsstyles": "~2.1.2",
-    "codemirror": "~5.5.0"
+    "codemirror": "~5.5.0",
+    "coffee-script": "~1.9.3"
   }
 }
