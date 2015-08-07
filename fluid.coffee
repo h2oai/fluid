@@ -1009,6 +1009,43 @@ createSpool = ->
 
 
 createRepl = (elementId) ->
+  _spool = createSpool()
+
+  _lastReplResult = undefined
+  _prelude = do ->
+    syms = for k of fluid when '_' isnt k.charAt 0
+      k
+    "{#{syms.join ','}} = window.fluid"
+
+  evaluateSnippet = ->
+    source = editor.getValue()
+    console.group source
+    try
+      cs = _prelude + '\nreturn do ->\n' + source
+        .split "\n"
+        .map (a) -> "  #{a}"
+        .join "\n"
+      js = CoffeeScript.compile cs, bare: yes
+      closure = new Function 'context', 'app', 'home', 'last', js
+      console.log _lastReplResult = closure fluid.context, fluid.app, fluid.app.home, _lastReplResult
+      editor.setValue ''
+    catch error
+      console.error error
+    finally
+      console.groupEnd()
+
+  loadPreviousSnippet = ->
+    editor.setValue source if source = _spool.prev()
+
+  loadNextSnippet = ->
+    editor.setValue source if source = _spool.next()
+
+  editor = CodeMirror.fromTextArea document.getElementById(elementId),
+    extraKeys:
+      'Alt-Up': loadPreviousSnippet
+      'Alt-Down': loadNextSnippet
+      'Alt-Enter': evaluateSnippet
+
 _start = (init) ->
   # Create style sheet with global selectors
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
