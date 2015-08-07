@@ -1,1 +1,1 @@
-window.fluid.start (context, app, home) ->
+window.fluid._start (context, app, home) ->

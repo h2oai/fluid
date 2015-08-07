@@ -979,7 +979,8 @@ saveSettings = (spool) ->
       repl:
         history: spool
   return
-start = (init) ->
+
+_start = (init) ->
   # Create style sheet with global selectors
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
   fluid.context = context = do Context
@@ -999,12 +1000,11 @@ start = (init) ->
 fluid = {
   version: 'Fluid 0.0.1'
 
-  # Available after app start (mutable, for testability)
+  _start
+
   app: null
   context: null
   styles: null
-
-  start
 
   get: _get, set: _set, fire: _fire
   at, add, remove, clear
