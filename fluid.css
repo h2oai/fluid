@@ -48,8 +48,7 @@ html, body {
 .CodeMirror {
   width: 100%;
   height: 100%;
-  /*font-family: "Source Code Pro", monospace;
-  font-size: 14px;*/
+  font-family: 'Source Code Pro', monospace;
 }
 
 body.fluid-is-editing .mdl-layout__container {
