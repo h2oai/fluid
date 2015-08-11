@@ -6,7 +6,12 @@ mkdirp = require 'mkdirp'
 fluid = require './prototype/fluid.coffee'
 coffee = require 'coffee-script'
 
-prelude = "{ #{ fluid._symbols().join ', ' } } = window.fluid\nwindow.fluid._start (context, app, home) ->\n"
+prelude = """
+{ #{ fluid._symbols().join ', ' } } = window.fluid
+window.fluid._start (context, app, home, activePage) ->
+  bind app.page, (it) -> activePage = it
+
+"""
 
 appCoffee = path.join __dirname, 'prototype', 'app.coffee'
 appJs = path.join __dirname, 'prototype', 'app.js'

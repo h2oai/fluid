@@ -1027,8 +1027,14 @@ createRepl = (elementId) ->
         .map (a) -> "  #{a}"
         .join "\n"
       js = CoffeeScript.compile cs, bare: yes
-      closure = new Function 'context', 'app', 'home', 'last', js
-      console.log _lastReplResult = closure fluid.context, fluid.app, fluid.app.home, _lastReplResult
+      closure = new Function 'context', 'app', 'home', 'activePage', 'last', js
+      console.log _lastReplResult = closure(
+        fluid.context
+        fluid.app
+        fluid.app.home
+        fluid.app.page()
+        _lastReplResult
+      )
       editor.setValue ''
       _spool.push source
     catch error
@@ -1054,7 +1060,7 @@ _start = (init) ->
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
   fluid.context = context = do Context
   fluid.app = app = do Application
-  init context, app, app.home
+  init context, app, app.home, app.home
   ko.applyBindings app
   preload()
   createRepl 'fluid-editor'
@@ -1147,6 +1153,10 @@ fluid = {
   _toAction: toAction
   _header: Header
   _footer: Footer
+
+  # Phony keywords for codemirror
+  home: null
+  activePage: null
 
   # Exported for codemirror mode keyword support.
   _symbols: listModuleSymbols
