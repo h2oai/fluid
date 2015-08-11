@@ -7,16 +7,32 @@ rpc = (name, args..., go) ->
   request.done (data, status, xhr) -> go null, data
   request.fail (xhr, status, error) -> go error
   return
+
+_dirty = no
+_title = 'Fluid Editor'
+markDirty = ->
+  unless _dirty
+    document.title = "#{_title}*"
+    _dirty = yes
+  return
+
+markClean = ->
+  if _dirty
+    document.title = _title
+    _dirty = no
+  return
+
 autosave = ->
   if hasLocalStorage
     window.localStorage['fluid_buffer'] = editor.getValue()
-  console.log 'autosaved'
   return
 
 saveSource = ->
   rpc 'save', editor.getValue(), (error, result) ->
     if error
       console.error error
+    else
+      markClean()
 
 main = ->
   editor = CodeMirror.fromTextArea document.getElementById('fluid-editor'),
@@ -30,5 +46,6 @@ main = ->
     editor.setValue buffer
 
   editor.on 'change', _.debounce autosave, 2000
+  editor.on 'change', markDirty
 
 do main

@@ -1,1 +1,1 @@
-window.fluid._start (context, app, home) ->
+app.title 'Demo'
