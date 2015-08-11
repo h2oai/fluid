@@ -6,7 +6,7 @@
   "scripts": {
     "start": "coffee --watch --compile prototype/*.coffee editor/*.coffee tests/*.coffee & \njade --pretty --watch prototype/index.jade editor/index.jade & \ncoffee server.coffee & \nbrowser-sync start --server --files \"prototype/*.js,prototype/*.css,prototype/*.html\"",
     "pack": "coffee pack.coffee",
-    "compile-coffee": "coffee --compile prototype/*.coffee editor/*.coffee tests/*.coffee",
+    "compile-coffee": "coffee --compile editor/*.coffee tests/*.coffee",
     "test": "npm run compile-coffee && node tests/tests.js | faucet",
     "coverage": "npm run compile-coffee && istanbul cover tests/tests.js",
     "coveralls": "npm run compile-coffee && istanbul cover tests/tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
