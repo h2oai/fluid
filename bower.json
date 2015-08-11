@@ -31,6 +31,7 @@
     "jquery": "~2.1.4",
     "jsstyles": "~2.1.2",
     "codemirror": "~5.5.0",
-    "coffee-script": "~1.9.3"
+    "coffee-script": "~1.9.3",
+    "Faker": "~3.0.1"
   }
 }
