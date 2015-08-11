@@ -3,8 +3,15 @@ path = require 'path'
 express = require 'express'
 bodyParser = require 'body-parser'
 mkdirp = require 'mkdirp'
+fluid = require './prototype/fluid.coffee'
+coffee = require 'coffee-script'
 
-fileDir = path.join __dirname, 'files'
+prelude = "{ #{ fluid._symbols().join ', ' } } = window.fluid\nwindow.fluid._start (context, app, home) ->\n"
+
+appCoffee = path.join __dirname, 'prototype', 'app.coffee'
+appJs = path.join __dirname, 'prototype', 'app.js'
+
+#FIXME
 getAbsolutePath = (location, go) ->
   # fail if location lies outside ./files
   relativePath = path.relative fileDir, path.join fileDir, location
@@ -13,6 +20,7 @@ getAbsolutePath = (location, go) ->
   else
     go null, path.join fileDir, relativePath
 
+#FIXME
 collectFiles = (entries, dir) ->
   for name in fs.readdirSync dir when 0 isnt name.indexOf '.'
     subpath = path.join dir, name
@@ -23,11 +31,13 @@ collectFiles = (entries, dir) ->
         entries.push subpath
   entries
 
+#FIXME
 list = (go) ->
   relativePaths = for absolutePath in collectFiles [], fileDir
     path.relative fileDir, absolutePath
   go null, relativePaths
 
+#FIXME
 load = (location, go) -> 
   getAbsolutePath location, (error, absolutePath) ->
     if error
@@ -39,20 +49,26 @@ load = (location, go) ->
         else
           go null, data
 
-save = (location, contents, go) -> 
-  getAbsolutePath location, (error, absolutePath) ->
-    if error
-      go error
-    else
-      mkdirp (path.dirname absolutePath), (error) ->
-        if error
-          go error
-        else
-          fs.writeFile absolutePath, contents, (error) ->
-            if error
-              go error
-            else
-              go null, 'OK'
+wrap = (contents) ->
+  prelude + contents
+    .split /\n/
+    .map (a) -> '  ' + a
+    .join "\n"
+
+save = (contents, go) -> 
+  try
+    js = coffee.compile wrap contents
+    fs.writeFile appCoffee, contents, (error) ->
+      if error
+        go error
+      else
+        fs.writeFile appJs, js, (error) ->
+          if error
+            go error
+          else
+            go null, 'OK'
+  catch error
+    go error
 
 methods = { list, save, load }
 
@@ -103,5 +119,5 @@ main = (port) ->
 
   app.listen port
 
-main process.env.PORT ? 2999
+main process.env.PORT ? 8080
 
