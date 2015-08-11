@@ -1060,7 +1060,10 @@ _start = (init) ->
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
   fluid.context = context = do Context
   fluid.app = app = do Application
-  init context, app, app.home, app.home
+  try
+    init context, app, app.home, app.home
+  catch error
+    console.error error
   ko.applyBindings app
   preload()
   createRepl 'fluid-editor'
