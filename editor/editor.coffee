@@ -1,6 +1,12 @@
 editor = null
 hasLocalStorage = if window.localStorage? then yes else no
 
+rpc = (name, args..., go) ->
+  payload = JSON.stringify name: name, args: args
+  request = $.post "/rpc", { request: payload }
+  request.done (data, status, xhr) -> go null, data
+  request.fail (xhr, status, error) -> go error
+  return
 autosave = ->
   if hasLocalStorage
     window.localStorage['fluid_buffer'] = editor.getValue()
@@ -8,7 +14,9 @@ autosave = ->
   return
 
 saveSource = ->
-  console.log editor.getValue()
+  rpc 'save', editor.getValue(), (error, result) ->
+    if error
+      console.error error
 
 main = ->
   editor = CodeMirror.fromTextArea document.getElementById('fluid-editor'),
