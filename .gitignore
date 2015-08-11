@@ -39,4 +39,6 @@ fluid.js
 app.js
 tests.js
 pack.js
+editor.html
+editor.js
 
