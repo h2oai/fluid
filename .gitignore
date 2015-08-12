@@ -40,6 +40,7 @@ prototype/app.js
 tests/tests.js
 editor/index.html
 editor/editor.js
+editor/snippets.js
 server.js
 pack.js
 
