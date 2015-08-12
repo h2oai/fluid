@@ -65,6 +65,12 @@ initSnippets = ->
   $search = $ '#search'
   $search.on 'input', -> onSearch_throttled $search.val()
 
+  $sidebar = $ '#fluid-sidebar'
+  $showSnippets = $ '#show-snippets'
+  $showSnippets.click -> $sidebar.show()
+  $hideSnippets = $ '#hide-snippets'
+  $hideSnippets.click -> $sidebar.hide()
+
 initEditor = ->
   editor = CodeMirror.fromTextArea document.getElementById('fluid-editor'),
     theme: 'eclipse'

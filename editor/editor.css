@@ -6,11 +6,12 @@
   bottom: 0;
 }
 #fluid-sidebar {
+  display: none;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  width: 75%;
+  width: 50%;
   background: #fff;
   border-left: 1px solid #aaa;
   -webkit-box-shadow: -10px 0px 100px 0px rgba(0,0,0,0.5);
@@ -44,4 +45,15 @@
   margin: 0 0 1em 0;
   padding: 10px;
   background: #eee;
+}
+#show-snippets, #hide-snippets {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+#show-snippets {
+  z-index: 99;
+}
+#hide-snippets {
+  z-index: 101;
 }
