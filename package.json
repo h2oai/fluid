@@ -4,9 +4,9 @@
   "description": "Rapid Application Development for a more... civilized age.",
   "main": "index.js",
   "scripts": {
-    "start": "coffee --watch --compile *.coffee prototype/fluid.coffee editor/*.coffee tests/*.coffee & \njade --pretty --watch prototype/index.jade editor/index.jade & \ncoffee server.coffee & \nbrowser-sync start --proxy localhost:8080 --startPath \"/prototype/\" --files \"prototype/*.js,prototype/*.css,prototype/*.html\"",
+    "start": "coffee --watch --compile prototype/fluid.coffee editor/editor.coffee tests/*.coffee & \njade --pretty --watch prototype/index.jade editor/index.jade & \ncoffee tools/compile-snippets.coffee && coffee server.coffee & \nbrowser-sync start --proxy localhost:8080 --startPath \"/prototype/\" --files \"prototype/*.js,prototype/*.css,prototype/*.html\"",
     "pack": "coffee pack.coffee",
-    "compile-coffee": "coffee --compile *.coffee prototype/fluid.coffee editor/*.coffee tests/*.coffee",
+    "compile-coffee": "coffee --compile prototype/fluid.coffee editor/editor.coffee tests/*.coffee",
     "test": "npm run compile-coffee && node tests/tests.js | faucet",
     "coverage": "npm run compile-coffee && istanbul cover tests/tests.js",
     "coveralls": "npm run compile-coffee && istanbul cover tests/tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
