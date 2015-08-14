@@ -614,7 +614,7 @@ Text = Component (opts) ->
   html = from value, _.escape
   {
     id, visible, value, html
-    _template: 'html'
+    _template: 'text'
   }
 
 makeFontTemplate = (tag, type, opts) ->
