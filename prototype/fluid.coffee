@@ -1062,9 +1062,9 @@ _start = (init) ->
   fluid.app = app = do Application
   try
     init context, app, app.home, app.home
+    ko.applyBindings app
   catch error
     console.error error
-  ko.applyBindings app
   preload()
   createRepl 'fluid-editor'
   app.loaded()
