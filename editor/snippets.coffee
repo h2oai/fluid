@@ -10,6 +10,14 @@ add app.footer.buttons, button icon: 'search', -> print 'Search for...?'
 #---
 clear activePage
 #---
+# Given x, compute Math.log(x)
+add activePage, block [
+  text 'x ='
+  x = textfield 1
+  text 'log(x) = '
+  text from x.value, Math.log
+]
+#---
 add activePage, display4 'Display 4: Light 112px'
 #---
 add activePage, display3 'Display 3: Regular 56px'
