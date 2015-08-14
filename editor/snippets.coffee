@@ -57,191 +57,252 @@ add activePage, body1 'Body 1: right align', right: on
 add activePage, body1 'Body 1: no wrap', wrap: off
 #---
 # Flat Button
-add activePage, button()
+button1 = button()
+add activePage, button1
 #---
 # Flat (Disabled) Button
-add activePage, button disabled: yes
+button1 = button disabled: yes
+add activePage, button1
 #---
 # Flat Color Button
-add activePage, button color: 'primary'
+button1 = button color: 'primary'
+add activePage, button1
 #---
 # Flat Color (Disabled) Button
-add activePage, button color: 'primary', disabled: yes
+button1 = button color: 'primary', disabled: yes
+add activePage, button1
 #---
 # Flat Accent Button
-add activePage, button color: 'accent'
+button1 = button color: 'accent'
+add activePage, button1
 #---
 # Flat Accent (Disabled) Button
-add activePage, button color: 'accent', disabled: yes
+button1 = button color: 'accent', disabled: yes
+add activePage, button1
 #---
 # Raised Button
-add activePage, button type: 'raised'
+button1 = button type: 'raised'
+add activePage, button1
 #---
 # Raised (Disabled) Button
-add activePage, button type: 'raised', disabled: yes
+button1 = button type: 'raised', disabled: yes
+add activePage, button1
 #---
 # Raised Color Button
-add activePage, button type: 'raised', color: 'primary'
+button1 = button type: 'raised', color: 'primary'
+add activePage, button1
 #---
 # Raised Color (Disabled) Button
-add activePage, button type: 'raised', color: 'primary', disabled: yes
+button1 = button type: 'raised', color: 'primary', disabled: yes
+add activePage, button1
 #---
 # Raised Accent Button
-add activePage, button type: 'raised', color: 'accent'
+button1 = button type: 'raised', color: 'accent'
+add activePage, button1
 #---
 # Raised Accent (Disabled) Button
-add activePage, button type: 'raised', color: 'accent', disabled: yes
+button1 = button type: 'raised', color: 'accent', disabled: yes
+add activePage, button1
 #---
 # Icon Button
-add activePage, button icon: 'mood'
+button1 = button icon: 'mood'
+add activePage, button1
 #---
 # Icon (Disabled) Button
-add activePage, button icon: 'mood', disabled: yes
+button1 = button icon: 'mood', disabled: yes
+add activePage, button1
 #---
 # Icon Color Button
-add activePage, button icon: 'mood', color: 'primary'
+button1 = button icon: 'mood', color: 'primary'
+add activePage, button1
 #---
 # Icon Color (Disabled) Button
-add activePage, button icon: 'mood', color: 'primary', disabled: yes
+button1 = button icon: 'mood', color: 'primary', disabled: yes
+add activePage, button1
 #---
 # Icon Accent Button
-add activePage, button icon: 'mood', color: 'accent'
+button1 = button icon: 'mood', color: 'accent'
+add activePage, button1
 #---
 # Icon Accent (Disabled) Button
-add activePage, button icon: 'mood', color: 'accent', disabled: yes
+button1 = button icon: 'mood', color: 'accent', disabled: yes
+add activePage, button1
 #---
 # Plain FAB
-add activePage, button type: 'floating'
+button1 = button type: 'floating'
+add activePage, button1
 #---
 # Plain (Disabled) FAB
-add activePage, button type: 'floating', disabled: yes
+button1 = button type: 'floating', disabled: yes
+add activePage, button1
 #---
 # Color FAB
-add activePage, button type: 'floating', color: 'primary'
+button1 = button type: 'floating', color: 'primary'
+add activePage, button1
 #---
 # Color (Disabled) FAB
-add activePage, button type: 'floating', color: 'primary', disabled: yes
+button1 = button type: 'floating', color: 'primary', disabled: yes
+add activePage, button1
 #---
 # Plain Mini FAB
-add activePage, button size: 'small', type: 'floating'
+button1 = button size: 'small', type: 'floating'
+add activePage, button1
 #---
 # Plain Mini (Disabled) FAB
-add activePage, button size: 'small', type: 'floating', disabled: yes
+button1 = button size: 'small', type: 'floating', disabled: yes
+add activePage, button1
 #---
 # Color Mini FAB
-add activePage, button size: 'small', type: 'floating', color: 'primary'
+button1 = button size: 'small', type: 'floating', color: 'primary'
+add activePage, button1
 #---
 # Color Mini (Disabled) FAB
-add activePage, button size: 'small', type: 'floating', color: 'primary', disabled: yes
+button1 = button size: 'small', type: 'floating', color: 'primary', disabled: yes
+add activePage, button1
 #---
 # Plain with icon FAB
-add activePage, button type: 'floating', icon: 'camera'
+button1 = button type: 'floating', icon: 'camera'
+add activePage, button1
 #---
 # Color with icon FAB
-add activePage, button type: 'floating', color: 'primary', icon: 'camera'
+button1 = button type: 'floating', color: 'primary', icon: 'camera'
+add activePage, button1
 #---
 # Plain Mini with icon FAB
-add activePage, button size: 'small', type: 'floating', icon: 'camera'
+button1 = button size: 'small', type: 'floating', icon: 'camera'
+add activePage, button1
 #---
 # Color Mini with icon FAB
-add activePage, button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
+button1 = button size: 'small', type: 'floating', color: 'primary', icon: 'camera'
+add activePage, button1
 #---
 # Checkbox
-add activePage, checkbox()
+checkbox1 = checkbox()
+add activePage, checkbox1
 #---
 # Checkbox with value
-add activePage, checkbox value: on
+checkbox1 = checkbox value: on
+add activePage, checkbox1
 #---
 # Checkbox (Off)
-add activePage, checkbox off
+checkbox1 = checkbox off
+add activePage, checkbox1
 #---
 # Checkbox (On)
-add activePage, checkbox on
+checkbox1 = checkbox on
+add activePage, checkbox1
 #---
 # Checkbox with title (On)
-add activePage, checkbox on, title: 'Check on'
+checkbox1 = checkbox on, title: 'Check on'
+add activePage, checkbox1
 #---
 # Checkbox with title (Off)
-add activePage, checkbox off, title: 'Check off'
+checkbox1 = checkbox off, title: 'Check off'
+add activePage, checkbox1
 #---
 # Switch (Off)
-add activePage, checkbox off, icon: 'switch'
+checkbox1 = checkbox off, icon: 'switch'
+add activePage, checkbox1
 #---
 # Switch (On)
-add activePage, checkbox on, icon: 'switch'
+checkbox1 = checkbox on, icon: 'switch'
+add activePage, checkbox1
 #---
 # Checkbox without title
-add activePage, checkbox title: ' '
+checkbox1 = checkbox title: ' '
+add activePage, checkbox1
 #---
 # Icon Toggle
-add activePage, checkbox icon: 'wifi'
+checkbox1 = checkbox icon: 'wifi'
+add activePage, checkbox1
 #---
 # Icon Toggle (On)
-add activePage, checkbox on, icon: 'bluetooth'
+checkbox1 = checkbox on, icon: 'bluetooth'
+add activePage, checkbox1
 #---
 # Icon Toggle (Off)
-add activePage, checkbox off, icon: 'favorite'
+checkbox1 = checkbox off, icon: 'favorite'
+add activePage, checkbox1
 #---
 # Radio buttons
 radioOptions = atom 'option1'
-add activePage, radio radioOptions, item: 'option1', title: 'Option 1'
-add activePage, radio radioOptions, item: 'option2', title: 'Option 2'
-add activePage, radio radioOptions, item: 'option3', title: 'Option 3'
-add activePage, radio radioOptions, item: 'option4', title: 'Option 4'
+radio1 = radio radioOptions, item: 'option1', title: 'Option 1'
+radio2 = radio radioOptions, item: 'option2', title: 'Option 2'
+radio3 = radio radioOptions, item: 'option3', title: 'Option 3'
+radio4 = radio radioOptions, item: 'option4', title: 'Option 4'
+add activePage, radio1, radio2, radio3, radio4
 #---
 # Slider
-add activePage, slider()
+slider1 = slider()
+add activePage, slider1
 #---
 # Slider (custom range)
-add activePage, slider 150, min: 100, max: 200
+slider1 = slider 150, min: 100, max: 200
+add activePage, slider1
 #---
 # Textfield
-add activePage, textfield()
+textfield1 = textfield()
+add activePage, textfield1
 #---
 # Textfield With Value
-add activePage, textfield 'Hello!'
+textfield1 = textfield 'Hello!'
+add activePage, textfield1
 #---
 # Textfield With Value
-add activePage, textfield title: 'Message'
+textfield1 = textfield title: 'Message'
+add activePage, textfield1
 #---
 # Textfield With Value and Title
-add activePage, textfield 'Hello!', title: 'Message'
+textfield1 = textfield 'Hello!', title: 'Message'
+add activePage, textfield1
 #---
 # Textfield Validation / Patterns
-add activePage, textfield title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+textfield1 = textfield title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+add activePage, textfield1
 #---
 # Textfield Validation / Patterns
-add activePage, textfield '55555', title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+textfield1 = textfield '55555', title: 'Zip Code', pattern: '[0-9]{5}', error: 'Invalid zip code'
+add activePage, textfield1
 #---
 # Textfield - Expandable
-add activePage, textfield icon:'search'
+textfield1 = textfield icon:'search'
+add activePage, textfield1
 #---
 # Textfield - Expandable with Title
-add activePage, textfield icon:'search', title:'Cat pictures'
+textfield1 = textfield icon:'search', title:'Cat pictures'
+add activePage, textfield1
 #---
 # Textarea
-add activePage, textarea()
+textarea1 = textarea()
+add activePage, textarea1
 #---
 # Textarea With Value
-add activePage, textarea 'Hello World!'
+textarea1 = textarea 'Hello World!'
+add activePage, textarea1
 #---
 # Textarea With Title
-add activePage, textarea title: 'Message'
+textarea1 = textarea title: 'Message'
+add activePage, textarea1
 #---
 # Textarea With Rows
-add activePage, textarea 'Hello World!', rows: 5
+textarea1 = textarea 'Hello World!', rows: 5
+add activePage, textarea1
 #---
 # Badge
-add activePage, badge()
+badge1 = badge()
+add activePage, badge1
 #---
 # Badge With Title
-add activePage, badge title: 'Inbox'
+badge1 = badge title: 'Inbox'
+add activePage, badge1
 #---
 # Badge With Value
-add activePage, badge 5, title: 'Inbox'
+badge1 = badge 5, title: 'Inbox'
+add activePage, badge1
 #---
 # Badge With Icon
-add activePage, badge 3, icon: 'account_box'
+badge1 = badge 3, icon: 'account_box'
+add activePage, badge1
 #---
 # Tabs
 add activePage, tabset [
@@ -273,12 +334,12 @@ add activePage, grid [
 ]
 #---
 # Card
-add activePage, card faker.lorem.paragraph(),
+card1 = card faker.lorem.paragraph(),
   title: 'Card'
   buttons: [ button -> print 'Hello' ]
 #---
 # Card - with menu
-add activePage, card faker.lorem.paragraph(),
+card1 = card faker.lorem.paragraph(),
   title: 'Card'
   menu: menu [
     command 'command1', -> print 'command1'
@@ -287,13 +348,13 @@ add activePage, card faker.lorem.paragraph(),
   buttons: [ button 'Button', color: 'primary', -> print 'Hello' ]
 #---
 # Card - Auto width
-add activePage, card faker.lorem.paragraph(),
+card1 = card faker.lorem.paragraph(),
   title: 'Card'
   width: 'auto'
   buttons: [ button -> print 'Hello' ]
 #---
 # Card - Custom width
-add activePage, card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',
+card1 = card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',
   title: 'Welcome'
   height: 300
   width: 512
@@ -302,7 +363,7 @@ add activePage, card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. M
   buttons: [ button 'Get Started', color: 'primary', -> print 'Welcome!' ]
 #---
 # Square Card
-add activePage, card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',
+card1 = card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',
   title: 'Updates'
   width: 320
   height: 320
@@ -311,10 +372,11 @@ add activePage, card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. A
   buttons: [ button 'Get Updates', color: 'primary', -> print 'Welcome!' ]
 #---
 # Thumbnail
-add activePage, thumbnail 'sample.jpg', title: 'Spaceman'
+thumbnail1 = thumbnail 'sample.jpg', title: 'Spaceman'
+add activePage, thumnail1
 #---
 # Table
-add activePage, table [
+table1 = table [
   tr [
     th 'Material'
     th 'Quantity'
@@ -336,9 +398,10 @@ add activePage, table [
     td '$2.35'
   ]
 ]
+add activePage, table1
 #---
 # Selectable table
-add activePage, table selectable: yes, [
+table1 = table selectable: yes, [
   tr [
     th 'Material'
     th 'Quantity'
@@ -360,17 +423,21 @@ add activePage, table selectable: yes, [
     td '$2.35'
   ]
 ]
+add activePage, table1
 #---
 # Indeterminate Progress Bar
-add activePage, progress()
+progress1 = progress()
+add activePage, progress1
 #---
 # Updatable Progress Bar
-add activePage, progress1 = progress()
+progress11 = progress1 = progress()
+add activePage, progress11
 add activePage, button 'Update', ->
   progress1.progress Math.floor Math.random() * 100
 #---
 # Spinner
-add activePage, spinner()
+spinner1 = spinner()
+add activePage, spinner1
 #---
 # See https://www.google.com/design/icons/
 add activePage, icon 'face', size: 'small'
