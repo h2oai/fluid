@@ -40,11 +40,14 @@ initSnippets = ->
   lowerCaseSnippets = for snippet in allSnippets
     snippet.toLowerCase()
 
+  sanitizeSnippet = (snippet) ->
+    '\n' + snippet.replace(/#.+\n/g, '') + '\n'
+
   snippetEls = allSnippets.map (snippet) ->
     pre = document.createElement 'pre'
-    pre.textContent = _.escape snippet
+    pre.textContent = snippet
     pre.addEventListener 'click', ->
-      editor.replaceSelection '\n' + snippet + '\n'
+      editor.replaceSelection sanitizeSnippet snippet
     pre
 
   snippetsEl = document.getElementById 'fluid-snippets'
