@@ -2,7 +2,7 @@ argv = require('minimist') process.argv.slice 2
 
 path = require 'path'
 fs = require 'fs-extra'
-fluid = require '../prototype/fluid.js'
+fluid = require '../fluid.js'
 
 app_coffee = argv._[0]
 
