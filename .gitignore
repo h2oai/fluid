@@ -34,13 +34,10 @@ lib
 *.swp
 
 # Built files
-prototype/index.html
-prototype/fluid.js
-prototype/app.js
-tests/tests.js
-editor/index.html
-editor/editor.js
-editor/snippets.js
-server.js
-pack.js
+index.html
+fluid.js
+app.js
+tests.js
+index.html
+tools/compile.js
 

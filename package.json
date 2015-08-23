@@ -2,14 +2,13 @@
   "name": "fluid",
   "version": "0.0.1",
   "description": "Rapid Application Development for a more... civilized age.",
-  "main": "index.js",
   "scripts": {
-    "start": "coffee --watch --compile prototype/fluid.coffee editor/editor.coffee tests/*.coffee & \njade --pretty --watch prototype/index.jade editor/index.jade & \ncoffee tools/compile-snippets.coffee && coffee server.coffee & \nbrowser-sync start --proxy localhost:8080 --startPath \"/prototype/\" --files \"prototype/*.js,prototype/*.css,prototype/*.html\"",
-    "pack": "coffee pack.coffee",
-    "compile-coffee": "coffee --compile prototype/fluid.coffee editor/editor.coffee tests/*.coffee",
-    "test": "npm run compile-coffee && node tests/tests.js | faucet",
-    "coverage": "npm run compile-coffee && istanbul cover tests/tests.js",
-    "coveralls": "npm run compile-coffee && istanbul cover tests/tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch index.jade & \ncoffee tools/compile-snippets.coffee",
+    "compile-coffee": "coffee --compile fluid.coffee tests.coffee",
+    "compile-compile": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile", 
+    "test": "npm run compile-coffee && node tests.js | faucet",
+    "coverage": "npm run compile-coffee && istanbul cover tests.js",
+    "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -29,21 +28,24 @@
   },
   "homepage": "https://github.com/h2oai/fluid",
   "dependencies": {
-    "body-parser": "^1.13.2",
     "bower": "^1.4.1",
-    "browser-sync": "^2.8.0",
     "coffee-script": "^1.9.3",
     "coveralls": "^2.11.3",
     "diecut": "^0.0.1",
-    "express": "^4.13.1",
     "faucet": "0.0.1",
+    "fs-extra": "^0.23.1",
     "istanbul": "^0.3.17",
     "jade": "^1.11.0",
     "jss": "^2.1.3",
     "knockout": "^3.3.0",
     "lodash": "^3.10.0",
     "marked": "^0.3.5",
+    "minimist": "^1.1.3",
     "mkdirp": "^0.5.1",
     "tape": "^4.0.2"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "fluidc": "./bin/compile"
   }
 }

@@ -1,7 +1,7 @@
 if module?.exports?
   tape = require 'tape'
   _ = require 'lodash'
-  fluid = require '../prototype/fluid.js'
+  fluid = require './fluid.js'
   through = (o, m) -> (args...) -> m.apply o, args
   test = (name, f) ->
     tape name, (t) ->
