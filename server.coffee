@@ -4,14 +4,6 @@ express = require 'express'
 bodyParser = require 'body-parser'
 mkdirp = require 'mkdirp'
 fluid = require './prototype/fluid.coffee'
-coffee = require 'coffee-script'
-
-prelude = """
-{ #{ fluid._symbols().join ', ' } } = window.fluid
-window.fluid._start (context, app, home, activePage) ->
-  bind app.page, (it) -> activePage = it
-
-"""
 
 appCoffee = path.join __dirname, 'prototype', 'app.coffee'
 appJs = path.join __dirname, 'prototype', 'app.js'
@@ -54,15 +46,9 @@ load = (location, go) ->
         else
           go null, data
 
-wrap = (contents) ->
-  prelude + contents
-    .split /\n/
-    .map (a) -> '  ' + a
-    .join "\n"
-
 save = (contents, go) -> 
   try
-    js = coffee.compile wrap contents
+    js = fluid._compile contents
     fs.writeFile appCoffee, contents, (error) ->
       if error
         go error
