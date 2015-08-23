@@ -4,8 +4,9 @@ if module?.exports?
   diecut = require 'diecut'
   jss = require 'jss'
   ko = require 'knockout'
+  CoffeeScript = require 'coffee-script'
 else
-  { _, marked, diecut, jss, ko } = window
+  { _, marked, diecut, jss, ko, CoffeeScript } = window
 
 print = (a...) -> console.log a...
 
@@ -1055,6 +1056,23 @@ createRepl = (elementId) ->
       'Alt-Down': loadNextSnippet
       'Alt-Enter': evaluateSnippet
 
+indent = (contents) ->
+  contents
+    .split /\n/
+    .map (a) -> '  ' + a
+    .join "\n"
+
+createPrelude = -> #TODO cache
+  """
+  { #{ listModuleSymbols().join ', ' } } = window.fluid
+  window.fluid._start (context, app, home, activePage) ->
+    bind app.page, (it) -> activePage = it
+
+  """
+
+_compile = (contents) ->
+  CoffeeScript.compile createPrelude() + indent contents
+
 _start = (init) ->
   # Create style sheet with global selectors
   fluid.styles = jss.createStyleSheet(null, named:no).attach()
@@ -1072,7 +1090,7 @@ _start = (init) ->
 fluid = {
   version: 'Fluid 0.0.1'
 
-  _start
+  _start, _compile
 
   app: null
   context: null
