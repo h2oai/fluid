@@ -34,10 +34,10 @@ lib
 *.swp
 
 # Built files
-index.html
-fluid.js
-app.js
-tests.js
-index.html
-tools/compile.js
+/index.html
+/fluid.js
+/app.js
+/tests.js
+/index.html
+/tools/compile.js
 

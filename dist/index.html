@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fluid</title>
+    <meta name="description" content="Fluid Application">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Fluid Application">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="fluid.css" rel="stylesheet" type="text/css">
+  </head>
+  <body class="mdl-color--grey-200 fluid-is-editing">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout-icon"></div>
+        <div class="mdl-layout__header-row"><span data-bind="text:title" class="mdl-layout-title"></span>
+          <!-- Align navigation to the right-->
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+            <label for="fluid-app-search-box" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">search</i></label>
+            <div class="mdl-textfield__expandable-holder">
+              <input id="fluid-app-search-box" type="text" name="sample" class="mdl-textfield__input">
+            </div>
+          </div>
+          <!-- ko with:header-->
+          <!-- ko if:_hasLinks-->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <!-- ko foreach:links--><a data-bind="attr:{ href:address }, text:title" target="_blank" class="mdl-navigation__link"></a>
+            <!-- /ko-->
+          </nav>
+          <!-- /ko-->
+          <!-- ko with:menu-->
+          <button id="fluid-app-menu" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"><i class="material-icons">more_vert</i></button>
+          <ul for="fluid-app-menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
+            <!-- ko foreach:items-->
+            <li data-bind="attr:{ disabled:disabled }, text:title, click:clicked" class="mdl-menu__item"></li>
+            <!-- /ko-->
+          </ul>
+          <!-- /ko-->
+          <!-- /ko-->
+        </div>
+      </header>
+      <div id="fluid-drawer" class="mdl-layout__drawer"><span data-bind="text:title" class="mdl-layout-title"></span>
+        <nav class="mdl-navigation">
+          <!-- ko foreach:pages--><a href="" data-bind="text:title, click:load" class="mdl-navigation__link"></a>
+          <!-- /ko-->
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <!-- ko foreach:pages-->
+        <div data-bind="template:{ name:_templateOf, foreach:items }, visible:isActive" class="page-content"></div>
+        <!-- /ko-->
+      </main>
+      <!-- ko with:footer-->
+      <footer data-bind="visible:visible" class="mdl-mini-footer mdl-cell--hide-phone">
+        <div class="mdl-mini-footer--left-section">
+          <div data-bind="text:title, visible:_hasTitle" class="mdl-logo"></div>
+          <!-- ko if:_hasLinks-->
+          <ul class="mdl-mini-footer--link-list">
+            <!-- ko foreach:links-->
+            <li><a data-bind="attr:{ href:address }, text:title" target="_blank"></a></li>
+            <!-- /ko-->
+          </ul>
+          <!-- /ko-->
+        </div>
+        <!-- ko if:_hasButtons-->
+        <div class="mdl-mini-footer__right-section">
+          <!-- ko foreach:buttons-->
+          <!-- ko if:icon-->
+          <button data-bind="click:clicked" class="mdl-mini-footer__social-btn"><i data-bind="text:icon" class="material-icons"></i></button>
+          <!-- /ko-->
+          <!-- /ko-->
+        </div>
+        <!-- /ko-->
+      </footer>
+      <!-- /ko-->
+    </div>
+    <div id="fluid-dev-tools">
+      <div id="fluid-dev-tools-title"><strong>Console</strong> (Evaluate: <kbd>Alt+Enter</kbd>, History: <kbd>Alt+&uarr;</kbd> / <kbd>Alt+&darr;</kbd>)</div>
+      <div id="fluid-repl">
+        <textarea id="fluid-editor"></textarea>
+      </div>
+    </div>
+    <script type="text/html" id="grid-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-grid"></div>
+    </script>
+    <script type="text/html" id="cell-1-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--1-col"></div>
+    </script>
+    <script type="text/html" id="cell-2-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--2-col"></div>
+    </script>
+    <script type="text/html" id="cell-3-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--3-col"></div>
+    </script>
+    <script type="text/html" id="cell-4-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--4-col"></div>
+    </script>
+    <script type="text/html" id="cell-5-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--5-col"></div>
+    </script>
+    <script type="text/html" id="cell-6-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--6-col"></div>
+    </script>
+    <script type="text/html" id="cell-7-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--7-col"></div>
+    </script>
+    <script type="text/html" id="cell-8-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--8-col"></div>
+    </script>
+    <script type="text/html" id="cell-9-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--9-col"></div>
+    </script>
+    <script type="text/html" id="cell-10-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--10-col"></div>
+    </script>
+    <script type="text/html" id="cell-11-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--11-col"></div>
+    </script>
+    <script type="text/html" id="cell-12-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-cell mdl-cell--12-col"></div>
+    </script>
+    <script type="text/html" id="table-template">
+      <table data-bind="css:{ 'mdl-data-table--selectable':selectable }, visible:visible" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <!-- ko with:_headers-->
+            <!-- ko foreach:items-->
+            <th data-bind="text:value, css:{ 'mdl-data-table__cell--non-numeric':_isNonNumeric }"></th>
+            <!-- /ko-->
+            <!-- /ko-->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ko foreach:items-->
+          <tr>
+            <!-- ko foreach:items-->
+            <td data-bind="text:value, css:{ 'mdl-data-table__cell--non-numeric':_isNonNumeric }"></td>
+            <!-- /ko-->
+          </tr>
+          <!-- /ko-->
+        </tbody>
+      </table>
+    </script>
+    <script type="text/html" id="div-template">
+      <div data-bind="template:{ name:_templateOf, foreach:items }"></div>
+    </script>
+    <script type="text/html" id="span-template"><span data-bind="template:{ name:_templateOf, foreach:items }"></span></script>
+    <script type="text/html" id="card-template">
+      <div data-bind="style:_style, visible:visible" class="mdl-card mdl-shadow--2dp">
+        <!-- ko if:_hasTitle-->
+        <!-- ko if:_hasImage-->
+        <div data-bind="style:_titleStyle" class="mdl-card__title mdl-card--expand">
+          <h2 data-bind="text:title" class="mdl-card__title-text"></h2>
+        </div>
+        <!-- /ko-->
+        <!-- ko ifnot:_hasImage-->
+        <div class="mdl-card__title mdl-card--expand">
+          <h2 data-bind="text:title" class="mdl-card__title-text"></h2>
+        </div>
+        <!-- /ko-->
+        <!-- /ko-->
+        <div data-bind="template:{ name:_templateOf, foreach:items }" class="mdl-card__supporting-text"></div>
+        <!-- ko if:_hasButtons-->
+        <div class="mdl-card__actions mdl-card--border">
+          <!-- ko foreach:buttons--><a data-bind="text:title, click:clicked, css:{ 'mdl-button--colored':_isPrimary , 'mdl-button--accent':_isAccent }" class="mdl-button mdl-js-button mdl-js-ripple-effect"></a>
+          <!-- /ko-->
+        </div>
+        <!-- /ko-->
+        <!-- ko with:menu-->
+        <div class="mdl-card__menu">
+          <button data-bind="attr:{ id:id }" class="mdl-button mdl-js-button mdl-button--icon"><i data-bind="text:icon" class="material-icons"></i></button>
+          <ul data-bind="attr:{ 'for':id }" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect">
+            <!-- ko foreach:items-->
+            <li data-bind="attr:{ disabled:disabled }, text:title, click:clicked" class="mdl-menu__item"></li>
+            <!-- /ko-->
+          </ul>
+        </div>
+        <!-- /ko-->
+      </div>
+    </script>
+    <script type="text/html" id="spinner-template">
+      <div data-bind="visible:visible" class="mdl-spinner mdl-js-spinner is-active"></div>
+    </script>
+    <script type="text/html" id="progress-template">
+      <div data-bind="css:{ 'mdl-progress__indeterminate':_indeterminate }, progress:progress" class="mdl-progress mdl-js-progress"></div>
+    </script>
+    <script type="text/html" id="thumbnail-template">
+      <div data-bind="style:_style, visible:visible" class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand"></div>
+        <div style="height:52px;padding:16px;background:rgba(0,0,0,0.2)" class="mdl-card__actions"><span style="color:#fff" data-bind="text:title" class="demo-card-image__filename"></span></div>
+      </div>
+    </script>
+    <script type="text/html" id="tabs-template">
+      <div data-bind="visible:visible" class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+          <!-- ko foreach:items--><a data-bind="attr:{ href:_address }, css:{ 'is-active':_isActive }, text:title" class="mdl-tabs__tab"></a>
+          <!-- /ko-->
+        </div>
+        <!-- ko foreach:items-->
+        <div data-bind="attr:{ id:id }, css:{ 'is-active':_isActive }, template:{ name:_templateOf, foreach:items }" class="mdl-tabs__panel"></div>
+        <!-- /ko-->
+      </div>
+    </script>
+    <script type="text/html" id="button-template">
+      <button data-bind="css:{ 'mdl-button--colored':_isPrimary, 'mdl-button--accent':_isAccent, 'mdl-button--raised':_isRaised }, click:clicked, disable:disabled, text:title, visible:visible" class="mdl-button mdl-js-button mdl-js-ripple-effect"></button>
+    </script>
+    <script type="text/html" id="button-floating-template">
+      <button data-bind="css:{ 'mdl-button--colored':_isPrimary, 'mdl-button--mini-fab':_isSmall }, click:clicked, disable:disabled, visible:visible" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i data-bind="text:icon" class="material-icons"></i></button>
+    </script>
+    <script type="text/html" id="button-icon-template">
+      <button data-bind="css:{ 'mdl-button--colored':_isPrimary, 'mdl-button--accent':_isAccent }, click:clicked, disable:disabled, visible:visible" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"><i data-bind="text:icon" class="material-icons"></i></button>
+    </script>
+    <script type="text/html" id="textfield-template">
+      <div data-bind="visible:visible" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input type="text" data-bind="attr:{ id:id }, textInput:value" class="mdl-textfield__input">
+        <label data-bind="attr:{ 'for':id }, text:title" class="mdl-textfield__label"></label>
+      </div>
+    </script>
+    <script type="text/html" id="textfield-masked-template">
+      <div data-bind="visible:visible" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input type="text" data-bind="attr:{ id:id, pattern:pattern }, textInput:value" class="mdl-textfield__input">
+        <label data-bind="attr:{ 'for':id }, text:title" class="mdl-textfield__label"></label><span data-bind="text:error" class="mdl-textfield__error"></span>
+      </div>
+    </script>
+    <script type="text/html" id="textfield-expandable-template">
+      <div data-bind="visible:visible" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label data-bind="attr:{ 'for':id }" class="mdl-button mdl-js-button mdl-button--icon"><i data-bind="text:icon" class="material-icons"></i></label>
+        <div class="mdl-textfield__expandable-holder">
+          <input type="text" data-bind="attr:{ id:id }" class="mdl-textfield__input">
+          <label data-bind="attr:{ 'for':id }, text:title" class="mdl-textfield__label"></label>
+        </div>
+      </div>
+    </script>
+    <script type="text/html" id="textarea-template">
+      <div data-bind="visible:visible" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <textarea type="text" data-bind="attr:{ id:id, rows:rows }, textInput:value" class="mdl-textfield__input"></textarea>
+        <label data-bind="attr:{ 'for':id }, text:title" class="mdl-textfield__label"></label>
+      </div>
+    </script>
+    <script type="text/html" id="checkbox-template">
+      <label data-bind="attr:{ 'for':id }, visible:visible" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" data-bind="attr:{ id:id }, checked:value" class="mdl-checkbox__input"><span data-bind="text:title" class="mdl-checkbox__label"></span>
+      </label>
+    </script>
+    <script type="text/html" id="switch-template">
+      <label data-bind="attr:{ 'for':id }" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" data-bind="attr:{ id:id }, checked:value" class="mdl-switch__input"><span data-bind="text:title" class="mdl-switch__label"></span>
+      </label>
+    </script>
+    <script type="text/html" id="icon-toggle-template">
+      <label data-bind="attr:{ 'for':id }, visible:visible" class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect">
+        <input type="checkbox" data-bind="attr:{ id:id }, checked:value" class="mdl-icon-toggle__input"><i data-bind="text:icon" class="mdl-icon-toggle__label material-icons"></i>
+      </label>
+    </script>
+    <script type="text/html" id="radio-template">
+      <label data-bind="attr:{ 'for':id }, visible:visible" class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+        <input type="radio" data-bind="attr:{ id:id, name:group  }, checked:value, checkedValue:item" class="mdl-radio__button"><span data-bind="text:title" class="mdl-radio__label"></span>
+      </label>
+    </script>
+    <script type="text/html" id="slider-template">
+      <input type="range" tabindex="0" min="0" max="100" data-bind="attr:{ min:min, max:max }, value:value, visible:visible" class="mdl-slider mdl-js-slider">
+    </script>
+    <script type="text/html" id="link-template"><a data-bind="attr:{ 'href':address, 'class':_class_ }, text:title, visible:visible" target="_blank"></a></script>
+    <script type="text/html" id="badge-template">
+      <div data-bind="text:title, badge:value, visible:visible" class="mdl-badge"></div>
+    </script>
+    <script type="text/html" id="badge-icon-template">
+      <div data-bind="text:icon, badge:value" class="material-icons mdl-badge"></div>
+    </script>
+    <script type="text/html" id="icon-template"><i data-bind="text:value, attr:{ 'class':_class }, visible:visible"></i></script>
+    <script type="text/html" id="text-template"><span data-bind="attr:{ id:id }, html:html, visible:visible"></span></script>
+    <script type="text/html" id="html-template">
+      <div data-bind="attr:{ id:id }, html:html, visible:visible"></div>
+    </script>
+    <script type="text/html" id="pre-template">
+      <pre data-bind="html:value,visible:visible"></pre>
+    </script>
+    <script src="fluid.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
