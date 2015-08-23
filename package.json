@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "description": "Rapid Application Development for a more... civilized age.",
   "scripts": {
-    "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch index.jade",
-    "build": "coffee --compile fluid.coffee tests.coffee",
+    "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch --out dist index.jade",
+    "compile-coffee": "coffee --compile fluid.coffee tests.coffee",
+    "compile-jade": "jade --pretty --out dist index.jade",
+    "dist-scripts": "cat lib/jquery/dist/jquery.min.js lib/material-design-lite/material.min.js lib/lodash/lodash.min.js lib/knockout/dist/knockout.js lib/marked/marked.min.js lib/diecut/diecut.js lib/jsstyles/dist/jss.min.js lib/Faker/build/build/faker.min.js lib/codemirror/lib/codemirror.js lib/coffee-script/extras/coffee-script.js fluid.js codemirror-mode.js > dist/fluid.js",
+    "dist-styles": "cat lib/material-design-lite/material.min.css lib/codemirror/lib/codemirror.css lib/codemirror/theme/eclipse.css fluid.css > dist/fluid.css",
+    "dist": "npm run compile-coffee && npm run compile-jade && npm run dist-scripts && npm run dist-styles",
     "compile-compile": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile", 
-    "test": "npm run build && node tests.js | faucet",
-    "coverage": "npm run build && istanbul cover tests.js",
-    "coveralls": "npm run build && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "test": "npm run compile-coffee && node tests.js | faucet",
+    "coverage": "npm run compile-coffee && istanbul cover tests.js",
+    "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
