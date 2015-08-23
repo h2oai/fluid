@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "description": "Rapid Application Development for a more... civilized age.",
   "scripts": {
-    "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch index.jade & \ncoffee tools/compile-snippets.coffee",
-    "compile-coffee": "coffee --compile fluid.coffee tests.coffee",
+    "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch index.jade",
+    "build": "coffee --compile fluid.coffee tests.coffee",
     "compile-compile": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile", 
-    "test": "npm run compile-coffee && node tests.js | faucet",
-    "coverage": "npm run compile-coffee && istanbul cover tests.js",
-    "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "test": "npm run build && node tests.js | faucet",
+    "coverage": "npm run build && istanbul cover tests.js",
+    "coveralls": "npm run build && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",

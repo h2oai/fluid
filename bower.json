@@ -29,6 +29,9 @@
     "marked": "~0.3.3",
     "jquery": "~2.1.4",
     "jsstyles": "~2.1.2",
-    "Faker": "~3.0.1"
+    "Faker": "~3.0.1",
+    "codemirror": "~5.6.0",
+    "coffee-script": "~1.9.3",
+    "diecut": "~0.0.1"
   }
 }
