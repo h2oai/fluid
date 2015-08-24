@@ -23,10 +23,10 @@ else
 
   Examples:
     fluid --compile app.coffee
-    fluid --compile app.coffee --js foo.js
-    fluid --compile app.coffee --js foo.js --js bar.js
-    fluid --compile app.coffee --js foo.js --js bar.js --css baz.css
-    fluid --compile app.coffee --js foo.js --js bar.js --css baz.css --watch
+    fluid --compile app.coffee --include-js foo.js
+    fluid --compile app.coffee --include-js foo.js --include-js bar.js
+    fluid --compile app.coffee --include-js foo.js --include-css baz.css
+    fluid --compile app.coffee --include-js foo.js --include-css baz.css --watch
   """
   process.exit 1
 
