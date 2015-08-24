@@ -13,7 +13,10 @@
     "compile-compiler": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile",
     "test": "npm run compile-coffee && node tests.js | faucet",
     "coverage": "npm run compile-coffee && istanbul cover tests.js",
-    "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags && npm publish",
+    "release": "npm version patch -m \"%s\""
   },
   "repository": {
     "type": "git",
