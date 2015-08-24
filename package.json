@@ -1,5 +1,5 @@
 {
-  "name": "fluid",
+  "name": "fluid-lang",
   "version": "0.0.1",
   "description": "Rapid Application Development for a more... civilized age.",
   "scripts": {
@@ -9,7 +9,7 @@
     "dist-scripts": "cat lib/jquery/dist/jquery.min.js .nl lib/material-design-lite/material.min.js .nl lib/lodash/lodash.min.js .nl lib/knockout/dist/knockout.js .nl lib/marked/marked.min.js .nl lib/diecut/diecut.js .nl lib/jsstyles/dist/jss.min.js .nl lib/Faker/build/build/faker.min.js .nl lib/codemirror/lib/codemirror.js .nl lib/coffee-script/extras/coffee-script.js .nl fluid.js .nl codemirror-mode.js > dist/fluid.js",
     "dist-styles": "cat lib/material-design-lite/material.min.css lib/codemirror/lib/codemirror.css lib/codemirror/theme/eclipse.css fluid.css > dist/fluid.css",
     "dist": "npm run compile-coffee && npm run compile-jade && npm run dist-scripts && npm run dist-styles",
-    "compile-compile": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile", 
+    "compile-compiler": "coffee --compile tools/compile.coffee && echo \"#!/usr/bin/env node\" | cat - tools/compile.js > bin/compile && chmod u+x bin/compile", 
     "test": "npm run compile-coffee && node tests.js | faucet",
     "coverage": "npm run compile-coffee && istanbul cover tests.js",
     "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls"
@@ -50,6 +50,6 @@
   },
   "preferGlobal": true,
   "bin": {
-    "fluidc": "./bin/compile"
+    "fluid": "./bin/compile"
   }
 }
