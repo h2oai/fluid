@@ -15,12 +15,17 @@
 
   _ = require('lodash');
 
+  if (argv.compile) {
+    app_coffee = _.isArray(argv.compile) ? argv.compile[0] : argv.compile;
+  } else {
+    console.log("Usage: fluid [options] --compile app.coffee\n\nOptions:\n  --compile      compile to HTML, JavaScript and CSS\n  --help         display this help message\n  --include-css  include a CSS file in index.html\n  --include-js   include a JavaScript file in index.html\n  --watch        watch for changes and recompile\n\nExamples:\n  fluid --compile app.coffee\n  fluid --compile app.coffee --js foo.js\n  fluid --compile app.coffee --js foo.js --js bar.js\n  fluid --compile app.coffee --js foo.js --js bar.js --css baz.css\n  fluid --compile app.coffee --js foo.js --js bar.js --css baz.css --watch");
+    process.exit(1);
+  }
+
   if (argv.verbose) {
     console.log('Using opts:');
     console.dir(argv);
   }
-
-  app_coffee = argv._[0];
 
   output_dir = path.dirname(app_coffee);
 
@@ -39,7 +44,7 @@
 
   deploy('fluid.js');
 
-  scripts = (ref = argv.script) != null ? ref : [];
+  scripts = (ref = argv['include-js']) != null ? ref : [];
 
   if (!_.isArray(scripts)) {
     scripts = [scripts];
@@ -55,7 +60,7 @@
     return results;
   })();
 
-  stylesheets = (ref1 = argv.stylesheet) != null ? ref1 : [];
+  stylesheets = (ref1 = argv['include-css']) != null ? ref1 : [];
 
   if (!_.isArray(stylesheets)) {
     stylesheets = [stylesheets];
@@ -98,11 +103,11 @@
     });
   };
 
+  recompile();
+
   if (argv.watch) {
     console.log("Watching " + app_coffee + "...");
     fs.watchFile(app_coffee, recompile);
-  } else {
-    recompile();
   }
 
 }).call(this);

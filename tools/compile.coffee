@@ -1,16 +1,39 @@
 argv = require('minimist') process.argv.slice 2
-
 path = require 'path'
 fs = require 'fs'
 fse = require 'fs-extra'
 fluid = require '../fluid.js'
 _ = require 'lodash'
 
+if argv.compile
+  app_coffee = if _.isArray argv.compile
+    argv.compile[0]
+  else
+    argv.compile
+else
+  console.log """
+  Usage: fluid [options] --compile app.coffee
+
+  Options:
+    --compile      compile to HTML, JavaScript and CSS
+    --help         display this help message
+    --include-css  include a CSS file in index.html
+    --include-js   include a JavaScript file in index.html
+    --watch        watch for changes and recompile
+
+  Examples:
+    fluid --compile app.coffee
+    fluid --compile app.coffee --js foo.js
+    fluid --compile app.coffee --js foo.js --js bar.js
+    fluid --compile app.coffee --js foo.js --js bar.js --css baz.css
+    fluid --compile app.coffee --js foo.js --js bar.js --css baz.css --watch
+  """
+  process.exit 1
+
 if argv.verbose
   console.log 'Using opts:'
   console.dir argv
 
-app_coffee = argv._[0]
 output_dir = path.dirname app_coffee
 app_js = path.join output_dir, path.basename(app_coffee, path.extname(app_coffee)) + '.js'
 
@@ -24,13 +47,13 @@ deploy = (name) ->
 deploy 'fluid.css'
 deploy 'fluid.js'
 
-scripts = argv.script ? []
+scripts = argv['include-js'] ? []
 if not _.isArray scripts then scripts = [ scripts ]
 
 scriptTags = for script in scripts
   "<script src=\"#{script}\"></script>"
 
-stylesheets = argv.stylesheet ? []
+stylesheets = argv['include-css'] ? []
 if not _.isArray stylesheets then stylesheets = [ stylesheets ]
 
 stylesheetTags = for stylesheet in stylesheets
