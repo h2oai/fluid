@@ -424,7 +424,7 @@ addSection 'Textfields', [
   'With Value'
   textfield 'Hello!'
 
-  'With Value'
+  'With Title'
   textfield title: 'Message'
 
   'With Value and Title'

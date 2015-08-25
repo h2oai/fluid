@@ -16,7 +16,7 @@
     "coveralls": "npm run compile-coffee && istanbul cover tests.js --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "preversion": "npm test",
     "postversion": "git push && git push --tags && npm publish",
-    "release": "npm version patch -m \"%s\""
+    "release": "npm version patch -m \"Release %s\""
   },
   "repository": {
     "type": "git",

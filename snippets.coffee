@@ -256,7 +256,7 @@ add activePage, textfield1
 textfield1 = textfield 'Hello!'
 add activePage, textfield1
 #---
-# Textfield With Value
+# Textfield With Title
 textfield1 = textfield title: 'Message'
 add activePage, textfield1
 #---
