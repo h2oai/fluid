@@ -496,8 +496,10 @@ GenericContainer = (template) ->
   Container (opts) ->
     visible = toAtom opts.visible ? yes
     items = toList opts.items
+    style = opts.style ? {}
+
     {
-      items, visible, _templateOf
+      items, visible, style, _templateOf
       _template: template
     }
 
