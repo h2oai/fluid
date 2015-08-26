@@ -532,13 +532,13 @@ Thumbnail = Component (opts) ->
   visible = toAtom opts.visible ? yes
   title = toAtom opts.title ? ''
   _hasTitle = from title, truthy
-  _style =
-    width: (opts.width ? 256) + 'px'
-    height: (opts.height ? 256)   + 'px'
-    background: from image, (url) -> "url('#{url}') center / cover"
+  style = opts.style ? {}
+  style.width ?= '256px'
+  style.height ?= '256px'
+  style.background ?= from image, (url) -> "url('#{url}') center / cover"
 
   {
-    _hasTitle, title, image, visible, value, _style
+    _hasTitle, title, image, visible, value, style
     _template: 'thumbnail'
   }
 
