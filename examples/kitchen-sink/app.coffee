@@ -524,14 +524,16 @@ add cardsPage, grid cell card lorem,
 add cardsPage, grid cell title 'Auto-width'
 add cardsPage, grid cell card lorem,
   title: 'Card'
-  width: 'auto'
+  style:
+    width: 'auto'
   buttons: [ button -> print 'Hello' ]
 
 add cardsPage, grid cell title 'Custom width'
 add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...',  
   title: 'Welcome'
-  height: 300
-  width: 512
+  style:
+    width: '512px'
+    height: '300px'
   color: 'white'
   image: 'sample.jpg'
   buttons: [ button 'Get Started', color: 'primary', -> print 'Welcome!' ]
@@ -539,8 +541,9 @@ add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscin
 add cardsPage, grid cell title 'Square'
 add cardsPage, grid cell card 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.',  
   title: 'Updates'
-  width: 320
-  height: 320
+  style:
+    width: '320px'
+    height: '320px'
   color: 'white'
   image: 'sample.jpg'
   buttons: [ button 'Get Updates', color: 'primary', -> print 'Welcome!' ]

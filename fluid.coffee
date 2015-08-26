@@ -553,9 +553,7 @@ Card = Container (opts) ->
   image = toAtom opts.image
   _hasImage = from image, truthy
 
-  _style =
-    width: if opts.width? then px opts.width else undefined
-    height: if opts.height? then px opts.height else undefined
+  style = opts.style ? {}
 
   _titleStyle =
     background: from image, (url) -> "url('#{url}') center / cover"
@@ -563,7 +561,7 @@ Card = Container (opts) ->
   _titleStyle.color = opts.color if opts.color
 
   {
-    _hasTitle, visible, title, items, _hasButtons, buttons, menu, image, _hasImage, _style, _titleStyle, _templateOf
+    _hasTitle, visible, title, items, _hasButtons, buttons, menu, image, _hasImage, style, _titleStyle, _templateOf
     _template: 'card'
   }
 
