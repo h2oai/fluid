@@ -1,6 +1,6 @@
 {
   "name": "fluid-lang",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Rapid Application Development for a more... civilized age.",
   "scripts": {
     "start": "coffee --watch --compile fluid.coffee tests.coffee & \njade --pretty --watch --out dist index.jade",
