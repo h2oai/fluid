@@ -9956,12 +9956,14 @@ this.trace(e)},parse:function(e){function t(){var e;return e=f.lex()||p,"number"
 
   GenericContainer = function(template) {
     return Container(function(opts) {
-      var items, ref, visible;
+      var items, ref, ref1, style, visible;
       visible = toAtom((ref = opts.visible) != null ? ref : true);
       items = toList(opts.items);
+      style = (ref1 = opts.style) != null ? ref1 : {};
       return {
         items: items,
         visible: visible,
+        style: style,
         _templateOf: _templateOf,
         _template: template
       };
@@ -10003,31 +10005,36 @@ this.trace(e)},parse:function(e){function t(){var e;return e=f.lex()||p,"number"
   });
 
   Thumbnail = Component(function(opts) {
-    var _hasTitle, _style, image, ref, ref1, ref2, ref3, ref4, title, value, visible;
+    var _hasTitle, image, ref, ref1, ref2, ref3, style, title, value, visible;
     image = value = toAtom((ref = opts.value) != null ? ref : opts.image);
     visible = toAtom((ref1 = opts.visible) != null ? ref1 : true);
     title = toAtom((ref2 = opts.title) != null ? ref2 : '');
     _hasTitle = from(title, truthy);
-    _style = {
-      width: ((ref3 = opts.width) != null ? ref3 : 256) + 'px',
-      height: ((ref4 = opts.height) != null ? ref4 : 256) + 'px',
-      background: from(image, function(url) {
+    style = (ref3 = opts.style) != null ? ref3 : {};
+    if (style.width == null) {
+      style.width = '256px';
+    }
+    if (style.height == null) {
+      style.height = '256px';
+    }
+    if (style.background == null) {
+      style.background = from(image, function(url) {
         return "url('" + url + "') center / cover";
-      })
-    };
+      });
+    }
     return {
       _hasTitle: _hasTitle,
       title: title,
       image: image,
       visible: visible,
       value: value,
-      _style: _style,
+      style: style,
       _template: 'thumbnail'
     };
   });
 
   Card = Container(function(opts) {
-    var _hasButtons, _hasImage, _hasTitle, _style, _titleStyle, buttons, image, items, menu, ref, ref1, ref2, title, visible;
+    var _hasButtons, _hasImage, _hasTitle, _titleStyle, buttons, image, items, menu, ref, ref1, ref2, ref3, style, title, visible;
     items = toList(opts.items);
     visible = toAtom((ref = opts.visible) != null ? ref : true);
     title = toAtom((ref1 = opts.title) != null ? ref1 : '');
@@ -10037,10 +10044,7 @@ this.trace(e)},parse:function(e){function t(){var e;return e=f.lex()||p,"number"
     menu = toAtom(opts.menu);
     image = toAtom(opts.image);
     _hasImage = from(image, truthy);
-    _style = {
-      width: opts.width != null ? px(opts.width) : void 0,
-      height: opts.height != null ? px(opts.height) : void 0
-    };
+    style = (ref3 = opts.style) != null ? ref3 : {};
     _titleStyle = {
       background: from(image, function(url) {
         return "url('" + url + "') center / cover";
@@ -10059,7 +10063,7 @@ this.trace(e)},parse:function(e){function t(){var e;return e=f.lex()||p,"number"
       menu: menu,
       image: image,
       _hasImage: _hasImage,
-      _style: _style,
+      style: style,
       _titleStyle: _titleStyle,
       _templateOf: _templateOf,
       _template: 'card'
