@@ -60,3 +60,9 @@ body.fluid-is-editing .mdl-layout__container {
 body.fluid-is-editing #fluid-dev-tools {
   display: block;
 }
+
+/* HACK header's z-index is messed up for some reason. MDL bug? */
+.mdl-layout__header {
+  z-index: 6 !important;
+}
+
